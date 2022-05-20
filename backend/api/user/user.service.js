@@ -90,10 +90,12 @@ async function add(user) {
         const userToAdd = {
             username,
             password,
+            //userType,
             fullname,
             isAdmin: false,
             isOnline: false,
-            createdAt: ObjectId(user._id).getTimestamp()
+            createdAt: ObjectId(user._id).getTimestamp(),
+            
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)
