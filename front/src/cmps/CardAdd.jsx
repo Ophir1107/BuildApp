@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import { TextareaAutosize } from '@material-ui/core';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { utilsService } from '../services/utils.service'
+import { connect } from 'react-redux'
 
-export class CardAdd extends Component {
+export class _CardAdd extends Component {
 
     state = {
         titleTxt: ''
+    }
+
+    componentDidMount() {
+        const { loggedInUser } = this.props
     }
 
     handleChange = (ev) => {
@@ -42,6 +47,7 @@ export class CardAdd extends Component {
             startDate: 0,
             dueDate: 0,
             attachs: [],
+            isReject: false,
             style: {
                 coverMode: '',
                 bgColor: ''
@@ -57,15 +63,30 @@ export class CardAdd extends Component {
 
     render() {
         const { titleTxt } = this.state
-        const { toggleCardAdd } = this.props;
+        const { toggleCardAdd , loggedInUser } = this.props;
         return (
             <div className="card-add">
                 <TextareaAutosize className="card-add-input" ref={(textArea) => this.textArea = textArea} value={titleTxt} autoFocus onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="Enter a title for this card..." aria-label="empty textarea" />
+                {loggedInUser.userType !== 'client' && (<div>
+                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add Task</button>
+                    <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
+                </div>)}
                 <div>
-                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add card</button>
+                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add Reject</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>
             </div>
         )
     }
 }
+
+
+function mapStateToProps(state) {
+    return {
+      loggedInUser: state.appModule.loggedInUser,
+    }
+  }
+
+  
+  export const CardAdd = connect(mapStateToProps)(_CardAdd)
+  
