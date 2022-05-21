@@ -1,13 +1,14 @@
 import { httpService } from './http.service'
 
-export const userService = {
+export const constructorService = {
     addConstructor,
 }
 
 
 async function addConstructor(constructorInfo) {
     try {
-        const user = await httpService.post('auth/signup', constructorInfo)
+        console.log('cons cons cons', constructorInfo)
+        const user = await httpService.post('auth/addconstructor', constructorInfo)
         // return _saveLocalUser(user)
     } catch (err) {
         throw err

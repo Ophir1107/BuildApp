@@ -26,21 +26,10 @@ export class _Constructor extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        console.log(loggedinUser , "logggggged")
-        // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
-        // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
-        console.log("path " , this.props.location.pathname )
-        const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // console.log(loggedinUser , "loggedinUser")
-        // const pageMode =  loggedinUser ? 'signup' : 'login'
-        this.setState({ pageMode })
     }
 
     componentDidUpdate() {
         const { loggedInUser } = this.props
-        const { pageMode } = this.state
-        console.log('pageMoode' , pageMode)
-        console.log(loggedInUser ,"logg")
         // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
@@ -51,7 +40,7 @@ export class _Constructor extends Component {
         } else if (values.username.length < 6) {
             errors.username = 'Please use at least 6 characters'
         }
-        if (values.phone.length === 12) {
+        if (values.phone.length < 8) {
             errors.password = 'Invalid phone number'
         }
         return errors
@@ -73,14 +62,14 @@ export class _Constructor extends Component {
             </Link>
       
         
-
+            {loggedInUser.userType==='admin' &&
             <div className="login-signup flex column ">
                 <h3>Add new constructor</h3>
                 <Formik initialValues={constructorInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
                     <Form className="flex column">
                         <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
                         <ErrorMessage name="fullname" component="p" />
-                        <Field type="phone" placeholder="Enter phone number" name="username" />
+                        <Field type="phone" placeholder="Enter phone number" name="phone" />
                         <ErrorMessage name="username" component="p" />
 
 
@@ -106,6 +95,7 @@ export class _Constructor extends Component {
                 <hr />
                 <Link to="/login">Already have an account ? Log In</Link>
             </div>
+    }
             <div className="left-logo">
                 <LogoLeft />
             </div>

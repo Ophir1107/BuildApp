@@ -34,6 +34,26 @@ async function signup(req, res) {
     }
 }
 
+
+async function addConstructor(req, res) {
+    try {
+        const { fullname, phone, field, projects } = req.body
+        // Never log passwords
+        // logger.debug(fullname + ', ' + username + ', ' + password)
+        const account = await authService.addConstructor(fullname, phone, field, projects)
+        console.log(`auth.route - new account created: ` + JSON.stringify(account))
+        logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
+        // const user = await authService.login(username, password)
+        // req.session.user = user
+        res.json(userService.getByUsername(username))
+    } catch (err) {
+        logger.error('Failed to signup ' + err)
+        res.status(500).send({ err: 'Failed to signup' })
+    }
+}
+
+
+
 async function logout(req, res) {
     try {
         const user = req.body
@@ -73,5 +93,6 @@ module.exports = {
     login,
     signup,
     logout,
-    googleLogin
+    googleLogin,
+    addConstructor
 }

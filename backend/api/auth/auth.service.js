@@ -26,6 +26,16 @@ async function signup(username, password, fullname , userType , phone , email) {
     return userService.add({ username, password: hash, fullname , userType , phone , email})
 }
 
+async function addConstructor(fullname, phone, field, projects) {
+    const saltRounds = 10
+    logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
+    if (!username || !password || !fullname || !userType) return Promise.reject('fullname, username and password are required!')
+    const hash = await bcrypt.hash(password, saltRounds) 
+    return fullname
+}
+
+
+
 async function logout(user) {
     user.isOnline = false
     await userService.update(user)
@@ -34,5 +44,6 @@ async function logout(user) {
 module.exports = {
     signup,
     login,
-    logout
+    logout,
+    addConstructor
 }
