@@ -38,6 +38,7 @@ function _PopoverProfile({
                         }
                         {console.log(isLoggedInUser + " :isLogged in" , loggedInUser.userType , loggedInUser)}
                         {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/signup" onClick={closePopover} >signup new users</Link>}
+                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >add Constructor</Link>}
 
                     </div>
                 </div>
