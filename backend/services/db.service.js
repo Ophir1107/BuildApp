@@ -7,7 +7,7 @@ module.exports = {
 }
 
 // Database Name
-const dbName = 'BuildApp'
+const dbName = 'buildApp'
 
 var dbConn = null
 
@@ -28,6 +28,7 @@ async function connect() {
         const client = await MongoClient.connect(config.dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
         const db = client.db(dbName)
         dbConn = db
+        console.log("connection to mongodb")
         return db
     } catch (err) {
         logger.error('Cannot Connect to DB', err)

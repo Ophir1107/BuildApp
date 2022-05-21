@@ -40,9 +40,9 @@ export class HomeHeader extends Component {
                         <Link to="/login" className="login-btn clean-link">
                             Log in
                         </Link>
-                        <Link to="/signup" className="signup-btn clean-link">
+                        {/* <Link to="/signup" className="signup-btn clean-link">
                             Sign up
-                        </Link>
+                        </Link> */}
                     </div>
                 </nav>
             </header>

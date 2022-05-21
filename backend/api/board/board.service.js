@@ -6,9 +6,9 @@ const ObjectId = require('mongodb').ObjectId
 async function query(filterBy = { ctg: '' }) {
     const criteria = _buildCriteria(filterBy)
     try {
-        const collection = await dbService.getCollection('board')
+        const collection = await dbService.getCollection('project')
         const boards = await collection.find(criteria).toArray()
-        console.log(boards)
+        logger.warn(boards.length ,"num of boards")
         return boards
     } catch (err) {
         logger.error('cannot find boards', err)
@@ -33,7 +33,8 @@ async function save(board) {
                 activities: activities.slice(0, 20),
                 isFavorite
             }
-            const collection = await dbService.getCollection('board')
+            const collection = await dbService.getCollection('project')
+            console.log("trying to add board")
             await collection.updateOne({ _id: savedBoard._id }, { $set: savedBoard })
             return savedBoard
 
@@ -58,7 +59,7 @@ async function save(board) {
                 activities: [],
                 isFavorite: false
             }
-            const collection = await dbService.getCollection('board')
+            const collection = await dbService.getCollection('project')
             await collection.insertOne(savedBoard)
             return savedBoard
         } catch (err) {
@@ -70,7 +71,7 @@ async function save(board) {
 
 async function getById(boardId) {
     try {
-        const collection = await dbService.getCollection('board')
+        const collection = await dbService.getCollection('project')
         const board = await collection.findOne({ '_id': ObjectId(boardId) })
         return board
     } catch (err) {
@@ -81,7 +82,7 @@ async function getById(boardId) {
 
 async function remove(boardId) {
     try {
-        const collection = await dbService.getCollection('board')
+        const collection = await dbService.getCollection('project')
         await collection.deleteOne({ '_id': ObjectId(boardId) })
     } catch (err) {
         logger.error(`cannot remove board ${boardId}`, err)

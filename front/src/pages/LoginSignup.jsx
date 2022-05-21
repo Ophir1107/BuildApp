@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
-import { onLogin, onSignup, onGoogleLogin } from '../store/actions/app.actions.js'
+import { onLogin, onSignup } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 export class _LoginSignup extends Component {
@@ -16,6 +19,7 @@ export class _LoginSignup extends Component {
             fullname: '',
             username: '',
             password: '',
+            userType: '',
             imgUrl: ''
         },
         credentials: {
@@ -27,14 +31,22 @@ export class _LoginSignup extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        if (loggedinUser) this.props.history.push('/workspace')
+        console.log(loggedinUser , "logggggged")
+        // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
+        // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
+        console.log("path " , this.props.location.pathname )
         const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
+        // console.log(loggedinUser , "loggedinUser")
+        // const pageMode =  loggedinUser ? 'signup' : 'login'
         this.setState({ pageMode })
     }
 
     componentDidUpdate() {
         const { loggedInUser } = this.props
-        if (loggedInUser) this.props.history.push('/workspace')
+        const { pageMode } = this.state
+        console.log('pageMoode' , pageMode)
+        console.log(loggedInUser ,"logg")
+        // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
     validate = (values) => {
@@ -58,7 +70,14 @@ export class _LoginSignup extends Component {
     onSubmit = (values) => {
         const { pageMode } = this.state
         const { onLogin, onSignup } = this.props
-        pageMode === 'login' ? onLogin(values) : onSignup(values)
+        if(pageMode === 'login') {
+            onLogin(values)
+            this.componentDidUpdate()
+            this.props.history.push('/workspace')
+        } else{
+            onSignup(values)
+            this.props.history.push('/workspace')
+        }
     }
 
     onSuccessGoogle = (res) => {
@@ -74,7 +93,7 @@ export class _LoginSignup extends Component {
 
     render() {
         const { pageMode, credentials, userInfo } = this.state
-        const { loginErr } = this.props
+        const { loginErr , loggedInUser } = this.props
         if (!pageMode) return ''
         return (<section className="login-signup-container">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
@@ -94,18 +113,16 @@ export class _LoginSignup extends Component {
                         <button type="submit" className="primary-btn login-signup-btn">Log in</button>
                     </Form>
                 </Formik>
-                <p>OR</p>
-                <GoogleLogin
+                {/* <GoogleLogin
                     className="google-login-btn flex align-center justify-center"
                     clientId='640315421255-e4mv3dirnt2lbm4ati92b1euclri0j8d.apps.googleusercontent.com'
                     buttonText='Continue with Google'
                     onSuccess={this.onSuccessGoogle}
                     onFailure={this.onFailureGoogle}
                     cookiePolicy={'single_host_origin'}
-                />
-                <hr />
-                <Link to="/signup">Sign up for an account</Link>
+                /> */}    
             </div>}
+        
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
                     <h3>Sign up for your account</h3>
@@ -117,6 +134,22 @@ export class _LoginSignup extends Component {
                             <ErrorMessage name="username" component="p" />
                             <Field type="password" placeholder="Enter password" name="password" />
                             <ErrorMessage name="password" component="p" />
+
+
+                            <Field name="userType" as="select" placeholder="Select type of user"
+                                //component="select"
+                                value = {this.value}
+                                className = "LoginSelectBar"
+                            >
+                                <option defaultValue disabled>Select type of user </option>
+                                <option value = "admin">admin</option>
+                                <option value = "manager">manager</option>
+                                <option value = "client">client</option>
+                                
+                                
+                                
+                            </Field>
+
                             <button type="submit" className="primary-btn login-signup-btn">Sign up</button>
                         </Form>
                     </Formik>
@@ -145,7 +178,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     onLogin,
     onSignup,
-    onGoogleLogin
 }
 
 export const LoginSignup = connect(mapStateToProps, mapDispatchToProps)(_LoginSignup)

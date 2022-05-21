@@ -6,9 +6,14 @@ import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
 
 class _Workspace extends Component {
+    state = {
+        boards: []
+    }
 
     componentDidMount() {
         this.props.loadBoards()
+        const boards = this.props
+        this.setState({ boards })
     }
 
     get favoriteBoards() {

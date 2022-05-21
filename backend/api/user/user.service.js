@@ -64,6 +64,7 @@ async function remove(userId) {
 }
 
 async function update(user) {
+    console.log('user update' , user )
     try {
         // peek only updatable fields!
         const userToSave = {
@@ -71,10 +72,14 @@ async function update(user) {
             username: user.username,
             fullname: user.fullname,
             isOnline: user.isOnline,
-            imgUrl: user.imgUrl
+            userType: user.userType,
+            imgUrl: user.imgUrl 
         }
         const collection = await dbService.getCollection('user')
         await collection.updateOne({ '_id': userToSave._id }, { $set: userToSave })
+        // const exsitUser = await collection.find({ '_id': userToSave._id }) 
+        // exsitUser ? await collection.updateOne({ '_id': exsitUser._id}) : 
+        //                 await collection.insertOne({userToSave})
         console.log('user in update',userToSave);
         return userToSave;
     } catch (err) {
@@ -84,19 +89,23 @@ async function update(user) {
 }
 
 async function add(user) {
-    const { username, password, fullname } = user
+    const { username, password, fullname , userType } = user
     try {
         // peek only updatable fields!
         const userToAdd = {
             username,
             password,
+            userType,
             fullname,
             isAdmin: false,
             isOnline: false,
-            createdAt: ObjectId(user._id).getTimestamp()
+            createdAt: ObjectId(user._id).getTimestamp(),
+            projects : []
+            
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)
+        console.log('user is added to db')
         return userToAdd
     } catch (err) {
         logger.error('cannot insert user', err)
