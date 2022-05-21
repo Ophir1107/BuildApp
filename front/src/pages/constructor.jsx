@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
-import { onLogin, onSignup } from '../store/actions/app.actions.js'
+import { onAddConstructor } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
 // import InputLabel from '@mui/material/InputLabel';
 // import MenuItem from '@mui/material/MenuItem';
@@ -15,16 +15,11 @@ import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-sig
 export class _Constructor extends Component {
 
     state = {
-        userInfo: {
+        constructorInfo: {
             fullname: '',
-            username: '',
-            password: '',
-            userType: '',
-            imgUrl: ''
-        },
-        credentials: {
-            username: '',
-            password: ''
+            phone: '',
+            field: '',
+            projects: []
         },
         pageMode: 'constructor'
     }
@@ -56,45 +51,20 @@ export class _Constructor extends Component {
         } else if (values.username.length < 6) {
             errors.username = 'Please use at least 6 characters'
         }
-        if (values.password.length < 4) {
-            errors.password = 'Password too short'
-        }
-        if (!values.fullname) {
-            errors.fullname = 'Required'
-        } else if (values.fullname.length < 4) {
-            errors.fullname = 'Please use at least 4 characters'
+        if (values.phone.length === 12) {
+            errors.password = 'Invalid phone number'
         }
         return errors
     }
 
     onSubmit = (values) => {
-        const { pageMode } = this.state
-        const { onLogin, onSignup } = this.props
-        if(pageMode === 'login') {
-            onLogin(values)
-            this.componentDidUpdate()
-            this.props.history.push('/workspace')
-        } else{
-            onSignup(values)
-            this.props.history.push('/workspace')
-        }
+        const { onAddConstructor  } = this.props
+        onAddConstructor(values)
     }
-
-    onSuccessGoogle = (res) => {
-        const { tokenId } = res
-        const { onGoogleLogin } = this.props
-        onGoogleLogin(tokenId)
-    }
-
-    onFailureGoogle = (res) => {
-        console.log('Login with google failed', res)
-    }
-
 
     render() {
-        const { pageMode, credentials, userInfo } = this.state
-        const { loginErr , loggedInUser } = this.props
-        if (!pageMode) return ''
+        const { constructorInfo } = this.state
+        const { loggedInUser } = this.props
         return (<section className="login-signup-container">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
                 <LoginSignupLogo />
@@ -103,39 +73,39 @@ export class _Constructor extends Component {
             </Link>
       
         
-            {pageMode === 'signup' &&
-                <div className="login-signup flex column ">
-                    <h3>Add new constructor</h3>
-                    <Formik initialValues={userInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
-                        <Form className="flex column">
-                            <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
-                            <ErrorMessage name="fullname" component="p" />
-                            <Field type="username" placeholder="Enter phone number" name="username" />
-                            <ErrorMessage name="username" component="p" />
+
+            <div className="login-signup flex column ">
+                <h3>Add new constructor</h3>
+                <Formik initialValues={constructorInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
+                    <Form className="flex column">
+                        <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
+                        <ErrorMessage name="fullname" component="p" />
+                        <Field type="phone" placeholder="Enter phone number" name="username" />
+                        <ErrorMessage name="username" component="p" />
 
 
 
-                            <Field name="userType" as="select" placeholder="Select type of user"
-                                //component="select"
-                                value = {this.value}
-                                className = "LoginSelectBar"
-                            >
-                                <option defaultValue disabled>Select field </option>
-                                <option value = "air">מיזוג</option>
-                                <option value = "electricity">חשמלאי</option>
-                                <option value = "plumbing">אינסטלציה</option>
-                                <option value = "construction">בינוי</option>
-                                
-                                
-                                
-                            </Field>
+                        <Field name="field" as="select" placeholder="Select type of user"
+                            //component="select"
+                            value = {this.value}
+                            className = "LoginSelectBar"
+                        >
+                            <option defaultValue disabled>Select field </option>
+                            <option value = "air">מיזוג</option>
+                            <option value = "electricity">חשמלאי</option>
+                            <option value = "plumbing">אינסטלציה</option>
+                            <option value = "construction">בינוי</option>
+                            
+                            
+                            
+                        </Field>
 
-                            <button type="submit" className="primary-btn login-signup-btn">Add</button>
-                        </Form>
-                    </Formik>
-                    <hr />
-                    <Link to="/login">Already have an account ? Log In</Link>
-                </div>}
+                        <button type="submit" className="primary-btn login-signup-btn">Add</button>
+                    </Form>
+                </Formik>
+                <hr />
+                <Link to="/login">Already have an account ? Log In</Link>
+            </div>
             <div className="left-logo">
                 <LogoLeft />
             </div>
@@ -156,8 +126,8 @@ function mapStateToProps(state) {
 
 
 const mapDispatchToProps = {
-    onLogin,
-    onSignup,
+    onAddConstructor,
+
 }
 
 export const Constructor = connect(mapStateToProps, mapDispatchToProps)(_Constructor)

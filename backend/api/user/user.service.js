@@ -71,6 +71,8 @@ async function update(user) {
             _id: ObjectId(user._id),
             username: user.username,
             fullname: user.fullname,
+            phone: user.phone,
+            email: user.email,
             isOnline: user.isOnline,
             userType: user.userType,
             imgUrl: user.imgUrl 
@@ -89,7 +91,7 @@ async function update(user) {
 }
 
 async function add(user) {
-    const { username, password, fullname , userType } = user
+    const { username, password, fullname , userType, phone , email } = user
     try {
         // peek only updatable fields!
         const userToAdd = {
@@ -97,6 +99,8 @@ async function add(user) {
             password,
             userType,
             fullname,
+            phone,
+            email,
             isAdmin: false,
             isOnline: false,
             createdAt: ObjectId(user._id).getTimestamp(),

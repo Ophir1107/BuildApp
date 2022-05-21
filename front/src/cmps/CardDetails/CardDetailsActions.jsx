@@ -12,6 +12,8 @@ import { boardService } from '../../services/board.service'
 import { ElementOverlay } from '../Popover/ElementOverlay'
 import { ReactComponent as MemberIcon } from '../../assets/img/icons/person.svg'
 import { socketService } from '../../services/socket.service'
+import * as tf from '@tensorflow/tfjs'
+
 
 class _CardDetailsActions extends Component {
 
@@ -24,7 +26,8 @@ class _CardDetailsActions extends Component {
             url: fileUrl,
             createdAt: Date.now()
         }
-
+        // const model = await tf.loadLayersModel('../../../public/Models/Models/model.json')
+        // const func = await tf.keras.model.imageDataG
         card.attachs.push(attach)
         const savedActivity = boardService.createActivity('attached', attach.fileName, card)
         socketService.emit('app newActivity', savedActivity)

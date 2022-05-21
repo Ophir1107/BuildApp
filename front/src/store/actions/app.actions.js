@@ -1,4 +1,5 @@
 import { userService } from '../../services/user.service.js'
+import { constructorService } from '../../services/constructor.service.js'
 import { socketService } from '../../services/socket.service.js'
 
 export function onGoogleLogin(tokenId) {
@@ -32,6 +33,16 @@ export function onSignup(userInfo) {
         try {
             const user = await userService.signup(userInfo)
             dispatch({ type: 'ADD_USER', user })
+        } catch (err) {
+            console.log('UserActions: err in signup', err)
+        }
+    }
+}
+export function onAddConstructor(constructorInfo) {
+    return async dispatch => {
+        try {
+            const cons = await userService.addConstructor(constructorInfo)
+            dispatch({ type: 'ADD_CONS', cons })
         } catch (err) {
             console.log('UserActions: err in signup', err)
         }

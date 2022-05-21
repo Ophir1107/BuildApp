@@ -20,6 +20,8 @@ export class _LoginSignup extends Component {
             username: '',
             password: '',
             userType: '',
+            phone: '',
+            email: '',
             imgUrl: ''
         },
         credentials: {
@@ -56,13 +58,25 @@ export class _LoginSignup extends Component {
         } else if (values.username.length < 6) {
             errors.username = 'Please use at least 6 characters'
         }
-        if (values.password.length < 4) {
+        if (!values.password) {
+            errors.password = 'Required'
+        } else if (values.password.length < 4) {
             errors.password = 'Password too short'
         }
         if (!values.fullname) {
             errors.fullname = 'Required'
         } else if (values.fullname.length < 4) {
             errors.fullname = 'Please use at least 4 characters'
+        }
+        if (!values.email) {
+            errors.email = 'Required'
+        } else if (!(values.email).includes('@')){
+            errors.email = 'Invalid email address'
+        }
+        if (!values.phone) {
+            errors.phone = 'Required'
+        } else if (values.phone.length < 8 || values.phone.length > 12 ) {
+            errors.phone = 'Invalid phone number use 8-12 number'
         }
         return errors
     }
@@ -130,10 +144,15 @@ export class _LoginSignup extends Component {
                         <Form className="flex column">
                             <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
                             <ErrorMessage name="fullname" component="p" />
+                            <Field type="email" placeholder="Enter Email address" name="email" autoFocus />
+                            <ErrorMessage name="email" component="p" />
+                            <Field type="phone" placeholder="Enter phone number" name="phone" />
+                            <ErrorMessage name="phone" component="p" />
                             <Field type="username" placeholder="Enter username" name="username" />
                             <ErrorMessage name="username" component="p" />
                             <Field type="password" placeholder="Enter password" name="password" />
                             <ErrorMessage name="password" component="p" />
+
 
 
                             <Field name="userType" as="select" placeholder="Select type of user"

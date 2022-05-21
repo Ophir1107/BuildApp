@@ -35,7 +35,7 @@ async function googleLogin(tokenId) {
 async function signup(userInfo) {
     try {
         const user = await httpService.post('auth/signup', userInfo)
-        return _saveLocalUser(user)
+        // return _saveLocalUser(user)
     } catch (err) {
         throw err
     }
