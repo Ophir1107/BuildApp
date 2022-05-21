@@ -17,6 +17,7 @@ export function onGoogleLogin(tokenId) {
 export function onLogin(credentials = { username: 'guest', password: 'guest' }) {
     return async dispatch => {
         try {
+            console.log(credentials ,"credentials")
             const user = await userService.login(credentials)
             dispatch({ type: 'SET_USER', user })
             socketService.emit('user-watch', user._id)
@@ -30,7 +31,7 @@ export function onSignup(userInfo) {
     return async dispatch => {
         try {
             const user = await userService.signup(userInfo)
-            dispatch({ type: 'SET_USER', user })
+            dispatch({ type: 'ADD_USER', user })
         } catch (err) {
             console.log('UserActions: err in signup', err)
         }
