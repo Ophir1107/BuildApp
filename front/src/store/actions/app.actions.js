@@ -41,10 +41,6 @@ export function onSignup(userInfo) {
 export function onAddConstructor(constructorInfo) {
     return async dispatch => {
         try {
-<<<<<<< HEAD
-            console.log("cons from app.actions" ,constructorInfo )
-=======
->>>>>>> 1d7ebde1001657a5e5a0b3bbf4d1b6b94fab3dfa
             const cons = await constructorService.addConstructor(constructorInfo)
             dispatch({ type: 'ADD_CONS', cons })
         } catch (err) {
