@@ -4,6 +4,7 @@ import { loadBoards, onSaveBoard } from '../store/actions/board.actions'
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
+import { deleteBoard } from '../../../backend/api/board/board.controller'
 
 class _Workspace extends Component {
     state = {
@@ -28,6 +29,13 @@ class _Workspace extends Component {
         const board = boards.find(board => board._id === boardId)
         board.isFavorite = !board.isFavorite
         onSaveBoard(board)
+    }
+
+    onRemoveBoard = (ev, boardId) => {
+        ev.preventDefault()
+        const { boards, removeBoard } = this.props
+        const board = boards.find(board => board._id === boardId)
+        deleteBoard(boardId)
     }
 
     getUserBoards(){

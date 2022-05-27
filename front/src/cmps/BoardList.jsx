@@ -14,7 +14,7 @@ export function BoardList({ boards, onToggleFavorite , loggedInUser }) {
                             </span>
                             {loggedInUser.userType === 'admin' && 
                             <span className={`far fa-star fa-star2`}
-                                onClick={(ev) => onToggleFavorite(ev, board._id)}>
+                                onClick={(ev) => onRemoveBoard(ev, board._id)}>
                             </span>}
                         </div>
                     </div>

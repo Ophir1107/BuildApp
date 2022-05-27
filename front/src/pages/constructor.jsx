@@ -25,10 +25,6 @@ export class _Constructor extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-<<<<<<< HEAD
-        console.log("path " , this.props.location.pathname )
-=======
->>>>>>> 1d7ebde1001657a5e5a0b3bbf4d1b6b94fab3dfa
     }
 
     componentDidUpdate() {
@@ -43,13 +39,8 @@ export class _Constructor extends Component {
         } else if (values.fullname.length < 4) {
             errors.username = 'Please use at least 6 characters'
         }
-<<<<<<< HEAD
-        if (values.phone.length === 12) {
-            errors.phone = 'Invalid phone number'
-=======
         if (values.phone.length < 8) {
             errors.password = 'Invalid phone number'
->>>>>>> 1d7ebde1001657a5e5a0b3bbf4d1b6b94fab3dfa
         }
         return errors
     }
@@ -70,11 +61,8 @@ export class _Constructor extends Component {
                 <h1>BuildApp</h1>
             </div>
             </Link>
-<<<<<<< HEAD
-=======
       
         
->>>>>>> 1d7ebde1001657a5e5a0b3bbf4d1b6b94fab3dfa
             {loggedInUser.userType==='admin' &&
             <div className="login-signup flex column ">
                 <h3>Add new constructor</h3>

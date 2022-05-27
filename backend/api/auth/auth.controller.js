@@ -91,5 +91,4 @@ module.exports = {
     addcons,
     logout,
     googleLogin,
-    addConstructor
 }
