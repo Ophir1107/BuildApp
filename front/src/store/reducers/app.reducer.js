@@ -21,6 +21,9 @@ export function appReducer(state = initialState, action) {
         case 'ADD_USER':
             console.log('app reducer' , action.user)
             return { ...state, loggedInUser: state.loggedInUser, loginErr: null }
+        case 'ADD_CONS':
+            console.log('add constructor' , action.user)
+            return { ...state, loggedInUser: state.loggedInUser, loginErr: null }
         case 'SET_ONLINE_USERS':
             return { ...state, onlineUsers: [...action.onlineUsers] }
         case 'LOGIN_ERR':

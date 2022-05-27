@@ -78,7 +78,7 @@ class _AppHeader extends Component {
                     </button>
                 </div>
                 <div className="logo flex align-center">
-                    <Link to="/">
+                    <Link to="/workspace">
                         <BoardIcon />
                         <span>BuildApp</span>
                     </Link>

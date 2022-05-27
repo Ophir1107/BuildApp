@@ -12,7 +12,7 @@ class _Workspace extends Component {
 
     componentDidMount() {
         this.props.loadBoards()
-        const boards = this.props
+        const {loggedInUser , boards} = this.props
         this.setState({ boards })
     }
 
@@ -24,14 +24,30 @@ class _Workspace extends Component {
     onToggleFavorite = (ev, boardId) => {
         ev.preventDefault()
         const { boards, onSaveBoard } = this.props
+        // const {boards} =this.state
         const board = boards.find(board => board._id === boardId)
         board.isFavorite = !board.isFavorite
         onSaveBoard(board)
     }
 
-    render() {
-        const { boards } = this.props
-        if (!boards) return <Loader />
+    getUserBoards(){
+        const {loggedInUser , boards} = this.props
+        let userBoards = []
+        for(let i=0 ; i<boards.length ; i++){
+            let boardMembers = boards[i].members
+            for(let j=0 ; j<boardMembers.length ; j++){
+                console.log(boardMembers[j])
+                if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+                    userBoards.push(boards[i])
+                }
+            }
+        }
+        return userBoards
+    }
+
+    render() { 
+        const boards = this.getUserBoards()
+        const {loggedInUser} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
                 <div className="boards-wrapper flex column">
@@ -40,14 +56,14 @@ class _Workspace extends Component {
                             <i className="far fa-star"></i>
                             <h3>Starred boards</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} loggedInUser={loggedInUser} />
                     </div>
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             <BoardIcon />
                             <h3>Workspace</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} loggedInUser={loggedInUser} />
                     </div>
                 </div>
             </section>

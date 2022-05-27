@@ -5,10 +5,11 @@ const ObjectId = require('mongodb').ObjectId
 
 async function query(filterBy = { ctg: '' }) {
     const criteria = _buildCriteria(filterBy)
+    console.log("hello board.service")
     try {
         const collection = await dbService.getCollection('project')
         const boards = await collection.find(criteria).toArray()
-        logger.warn(boards.length ,"num of boards")
+        // logger.warn(boards.length ,"num of boards")
         return boards
     } catch (err) {
         logger.error('cannot find boards', err)
@@ -34,7 +35,6 @@ async function save(board) {
                 isFavorite
             }
             const collection = await dbService.getCollection('project')
-            console.log("trying to add board")
             await collection.updateOne({ _id: savedBoard._id }, { $set: savedBoard })
             return savedBoard
 

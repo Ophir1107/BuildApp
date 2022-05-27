@@ -8,6 +8,7 @@ async function login(req, res) {
     const { username, password } = req.body
     console.log(req.body , "body from login app.actions")
     try {
+        console.log("hiiiiiiiiiii")
         const user = await authService.login(username, password)
         req.session.user = user
         res.json(user)
@@ -33,6 +34,26 @@ async function signup(req, res) {
         res.status(500).send({ err: 'Failed to signup' })
     }
 }
+
+async function addcons(req, res) {
+    try {
+        const {fullname ,field , phone} = req.body
+        // Never log passwords
+        // logger.debug(fullname + ', ' + username + ', ' + password)
+        const constructor = await authService.addcons(fullname ,field , phone)
+        console.log(`auth.route - new account created: ` + JSON.stringify(account))
+        logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
+        // res.json(userService.getByUsername(username))
+        if (constructor) Promise.resolve(constructor ,'constructor has been added')
+    } catch (err) {
+        logger.error('Failed to signup ' + err)
+        res.status(500).send({ err: 'Failed to signup' })
+    }
+}
+
+
+
+
 
 async function logout(req, res) {
     try {
@@ -72,6 +93,7 @@ async function googleLogin(req, res) {
 module.exports = {
     login,
     signup,
+    addcons,
     logout,
     googleLogin
 }

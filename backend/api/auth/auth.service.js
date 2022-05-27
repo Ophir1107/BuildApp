@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt')
 const userService = require('../user/user.service')
 const logger = require('../../services/logger.service')
-
+const constructorService = require('../constructor/constructor.service')
 
 async function login(username, password ) {
-    logger.debug(`auth.service - login with username: ${username}`)
+    console.log("user from auth service " , username, password)
     const user = await userService.getByUsername(username)
     if (!user) return Promise.reject('Invalid username or password')
     const match = await bcrypt.compare(password, user.password)
@@ -25,6 +25,13 @@ async function signup(username, password, fullname , userType , phone , email) {
     const hash = await bcrypt.hash(password, saltRounds)
     return userService.add({ username, password: hash, fullname , userType , phone , email})
 }
+async function addcons(fullname ,field , phone) {
+    console.log(fullname ,field , phone , "fullname ,field , phone")
+    const saltRounds = 10
+    logger.debug(`auth.service - addcons with fullname: ${fullname}`)
+    if (!fullname || !field  ) return Promise.resolve('fullname ,field , phone are required!')
+    return constructorService.add({fullname ,field , phone})
+}
 
 async function logout(user) {
     user.isOnline = false
@@ -34,5 +41,6 @@ async function logout(user) {
 module.exports = {
     signup,
     login,
-    logout
+    logout,
+    addcons
 }

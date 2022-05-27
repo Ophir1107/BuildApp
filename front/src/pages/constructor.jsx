@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
 import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
 import { onAddConstructor } from '../store/actions/app.actions.js'
@@ -26,40 +25,32 @@ export class _Constructor extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        console.log(loggedinUser , "logggggged")
-        // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
-        // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
         console.log("path " , this.props.location.pathname )
-        const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // console.log(loggedinUser , "loggedinUser")
-        // const pageMode =  loggedinUser ? 'signup' : 'login'
-        this.setState({ pageMode })
     }
 
     componentDidUpdate() {
         const { loggedInUser } = this.props
-        const { pageMode } = this.state
-        console.log('pageMoode' , pageMode)
-        console.log(loggedInUser ,"logg")
         // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
     validate = (values) => {
         const errors = {}
-        if (!values.username) {
-            errors.username = 'Required'
-        } else if (values.username.length < 6) {
+        if (!values.fullname) {
+            errors.fullname = 'Required'
+        } else if (values.fullname.length < 4) {
             errors.username = 'Please use at least 6 characters'
         }
         if (values.phone.length === 12) {
-            errors.password = 'Invalid phone number'
+            errors.phone = 'Invalid phone number'
         }
         return errors
     }
 
     onSubmit = (values) => {
+        console.log(values , "cons fromn ")
         const { onAddConstructor  } = this.props
         onAddConstructor(values)
+        // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
     render() {
@@ -71,16 +62,14 @@ export class _Constructor extends Component {
                 <h1>BuildApp</h1>
             </div>
             </Link>
-      
-        
-
+            {loggedInUser.userType==='admin' &&
             <div className="login-signup flex column ">
                 <h3>Add new constructor</h3>
                 <Formik initialValues={constructorInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
                     <Form className="flex column">
                         <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
                         <ErrorMessage name="fullname" component="p" />
-                        <Field type="phone" placeholder="Enter phone number" name="username" />
+                        <Field type="phone" placeholder="Enter phone number" name="phone" />
                         <ErrorMessage name="username" component="p" />
 
 
@@ -106,6 +95,7 @@ export class _Constructor extends Component {
                 <hr />
                 <Link to="/login">Already have an account ? Log In</Link>
             </div>
+    }
             <div className="left-logo">
                 <LogoLeft />
             </div>
