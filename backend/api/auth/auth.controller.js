@@ -50,11 +50,6 @@ async function addcons(req, res) {
         res.status(500).send({ err: 'Failed to signup' })
     }
 }
-
-
-
-
-
 async function logout(req, res) {
     try {
         const user = req.body
@@ -95,5 +90,6 @@ module.exports = {
     signup,
     addcons,
     logout,
-    googleLogin
+    googleLogin,
+    addConstructor
 }
