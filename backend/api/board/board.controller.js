@@ -35,6 +35,8 @@ async function addBoard(req, res) {
     }
 }
 
+
+
 async function updateBoard(req, res) {
     try {
         const board = req.body
@@ -48,6 +50,7 @@ async function updateBoard(req, res) {
 
 async function deleteBoard(req, res) {
     try {
+        console.log(req ,"hello")
         await boardService.remove(req.params.id)
         res.send({ msg: 'Board deleted successfully' })
     } catch (err) {

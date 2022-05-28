@@ -105,12 +105,13 @@ export class _LoginSignup extends Component {
         const { loginErr , loggedInUser } = this.props
         if (!pageMode) return ''
         return (<section className="login-signup-container">
+            
+            {pageMode === 'login' && <div className="login-signup flex column">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
                 <LoginSignupLogo />
                 <h1>BuildApp</h1>
             </div>
             </Link>
-            {pageMode === 'login' && <div className="login-signup flex column">
                 <h3>Log in to BuildApp</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
                     <Form className="flex column">
@@ -134,6 +135,11 @@ export class _LoginSignup extends Component {
         
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
+                    <Link to="/workspace" className="clean-link"><div className="logo flex align-center justify-center">
+                <LoginSignupLogo />
+                <h1>BuildApp</h1>
+            </div>
+            </Link>
                     <h3>Sign up for your account</h3>
                     <Formik initialValues={userInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
                         <Form className="flex column">
