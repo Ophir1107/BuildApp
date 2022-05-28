@@ -36,9 +36,8 @@ function _PopoverProfile({
                         {loggedInUser?._id === member._id &&
                             <Link className="mini-profile-info-edit" to="/workspace" onClick={closePopover}>Edit profile info</Link>
                         }
-                        {console.log(isLoggedInUser + " :isLogged in" , loggedInUser.userType , loggedInUser)}
                         {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/signup" onClick={closePopover} >signup new users</Link>}
-                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >add Constructor</Link>}
+                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >Constructors</Link>}
 
                     </div>
                 </div>

@@ -14,7 +14,6 @@ export const httpService = {
         return ajax(endpoint, 'GET', data)
     },
     post(endpoint, data) {
-        console.log("sdgdfhgdhfgh" , data)
         return ajax(endpoint, 'POST', data)
     },
     put(endpoint, data) {
@@ -33,13 +32,10 @@ async function ajax(endpoint, method = 'GET', data = null) {
             data,
             params: (method === 'GET') ? data : null
         })
+        console.log(`${BASE_URL}${endpoint}` , "url")
         return res.data
     } catch (err) {
         if(endpoint !== 'auth/signup'){
-
-            console.log(data,"data before error")
-            console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: ${data}`)
-            console.dir(err)
             if (err.response && err.response.status === 401) {
                 // Depends on routing startegy - hash or history
                 window.location.assign('/#/login')

@@ -36,13 +36,21 @@ class _Workspace extends Component {
         for(let i=0 ; i<boards.length ; i++){
             let boardMembers = boards[i].members
             for(let j=0 ; j<boardMembers.length ; j++){
-                console.log(boardMembers[j])
                 if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
                     userBoards.push(boards[i])
                 }
             }
         }
         return userBoards
+    }
+
+    onDeleteBoard(ev, boardId , oldBoards){
+        ev.preventDefault()
+        console.log(oldBoards.length)
+        let boards = []
+        boards = oldBoards.filter(board => board._id !== boardId)
+        console.log(boards.length)
+        loadBoards(boards)
     }
 
     render() { 
@@ -56,14 +64,14 @@ class _Workspace extends Component {
                             <i className="far fa-star"></i>
                             <h3>Starred boards</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} loggedInUser={loggedInUser} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} onDeleteBoard={this.onDeleteBoard} loggedInUser={loggedInUser} />
                     </div>
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             <BoardIcon />
                             <h3>Workspace</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} loggedInUser={loggedInUser} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} onDeleteBoard={this.onDeleteBoard} boards={boards} loggedInUser={loggedInUser} />
                     </div>
                 </div>
             </section>

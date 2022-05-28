@@ -30,7 +30,6 @@ async function addBoard(req, res) {
        const  savedBoard = await boardService.save(board)
         res.send(savedBoard)
     } catch (err) {
-        console.log(err)
         logger.error('Failed to add board', err)
         res.status(500).send({ err: 'Failed to add board' })
     }
@@ -42,7 +41,6 @@ async function updateBoard(req, res) {
         savedBoard = await boardService.save(board)
         res.send(savedBoard)
     } catch (err) {
-        console.log(err)
         logger.error('Failed to update board', err)
         res.status(500).send({ err: 'Failed to update board' })
     }

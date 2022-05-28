@@ -5,7 +5,6 @@ const ObjectId = require('mongodb').ObjectId
 
 async function query(filterBy = { ctg: '' }) {
     const criteria = _buildCriteria(filterBy)
-    console.log("hello board.service")
     try {
         const collection = await dbService.getCollection('project')
         const boards = await collection.find(criteria).toArray()

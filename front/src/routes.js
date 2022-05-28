@@ -1,8 +1,9 @@
 import { Home } from './pages/Home'
 import { Workspace } from './pages/Workspace'
 import { LoginSignup } from './pages/LoginSignup'
-import { Constructor } from './pages/constructor'
+import { Constructor } from './pages/Constructor'
 import { BoardApp } from './pages/BoardApp'
+import { AddConstructor } from './cmps/AddConstructor'
 
 export const routes = [
     {
@@ -21,6 +22,11 @@ export const routes = [
         path: '/constructor',
         component: Constructor,
     },
+    {
+        path: '/constructor/add',
+        component: AddConstructor,
+    },
+    
     {
         path: '/workspace',
         component: Workspace,

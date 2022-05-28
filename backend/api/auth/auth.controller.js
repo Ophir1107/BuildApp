@@ -6,9 +6,7 @@ const client = new OAuth2Client('640315421255-e4mv3dirnt2lbm4ati92b1euclri0j8d.a
 
 async function login(req, res) {
     const { username, password } = req.body
-    console.log(req.body , "body from login app.actions")
     try {
-        console.log("hiiiiiiiiiii")
         const user = await authService.login(username, password)
         req.session.user = user
         res.json(user)
@@ -24,7 +22,6 @@ async function signup(req, res) {
         // Never log passwords
         // logger.debug(fullname + ', ' + username + ', ' + password)
         const account = await authService.signup(username, password, fullname , userType , phone , email)
-        console.log(`auth.route - new account created: ` + JSON.stringify(account))
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
         // const user = await authService.login(username, password)
         // req.session.user = user
@@ -41,7 +38,6 @@ async function addcons(req, res) {
         // Never log passwords
         // logger.debug(fullname + ', ' + username + ', ' + password)
         const constructor = await authService.addcons(fullname ,field , phone)
-        console.log(`auth.route - new account created: ` + JSON.stringify(account))
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
         // res.json(userService.getByUsername(username))
         if (constructor) Promise.resolve(constructor ,'constructor has been added')
@@ -64,10 +60,8 @@ async function logout(req, res) {
 async function googleLogin(req, res) {
     try {
         const { tokenId } = req.body
-        console.log(tokenId)
         const googleRes = await client.verifyIdToken({ idToken: tokenId, audience: '640315421255-e4mv3dirnt2lbm4ati92b1euclri0j8d.apps.googleusercontent.com' })
         const { email, name } = googleRes.payload
-        console.log(googleRes.payload)
         const user = await userService.getByUsername(email)
         if (!user) {
 
@@ -76,7 +70,6 @@ async function googleLogin(req, res) {
             logger.debug(`BuildApp doesnt have user with this ` + email ` gmail address`)
         }
         const googleUser = await authService.login(email, tokenId)
-        console.log('Google user', googleUser)
         req.session.user = googleUser
         res.json(googleUser)
 
@@ -91,5 +84,4 @@ module.exports = {
     addcons,
     logout,
     googleLogin,
-    addConstructor
 }

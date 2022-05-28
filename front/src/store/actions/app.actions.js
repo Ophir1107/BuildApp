@@ -6,7 +6,6 @@ export function onGoogleLogin(tokenId) {
     return async dispatch => {
         try {
             const user = await userService.googleLogin(tokenId)
-            console.log(user , "this is user")
             dispatch({ type: 'SET_USER', user })
             socketService.emit('user-watch', user._id)
         } catch (err) {
@@ -18,7 +17,6 @@ export function onGoogleLogin(tokenId) {
 export function onLogin(credentials = { username: 'guest', password: 'guest' }) {
     return async dispatch => {
         try {
-            console.log(credentials ,"credentials")
             const user = await userService.login(credentials)
             dispatch({ type: 'SET_USER', user })
             socketService.emit('user-watch', user._id)

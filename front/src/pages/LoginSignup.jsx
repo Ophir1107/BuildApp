@@ -33,12 +33,9 @@ export class _LoginSignup extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        console.log(loggedinUser , "logggggged")
         // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
         // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
-        console.log("path " , this.props.location.pathname )
         const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // console.log(loggedinUser , "loggedinUser")
         // const pageMode =  loggedinUser ? 'signup' : 'login'
         this.setState({ pageMode })
     }
@@ -46,8 +43,6 @@ export class _LoginSignup extends Component {
     componentDidUpdate() {
         const { loggedInUser } = this.props
         const { pageMode } = this.state
-        console.log('pageMoode' , pageMode)
-        console.log(loggedInUser ,"logg")
         // if ( loggedInUser) this.props.history.push('/workspace')
     }
 

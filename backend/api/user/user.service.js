@@ -43,10 +43,8 @@ async function getById(userId) {
 
 async function getByUsername(username) {
     try {
-        console.log(username , "username")
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username })
-        console.log('user from mongodb', user)
         return user
     } catch (err) {
         logger.error(`while finding user ${username}`, err)
@@ -66,7 +64,6 @@ async function remove(userId) {
 }
 
 async function update(user) {
-    console.log('user update' , user )
     try {
         // peek only updatable fields!
         const userToSave = {
@@ -84,7 +81,6 @@ async function update(user) {
         // const exsitUser = await collection.find({ '_id': userToSave._id }) 
         // exsitUser ? await collection.updateOne({ '_id': exsitUser._id}) : 
         //                 await collection.insertOne({userToSave})
-        console.log('user in update',userToSave);
         return userToSave;
     } catch (err) {
         logger.error(`cannot update user ${user._id}`, err)
@@ -111,7 +107,6 @@ async function add(user) {
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)
-        console.log('user is added to db')
         return userToAdd
     } catch (err) {
         logger.error('cannot insert user', err)

@@ -16,14 +16,13 @@ const initialState = {
 export function appReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_USER':
-            console.log('app reducer' , action.user)
             return { ...state, loggedInUser: action.user, loginErr: null }
         case 'ADD_USER':
-            console.log('app reducer' , action.user)
             return { ...state, loggedInUser: state.loggedInUser, loginErr: null }
         case 'ADD_CONS':
-            console.log('add constructor' , action.user)
-            return { ...state, loggedInUser: state.loggedInUser, loginErr: null }
+            return { ...state, loggedInUser: state.loggedInUser}
+        case 'GET_CONS':
+            return { ...state, loggedInUser: state.loggedInUser}
         case 'SET_ONLINE_USERS':
             return { ...state, onlineUsers: [...action.onlineUsers] }
         case 'LOGIN_ERR':
