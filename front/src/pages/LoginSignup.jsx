@@ -20,6 +20,8 @@ export class _LoginSignup extends Component {
             username: '',
             password: '',
             userType: '',
+            phone: '',
+            email: '',
             imgUrl: ''
         },
         credentials: {
@@ -31,12 +33,9 @@ export class _LoginSignup extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        console.log(loggedinUser , "logggggged")
         // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
         // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
-        console.log("path " , this.props.location.pathname )
         const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // console.log(loggedinUser , "loggedinUser")
         // const pageMode =  loggedinUser ? 'signup' : 'login'
         this.setState({ pageMode })
     }
@@ -44,8 +43,6 @@ export class _LoginSignup extends Component {
     componentDidUpdate() {
         const { loggedInUser } = this.props
         const { pageMode } = this.state
-        console.log('pageMoode' , pageMode)
-        console.log(loggedInUser ,"logg")
         // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
@@ -56,13 +53,25 @@ export class _LoginSignup extends Component {
         } else if (values.username.length < 6) {
             errors.username = 'Please use at least 6 characters'
         }
-        if (values.password.length < 4) {
+        if (!values.password) {
+            errors.password = 'Required'
+        } else if (values.password.length < 4) {
             errors.password = 'Password too short'
         }
         if (!values.fullname) {
             errors.fullname = 'Required'
         } else if (values.fullname.length < 4) {
             errors.fullname = 'Please use at least 4 characters'
+        }
+        if (!values.email) {
+            errors.email = 'Required'
+        } else if (!(values.email).includes('@')){
+            errors.email = 'Invalid email address'
+        }
+        if (!values.phone) {
+            errors.phone = 'Required'
+        } else if (values.phone.length < 8 || values.phone.length > 12 ) {
+            errors.phone = 'Invalid phone number use 8-12 number'
         }
         return errors
     }
@@ -96,12 +105,13 @@ export class _LoginSignup extends Component {
         const { loginErr , loggedInUser } = this.props
         if (!pageMode) return ''
         return (<section className="login-signup-container">
+            
+            {pageMode === 'login' && <div className="login-signup flex column">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
                 <LoginSignupLogo />
                 <h1>BuildApp</h1>
             </div>
             </Link>
-            {pageMode === 'login' && <div className="login-signup flex column">
                 <h3>Log in to BuildApp</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
                     <Form className="flex column">
@@ -125,15 +135,25 @@ export class _LoginSignup extends Component {
         
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
+                    <Link to="/workspace" className="clean-link"><div className="logo flex align-center justify-center">
+                <LoginSignupLogo />
+                <h1>BuildApp</h1>
+            </div>
+            </Link>
                     <h3>Sign up for your account</h3>
                     <Formik initialValues={userInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
                         <Form className="flex column">
                             <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
                             <ErrorMessage name="fullname" component="p" />
+                            <Field type="email" placeholder="Enter Email address" name="email" autoFocus />
+                            <ErrorMessage name="email" component="p" />
+                            <Field type="phone" placeholder="Enter phone number" name="phone" />
+                            <ErrorMessage name="phone" component="p" />
                             <Field type="username" placeholder="Enter username" name="username" />
                             <ErrorMessage name="username" component="p" />
                             <Field type="password" placeholder="Enter password" name="password" />
                             <ErrorMessage name="password" component="p" />
+
 
 
                             <Field name="userType" as="select" placeholder="Select type of user"

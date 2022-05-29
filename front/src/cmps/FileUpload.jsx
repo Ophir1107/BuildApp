@@ -12,7 +12,6 @@ export class FileUpload extends Component {
       const {secure_url} = await cloudinaryService.uploadFile(ev)
       this.props.onFileUpload(secure_url)
     }catch (err){
-      console.log('error in getting fileUrl From Cloudinary',err)
     }
     this.setState({ isUploading: false})
   }

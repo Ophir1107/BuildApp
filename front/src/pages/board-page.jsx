@@ -98,7 +98,6 @@ class _BoardPage extends React.Component {
         const { board } = this.props
         let boardToEdit = { ...board }
         const { lists } = boardToEdit
-        // console.log('lists:', lists, 'board:', board);
         if (!destination) return
         const droppableIdStart = source.droppableId
         const droppableIdEnd = destination.droppableId

@@ -25,6 +25,7 @@ export const httpService = {
 }
 
 async function ajax(endpoint, method = 'GET', data = null) {
+    console.log(endpoint , method, data , "endpoint , method, data")
     try {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
@@ -32,13 +33,11 @@ async function ajax(endpoint, method = 'GET', data = null) {
             data,
             params: (method === 'GET') ? data : null
         })
+        
+        console.log(`${BASE_URL}${endpoint}` , "url")
         return res.data
     } catch (err) {
         if(endpoint !== 'auth/signup'){
-
-            console.log(data,"data before error")
-            console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: ${data}`)
-            console.dir(err)
             if (err.response && err.response.status === 401) {
                 // Depends on routing startegy - hash or history
                 window.location.assign('/#/login')
@@ -46,6 +45,7 @@ async function ajax(endpoint, method = 'GET', data = null) {
                 //     router.push('/login')
                 // }
             }
+            console.log(err , "err bottom")
             throw err
         }
     }

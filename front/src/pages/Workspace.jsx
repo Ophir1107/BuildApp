@@ -4,6 +4,7 @@ import { loadBoards, onSaveBoard } from '../store/actions/board.actions'
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
+import { boardService } from '../services/board.service'
 
 class _Workspace extends Component {
     state = {
@@ -12,7 +13,7 @@ class _Workspace extends Component {
 
     componentDidMount() {
         this.props.loadBoards()
-        const boards = this.props
+        const {boards} = this.props
         this.setState({ boards })
     }
 
@@ -24,14 +25,40 @@ class _Workspace extends Component {
     onToggleFavorite = (ev, boardId) => {
         ev.preventDefault()
         const { boards, onSaveBoard } = this.props
+        // const {boards} =this.state
         const board = boards.find(board => board._id === boardId)
         board.isFavorite = !board.isFavorite
         onSaveBoard(board)
     }
 
-    render() {
-        const { boards } = this.props
-        if (!boards) return <Loader />
+    getUserBoards(){
+        const {loggedInUser , boards} = this.props
+        if (loggedInUser && loggedInUser.userType === 'admin') return boards
+        let userBoards = []
+        for(let i=0 ; i<boards.length ; i++){
+            let boardMembers = boards[i].members
+            for(let j=0 ; j<boardMembers.length ; j++){
+                if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+                    userBoards.push(boards[i])
+                }
+            }
+        }
+        return userBoards
+    }
+
+    onDeleteBoard(ev, boardId , oldBoards){
+        ev.preventDefault()
+        console.log(oldBoards.length)
+        let boards = []
+        boards = oldBoards.filter(board => board._id !== boardId)
+        console.log(boards.length)
+        boardService.remove(boardId)
+        this.setState({boards}) 
+    }
+
+    render() { 
+        const boards = this.getUserBoards()
+        const {loggedInUser} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
                 <div className="boards-wrapper flex column">
@@ -40,14 +67,14 @@ class _Workspace extends Component {
                             <i className="far fa-star"></i>
                             <h3>Starred boards</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} onDeleteBoard={this.onDeleteBoard} loggedInUser={loggedInUser} />
                     </div>
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             <BoardIcon />
                             <h3>Workspace</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} />
+                        <BoardList onToggleFavorite={this.onToggleFavorite} onDeleteBoard={this.onDeleteBoard} boards={boards} loggedInUser={loggedInUser} />
                     </div>
                 </div>
             </section>

@@ -45,10 +45,10 @@ async function getByUsername(username) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username })
-        console.log('user from mongodb', user)
         return user
     } catch (err) {
         logger.error(`while finding user ${username}`, err)
+        
         throw err
     }
 }
@@ -64,13 +64,14 @@ async function remove(userId) {
 }
 
 async function update(user) {
-    console.log('user update' , user )
     try {
         // peek only updatable fields!
         const userToSave = {
             _id: ObjectId(user._id),
             username: user.username,
             fullname: user.fullname,
+            phone: user.phone,
+            email: user.email,
             isOnline: user.isOnline,
             userType: user.userType,
             imgUrl: user.imgUrl 
@@ -80,7 +81,6 @@ async function update(user) {
         // const exsitUser = await collection.find({ '_id': userToSave._id }) 
         // exsitUser ? await collection.updateOne({ '_id': exsitUser._id}) : 
         //                 await collection.insertOne({userToSave})
-        console.log('user in update',userToSave);
         return userToSave;
     } catch (err) {
         logger.error(`cannot update user ${user._id}`, err)
@@ -89,7 +89,7 @@ async function update(user) {
 }
 
 async function add(user) {
-    const { username, password, fullname , userType } = user
+    const { username, password, fullname , userType, phone , email } = user
     try {
         // peek only updatable fields!
         const userToAdd = {
@@ -97,6 +97,8 @@ async function add(user) {
             password,
             userType,
             fullname,
+            phone,
+            email,
             isAdmin: false,
             isOnline: false,
             createdAt: ObjectId(user._id).getTimestamp(),
@@ -105,7 +107,6 @@ async function add(user) {
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)
-        console.log('user is added to db')
         return userToAdd
     } catch (err) {
         logger.error('cannot insert user', err)

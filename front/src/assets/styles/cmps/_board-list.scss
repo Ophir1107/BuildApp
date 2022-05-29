@@ -42,6 +42,23 @@
                     }
                 }
             }
+            .fa-star2 {
+                color: $clr2;
+                font-size: 14px;
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                color: $clr2;
+                transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+
+                &.favorite {
+                    color: #e6c60d;
+                    &:hover {
+                        transform: scale(1.2);
+                        color: #e6c50de5;
+                    }
+                }
+            }
         }
     }
 

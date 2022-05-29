@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-export function BoardList({ boards, onToggleFavorite }) {
+export function BoardList({ boards, onToggleFavorite , onDeleteBoard , loggedInUser }) {
     return (
         <div className="board-list">
             {boards.map(board => {
@@ -12,6 +12,11 @@ export function BoardList({ boards, onToggleFavorite }) {
                             <span className={`far fa-star ${board.isFavorite ? 'favorite' : ''}`}
                                 onClick={(ev) => onToggleFavorite(ev, board._id)}>
                             </span>
+                            {loggedInUser && loggedInUser.userType === 'admin' && 
+                            <icon
+                            class={`fas fa-archive icon-sm fa-star2`}
+                                onClick={(ev) => onDeleteBoard(ev, board._id , boards)}>
+                            </icon>}
                         </div>
                     </div>
                 </Link >

@@ -1,0 +1,104 @@
+
+.constructors-preview{
+    width : 80% ;
+    margin-top : 20px;
+    display: flex;
+    margin-inline : auto;
+    text-align : center;
+    .constructors-table{
+        border-radius: 3px;
+        display: grid;
+        line-height: 20px;
+    }
+
+    .constructor-preview{
+        background: #fff;
+        line-height: 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        box-shadow: 1.5px 2px 2px -1px #091e4240, inset 0px 1px 0 1px #091e4214;
+        line-height:40px;
+        .trash-icon{
+            // color : blue;
+            opacity: 0.0 ;
+            position: absolute;
+            right: 12px;
+            line-height: 40px;
+            top: 12px;
+        }
+        &:hover{
+            cursor: pointer;
+            filter: brightness(95%);
+            .trash-icon{
+                opacity: 1 ;
+            }
+
+        }
+       
+        
+    }
+
+    .add-cons-btn{
+        margin-top : 16px;
+    }
+}
+
+.constructors-logo{
+    padding: 40px 0;
+    svg {
+        height: 45px;
+        width: 45px;
+        margin-inline-end: 16px;
+    }
+
+    h1 {
+        font-size: 58px;
+        font-family: SourceSans-Bold;
+    }
+}
+
+.add-constructor-container{
+    overflow-y: scroll;
+    top: 0;
+    margin: auto;
+    padding: 48px;
+    width: 100%;
+    z-index: 4;
+    position: fixed;
+
+    &::after {
+        content: "";
+        display: block;
+        height: 50px;
+    }
+
+    .card-details {
+        color: $clr7;
+        background-color: $bgClr1;
+        border-radius: $borderRad1;
+        max-width: 768px;
+        position: absolute;
+        z-index: 4;
+        top: 48px;
+        right: 0;
+        left: 0;
+        margin: 0 8px;
+
+        .close-window-btn {
+            cursor: pointer;
+            color: $clr7;
+            background-color: transparent;
+            border-radius: 50%;
+            border: none;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 4px;
+            right: 4px;
+            z-index: 10;
+            transition: background-color 85ms, color 85ms;
+        }
+    }
+
+
+}

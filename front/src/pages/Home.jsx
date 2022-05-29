@@ -16,12 +16,12 @@ export class Home extends Component {
                                 <p>Collaborate, manage projects, and reach new productivity peaks. The way your team works is unique — accomplish it all with BuildApp.</p>
                                 <Link to="/workspace" className="clean-link">Get started!</Link>
                             </div>
-                            <div className="hero-img">
-                                <img src={heroImgUrl} alt="" />
+                            <div className="hero-img" >
+                                <img src={heroImgUrl} alt="" style={{background:"center center / cover" }}/>
                             </div>
                         </section>
                     </div>
-                    <section className="product">
+                    {/* <section className="product">
                         <div className="product-info">
                             <h2>It's more than work. It's a way of working together.</h2>
                             <p>Start with a BuildApp board, lists, and cards. Customize and expand with more features as your teamwork grows. Manage projects, organize tasks, and build team spirit—all in one place.</p>
@@ -30,7 +30,7 @@ export class Home extends Component {
                         <div>
                             <img src={productImgUrl} alt="" />
                         </div>
-                    </section>
+                    </section> */}
                 </main>
             </div>
         )

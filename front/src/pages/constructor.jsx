@@ -1,165 +1,111 @@
-import React, { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+// import { onSaveBoard } from "../store/actions/board.actions"
+import { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
-import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo.svg'
-import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
-import { onLogin, onSignup } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-
-export class _Constructor extends Component {
+import { Link } from 'react-router-dom'
+import { PopoverMemberPreview } from '../cmps/Popover/PopoverMemberPreview'
+import { constructorService } from '../services/constructor.service'
+import { withRouter , Route, BrowserRouter as Router } from 'react-router-dom'
+import { AddConstructor} from '../cmps/AddConstructor'
+class _Constructor extends Component {
 
     state = {
-        userInfo: {
-            fullname: '',
-            username: '',
-            password: '',
-            userType: '',
-            imgUrl: ''
-        },
-        credentials: {
-            username: '',
-            password: ''
-        },
-        pageMode: 'constructor'
+        constructorTxt: '',
+        constructors: [],
+
     }
 
-    componentDidMount() {
-        const { loggedinUser } = this.props
-        console.log(loggedinUser , "logggggged")
-        // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
-        // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
-        console.log("path " , this.props.location.pathname )
-        const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // console.log(loggedinUser , "loggedinUser")
-        // const pageMode =  loggedinUser ? 'signup' : 'login'
-        this.setState({ pageMode })
+    async componentDidMount() {
+        const constructors = await constructorService.getConstructors()
+        this.setState({ constructors })
     }
 
-    componentDidUpdate() {
-        const { loggedInUser } = this.props
-        const { pageMode } = this.state
-        console.log('pageMoode' , pageMode)
-        console.log(loggedInUser ,"logg")
-        // if ( loggedInUser) this.props.history.push('/workspace')
+    handleChange = ({ target }) => {
+
+        this.setState({ constructorTxt: target.value })
     }
 
-    validate = (values) => {
-        const errors = {}
-        if (!values.username) {
-            errors.username = 'Required'
-        } else if (values.username.length < 6) {
-            errors.username = 'Please use at least 6 characters'
-        }
-        if (values.password.length < 4) {
-            errors.password = 'Password too short'
-        }
-        if (!values.fullname) {
-            errors.fullname = 'Required'
-        } else if (values.fullname.length < 4) {
-            errors.fullname = 'Please use at least 4 characters'
-        }
-        return errors
+    removeConstructor(ev , constructorId){
+        ev.preventDefault()
+        let {constructors} = this.state
+        let newConstructors = []
+        newConstructors = constructors.filter(constructor => constructor._id !== constructorId)
+        console.log(constructors.length)
+        constructorService.deleteConstructors(constructorId)
+        constructors = newConstructors
+        this.setState({constructors})
+        // loadBoards(boards)
     }
 
-    onSubmit = (values) => {
-        const { pageMode } = this.state
-        const { onLogin, onSignup } = this.props
-        if(pageMode === 'login') {
-            onLogin(values)
-            this.componentDidUpdate()
-            this.props.history.push('/workspace')
-        } else{
-            onSignup(values)
-            this.props.history.push('/workspace')
-        }
+    onGoBack(){
+        // const history = useHistory()
+        console.log( "history")
     }
 
-    onSuccessGoogle = (res) => {
-        const { tokenId } = res
-        const { onGoogleLogin } = this.props
-        onGoogleLogin(tokenId)
-    }
-
-    onFailureGoogle = (res) => {
-        console.log('Login with google failed', res)
+    get filteredConstructors() {
+        const { constructors, constructorTxt } = this.state
+        const regex = new RegExp(constructorTxt, 'i')
+        return constructors.filter(constructor => regex.test(constructor.fullname)).slice(0, 10)
     }
 
 
     render() {
-        const { pageMode, credentials, userInfo } = this.state
-        const { loginErr , loggedInUser } = this.props
-        if (!pageMode) return ''
-        return (<section className="login-signup-container">
-            <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
-                <LoginSignupLogo />
-                <h1>BuildApp</h1>
-            </div>
-            </Link>
-      
-        
-            {pageMode === 'signup' &&
-                <div className="login-signup flex column ">
-                    <h3>Add new constructor</h3>
-                    <Formik initialValues={userInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
-                        <Form className="flex column">
-                            <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
-                            <ErrorMessage name="fullname" component="p" />
-                            <Field type="username" placeholder="Enter phone number" name="username" />
-                            <ErrorMessage name="username" component="p" />
-
-
-
-                            <Field name="userType" as="select" placeholder="Select type of user"
-                                //component="select"
-                                value = {this.value}
-                                className = "LoginSelectBar"
-                            >
-                                <option defaultValue disabled>Select field </option>
-                                <option value = "air">מיזוג</option>
-                                <option value = "electricity">חשמלאי</option>
-                                <option value = "plumbing">אינסטלציה</option>
-                                <option value = "construction">בינוי</option>
+        // const constructors = [{_id:"12j34ljk" , userName : "jhon"},{_id:"12jgdhfgh4ljk" , userName : "jhfdgon"}]
+        const {constructors} = this.state
+        const {loggedInUser , board} = this.props
+        return (
+            <Router>
+                <section>
+                    <Link onClick={this.onGoBack} to="/workspace" className="clean-link"><div className="constructors-logo flex align-center justify-center">
+                        <LoginSignupLogo />
+                        <h1>BuildApp</h1>
+                    </div>
+                    </Link>
+                    <div className="constructors-preview flex column">
+                        <input type="text" autoFocus className="pop-over-input" onChange={this.handleChange} />
+                        <div className="constructors-table">
+                            <div className="constructors-header constructor-preview" >
+                                <div><h3>Name</h3></div>
+                                <div><h3>Phone Number</h3></div>
+                                <div><h3>Field</h3></div>
+                            </div>
+                            {this.filteredConstructors.map(constructor => <div className="constructor-preview" key={constructor.name}>
+                                <div>{constructor.fullname}</div>
+                                <div>{constructor.phone ? constructor.phone : 'number invalid' }</div>
+                                <div>{constructor.field}</div>
+                                <icon onClick={(ev) => this.removeConstructor(ev , constructor._id)}
+                            class={`fas fa-archive icon-sm trash-icon`}>
+                            </icon>
+                                </div>
+                                )}
                                 
-                                
-                                
-                            </Field>
+                        </div>
+                     {/* onClick={(ev) => onDeleteBoard(ev, board._id , boards)}> */}
 
-                            <button type="submit" className="primary-btn login-signup-btn">Add</button>
-                        </Form>
-                    </Formik>
-                    <hr />
-                    <Link to="/login">Already have an account ? Log In</Link>
-                </div>}
-            <div className="left-logo">
-                <LogoLeft />
-            </div>
-            <div className="right-logo">
-                <LogoRight />
-            </div>
-        </section>
-        )
-    }
+                        <Link to="/constructor/add" className="primary-btn add-cons-btn" >Add new constructor</Link>
+                        {/* <button className="primary-btn">Send invitation</button> */}
+                    </div>
+                </section>
+                <section className="nested-routes">
+                            <Route path="/constructor/add" component={AddConstructor} />
+                        </section>
+        </Router>
+         ) }
+
+
+
+
 }
-
 function mapStateToProps(state) {
     return {
-        loggedInUser: state.appModule.loggedInUser,
-        loginErr: state.appModule.loginErr
+        board: state.boardModule.board,
+        loggedInUser: state.boardModule.loggedInUser
     }
 }
 
-
 const mapDispatchToProps = {
-    onLogin,
-    onSignup,
+    // onSaveBoard
 }
 
-export const Constructor = connect(mapStateToProps, mapDispatchToProps)(_Constructor)
-
-
+const _ConstructorWithRouter = withRouter(_Constructor)
+export const Constructor = connect(mapStateToProps, mapDispatchToProps)(_ConstructorWithRouter)
