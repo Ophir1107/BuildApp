@@ -70,6 +70,24 @@ class _Dashboard extends Component {
         return dueSoonCardsCount
     }
 
+
+    get criticalTasksCount() {
+        const { lists } = this.props.board
+        const criticalTasksCount = lists.reduce((acc, list) => {
+            const criticalTasksCountList = list.cards.reduce((acc, card) => {
+                if (card.urgency) {
+                    acc++
+                }
+                return acc
+            }, 0)
+            acc += criticalTasksCountList
+            return acc
+        }, 0)
+        return criticalTasksCount
+    }
+
+
+
     get cardsPerMemberMap() {
         const { members } = this.props.board
         const allCards = this.allCards
@@ -139,7 +157,7 @@ class _Dashboard extends Component {
     }
     get overduePercentage() {
 
-        return +(((this.overdueCardsCount) / this.cardsCount * 100).toFixed(1))
+        return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
     }
 
     goBackToBoard = () => {
@@ -160,7 +178,7 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
 
-                                <h3 className="flex align-center"><AssignmentIcon />כל המשימות</h3>
+                                <h3 className="flex align-center"><AssignmentIcon /> סה"כ משימות וריג'קטים </h3>
                                 <h4>{this.cardsCount}</h4>
                             </div>
                             <ChartIcon />
@@ -168,7 +186,7 @@ class _Dashboard extends Component {
 
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
-                                <h3 className="flex align-center">  <QueryBuilderIcon />דחופות</h3>
+                                <h3 className="flex align-center">  <QueryBuilderIcon /> מסתיימות בקרוב </h3>
                                 <h4>{this.dueSoonCardsCount}</h4>
                             </div>
                             <CircularProgressbar value={this.dueSoonPercentage} text={`${this.dueSoonPercentage}%`}
@@ -178,7 +196,7 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
 
-                                <h3 className="flex align-center"><ExclamationIcon />בנתיב הקריטי</h3>
+                                <h3 className="flex align-center"><ExclamationIcon />באיחור </h3>
                                 <h4>{this.overdueCardsCount}</h4>
                             </div>
                             <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
