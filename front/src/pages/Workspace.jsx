@@ -1,4 +1,3 @@
- 
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { loadBoards, onSaveBoard, saveBoards } from '../store/actions/board.actions'
@@ -6,6 +5,8 @@ import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
 import { boardService } from '../services/board.service'
+import { Route } from 'react-router-dom'
+import { AdminDashboard } from './AdminDashboard'
 
 class _Workspace extends Component {
     state = {
@@ -24,13 +25,6 @@ class _Workspace extends Component {
     }
 
 
-
-    onRemoveBoard = (ev, boardId) => {
-        ev.preventDefault()
-        const { boards, removeBoard } = this.props
-        const board = boards.find(board => board._id === boardId)
-        deleteBoard(boardId)
-    }
 
     getUserBoards(){
         const {loggedInUser , boards} = this.props
@@ -71,11 +65,16 @@ class _Workspace extends Component {
         // this.setState({constructors})
     }
 
+
+
+
+
     render() { 
         // let boards = this.getUserBoards()
         const {loggedInUser} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
+                <Route path="/workspace/dashboard" component={AdminDashboard} />
                 <div className="boards-wrapper flex column">
                     <div className="boards-preview flex column">
                         <div className="preview-title flex align-center">

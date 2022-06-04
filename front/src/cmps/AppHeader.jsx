@@ -3,12 +3,13 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { socketService } from "../services/socket.service";
 import { openPopover, onLogout, closePopover } from '../store/actions/app.actions'
-import { ReactComponent as HomeIcon } from '../assets/img/icons/home.svg'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
 import { ReactComponent as BellIcon } from '../assets/img/icons/notific-bell.svg'
 import { ProfileAvatar } from './ProfileAvatar'
 import { ElementOverlay } from "./Popover/ElementOverlay";
+import { ReactComponent as HomeIcon } from '../assets/img/icons/home.svg'
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 class _AppHeader extends Component {
 
@@ -68,6 +69,10 @@ class _AppHeader extends Component {
 
                     <Link to="/workspace" className="btn-header">
                         <HomeIcon />
+                    </Link>
+                    <Link to={`/workspace/dashboard`} className="btn-header">
+                        <BarChartIcon />
+                        {/* <span className="wide-layout">Dashboard</span> */}
                     </Link>
                     {/* <button className="boards-btn btn-header flex" onClick={(ev) => this.onOpenPopover(ev, 'BOARDS_SEARCH')}>
                         <BoardIcon />
