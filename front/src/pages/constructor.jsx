@@ -57,7 +57,7 @@ class _Constructor extends Component {
             <Router>
                 <section>
                     <Link onClick={this.onGoBack} to="/workspace" className="clean-link"><div className="constructors-logo flex align-center justify-center">
-                        <LoginSignupLogo />
+                        {/* <LoginSignupLogo /> */}
                         <h1>BuildApp</h1>
                     </div>
                     </Link>

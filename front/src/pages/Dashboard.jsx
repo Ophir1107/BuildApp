@@ -139,7 +139,7 @@ class _Dashboard extends Component {
     }
     get overduePercentage() {
 
-        return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
+        return +(((this.overdueCardsCount) / this.cardsCount * 100).toFixed(1))
     }
 
     goBackToBoard = () => {
@@ -160,7 +160,7 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
 
-                                <h3 className="flex align-center"><AssignmentIcon />All Tasks </h3>
+                                <h3 className="flex align-center"><AssignmentIcon />כל המשימות</h3>
                                 <h4>{this.cardsCount}</h4>
                             </div>
                             <ChartIcon />
@@ -168,7 +168,7 @@ class _Dashboard extends Component {
 
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
-                                <h3 className="flex align-center">  <QueryBuilderIcon /> Due Soon  </h3>
+                                <h3 className="flex align-center">  <QueryBuilderIcon />דחופות</h3>
                                 <h4>{this.dueSoonCardsCount}</h4>
                             </div>
                             <CircularProgressbar value={this.dueSoonPercentage} text={`${this.dueSoonPercentage}%`}
@@ -178,7 +178,7 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
 
-                                <h3 className="flex align-center"><ExclamationIcon />Overdue </h3>
+                                <h3 className="flex align-center"><ExclamationIcon />בנתיב הקריטי</h3>
                                 <h4>{this.overdueCardsCount}</h4>
                             </div>
                             <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}

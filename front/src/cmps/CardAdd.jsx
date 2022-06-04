@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { TextareaAutosize } from '@material-ui/core';
+import FmdBadIcon from '@mui/icons-material/FmdBad';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { utilsService } from '../services/utils.service'
 import { connect } from 'react-redux'
@@ -7,13 +8,15 @@ import { connect } from 'react-redux'
 export class _CardAdd extends Component {
 
     state = {
-        titleTxt: ''
+        titleTxt: '' ,
+        isUrgent: false ,
+        isNew : true ,
     }
 
     componentDidMount() {
         const { loggedInUser } = this.props
     }
-
+    
     handleChange = (ev) => {
         const { value } = ev.target;
         if (ev.key === 'Enter') {
@@ -23,15 +26,15 @@ export class _CardAdd extends Component {
         }
         this.setState({ titleTxt: value });
     }
-
+    
     onAddCard = () => {
-        const { titleTxt } = this.state;
+        const { titleTxt , isUrgent, isNew } = this.state;
         if (!titleTxt) {
             this.textArea.focus();
             return;
         }
 
-        const { board, currList, onSaveBoard } = this.props;
+        const { board, currList, onSaveBoard , loggedInUser} = this.props;
         const listIdx = board.lists.findIndex(list => list.id === currList.id);
 
         const card = {
@@ -41,32 +44,41 @@ export class _CardAdd extends Component {
             comments: [],
             checklists: [],
             members: [],
-            byMember: 'loggedinUser', 
+            byMember: loggedInUser, 
             labelIds: [],
             createdAt: Date.now(),
             startDate: 0,
             dueDate: 0,
             attachs: [],
             isReject: false,
+            isUrgent: isUrgent,
+            isNew: isNew ,
             style: {
-                coverMode: '',
+                coverMode: (isUrgent) ? 'full':'',
                 bgColor: ''
             }
         }
-
         board.lists[listIdx].cards.push(card)
         onSaveBoard(board)
         this.setState({ titleTxt: '' }, () => {
             this.textArea.focus()
         })
     }
+    
+    onToggleUrgentTask = ()=>{ 
+        const isUrgent = this.state.isUrgent
+        this.setState({isUrgent : !isUrgent})
+    }
 
     render() {
-        const { titleTxt } = this.state
+        const { titleTxt , isUrgent} = this.state
         const { toggleCardAdd , loggedInUser } = this.props;
         return (
             <div className="card-add">
-                <TextareaAutosize className="card-add-input" ref={(textArea) => this.textArea = textArea} value={titleTxt} autoFocus onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="Enter a title for this card..." aria-label="empty textarea" />
+                <div className="card-add-input-container">
+                    <TextareaAutosize className="card-add-input" ref={(textArea) => this.textArea = textArea} value={titleTxt} autoFocus onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="הוסף כותרת למשימה" aria-label="empty textarea" />
+                    <FmdBadIcon className="card-preview-urgent-btn" style={{color: isUrgent ? '#EB5A46' : '#6b778c'}} onClick={this.onToggleUrgentTask}/>
+                </div>
                 {loggedInUser.userType !== 'client' && (<div>
                     <button className="primary-btn" onMouseDown={this.onAddCard}>Add Task</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />

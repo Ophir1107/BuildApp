@@ -5,7 +5,7 @@ import { ColorPalette } from "../ColorPalette";
 import { closePopover } from "../../store/actions/app.actions";
 import { onSaveBoard } from "../../store/actions/board.actions";
 import { withRouter } from 'react-router-dom';
-
+import { utilsService } from '../../services/utils.service'
 class _PopoverCreateBoard extends Component {
 
     state = {
@@ -13,7 +13,7 @@ class _PopoverCreateBoard extends Component {
         color: ''
     }
     componentDidMount() {
-        this.setState({ color: '#0079bf' })
+        this.setState({ color: '#718c9c' })
     }
 
     handleChange = ({ target }) => {
@@ -22,13 +22,32 @@ class _PopoverCreateBoard extends Component {
     }
 
     onCreateBoard = async () => {
+        console.log("im creating new board ")
         const { title, color } = this.state
         const { loggedInUser, onSaveBoard, closePopover } = this.props
         const boardToSave = {
             title,
             background: color,
-            createdBy: loggedInUser
+            createdBy: loggedInUser,
+            lists : [{
+                id: utilsService.makeId(),
+                title: 'מיזוג אוויר',
+                cards: []
+            },{
+                id: utilsService.makeId(),
+                title: 'בינוי',
+                cards: []
+            },{
+                id: utilsService.makeId(),
+                title: 'חשמל',
+                cards: []
+            },{
+                id: utilsService.makeId(),
+                title: 'אינסטלציה',
+                cards: []
+            }]
         }
+        console.log(boardToSave , "boardToSave")
         try {
             await onSaveBoard(boardToSave)
             if (this.props.board) this.props.history.push(`/board/${this.props.board._id}`)

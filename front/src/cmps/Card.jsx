@@ -66,9 +66,8 @@ class _Card extends Component {
     }
 
     get cardStyles() {
-        const { isEditMode } = this.props
+        const { card, isEditMode , loggedInUser} = this.props
         const { coverMode, bgColor, bgImgUrl } = this.props.card.style
-
         if (coverMode === 'full' && bgImgUrl && !isEditMode) return {
             color: '#fff',
             backgroundImage: `url(${bgImgUrl})`,
@@ -77,11 +76,22 @@ class _Card extends Component {
             minHeight: '130px'
         }
         else if (coverMode === 'full' && !isEditMode) return {
-            backgroundColor: bgColor,
+            backgroundColor: card.isUrgent ? '#EB5A46': bgColor,
             minHeight: '56px',
             borderTopLeftRadius: '3px',
             borderTopRightRadius: '3px'
         }
+        else if (card.isNew && !card.isUrgent && loggedInUser.userType === 'manager' && 
+        loggedInUser._id !== card.byMember._id) return{ backgroundColor: '#FCB310' }
+
+        else if (card.isNew && card.isUrgent && loggedInUser.userType === 'manager' && 
+        loggedInUser._id !== card.byMember._id) return{ backgroundColor: '#FCB310' }
+
+        // else if (!card.isNew && !card.isUrgent && (bgColor === '#FCB310' || bgColor === '#EB5A46')){
+        //     coverMode === 'half'
+        //     return {}
+        // }
+    
         if (coverMode === 'header' && bgImgUrl) return {};
         if (coverMode === 'header' && !isEditMode) return {};
         if (isEditMode && !coverMode) return { borderRadius: '3px' }
@@ -90,8 +100,8 @@ class _Card extends Component {
     }
 
     get getCardHeaderStyles() {
-        const { isEditMode } = this.props
-        const { coverMode, bgColor, bgImgUrl } = this.props.card.style
+        const { isEditMode  , loggedInUser , card} = this.props
+        const { coverMode, bgColor, bgImgUrl , isNew} = this.props.card.style
         if (coverMode === 'full' && bgImgUrl && isEditMode) return {
             backgroundImage: `url(${bgImgUrl})`,
             minHeight: '130px'
@@ -100,14 +110,15 @@ class _Card extends Component {
             backgroundImage: `url(${bgImgUrl})`,
             minHeight: '130px'
         }
-        if (coverMode === 'full' || coverMode === 'header') return { backgroundColor: bgColor }
-        else return {}
+        if (coverMode === 'full' || coverMode === 'header'  ) return { backgroundColor: bgColor ? bgColor : 'white' }
+        else return {backgroundColor : '#'}
     }
 
     render() {
-
+        
         const { isEditMode, card, board, handleChange, cardTitle } = this.props;
         const { coverMode } = card.style;
+        console.log( card.isNew , card.isUrgent , card.bgColor , "card.isNew , card.isUrgent , bgCOlor")
 
         return (
             <div className="card-preview-container" ref={(div) => { this.cardContainer = div }} onContextMenu={this.onOpenCardEdit}>
@@ -156,9 +167,15 @@ class _Card extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        loggedInUser: state.appModule.loggedInUser
+    }
+}
+
 const mapDispatchToProps = {
     onSaveBoard,
     openPopover
 }
 
-export const Card = connect(null, mapDispatchToProps)(_Card)
+export const Card = connect(mapStateToProps, mapDispatchToProps)(_Card)
