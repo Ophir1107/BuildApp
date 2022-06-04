@@ -98,7 +98,6 @@ class _BoardPage extends React.Component {
         const { board } = this.props
         let boardToEdit = { ...board }
         const { lists } = boardToEdit
-        // console.log('lists:', lists, 'board:', board);
         if (!destination) return
         const droppableIdStart = source.droppableId
         const droppableIdEnd = destination.droppableId
@@ -149,6 +148,7 @@ class _BoardPage extends React.Component {
         let { list } = this.state
         if (!board) return <div className="trello-loader"> <TrelloLoader /> </div>
 
+        console.log(board.lists , "the lists in this board")
         return (
             <Router>
                 <DragDropContext onDragEnd={this.onDragEnd}>

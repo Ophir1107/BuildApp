@@ -3,6 +3,9 @@ import Axios from 'axios'
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
     : '//localhost:3030/api/'
+const PREDICTOR_URL = process.env.NODE_ENV === 'production'
+? '/api/'
+: '//localhost:3031/api/'
 
 
 var axios = Axios.create({
@@ -14,7 +17,6 @@ export const httpService = {
         return ajax(endpoint, 'GET', data)
     },
     post(endpoint, data) {
-        console.log("sdgdfhgdhfgh" , data)
         return ajax(endpoint, 'POST', data)
     },
     put(endpoint, data) {
@@ -26,20 +28,22 @@ export const httpService = {
 }
 
 async function ajax(endpoint, method = 'GET', data = null) {
+    console.log(endpoint , method, data , "endpoint , method, data")
     try {
         const res = await axios({
-            url: `${BASE_URL}${endpoint}`,
+            url: (endpoint.includes('url'))? `${PREDICTOR_URL}${endpoint}` :
+            `${BASE_URL}${endpoint}`,
             method,
             data,
             params: (method === 'GET') ? data : null
+            // params: (method === 'GET') ? data : null
         })
+        
+        console.log(`${BASE_URL}${endpoint}` , "url")
+        console.log(res.data , "res.data from http")
         return res.data
     } catch (err) {
         if(endpoint !== 'auth/signup'){
-
-            console.log(data,"data before error")
-            console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: ${data}`)
-            console.dir(err)
             if (err.response && err.response.status === 401) {
                 // Depends on routing startegy - hash or history
                 window.location.assign('/#/login')
@@ -47,6 +51,7 @@ async function ajax(endpoint, method = 'GET', data = null) {
                 //     router.push('/login')
                 // }
             }
+            console.log(err , "err bottom")
             throw err
         }
     }

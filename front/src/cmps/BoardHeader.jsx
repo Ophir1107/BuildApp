@@ -133,6 +133,11 @@ class _BoardHeader extends Component {
                         <span className="wide-layout">Show Menu</span>
                         <ElementOverlay />
                     </button>
+                    <button className="board-btn" onClick={(ev) => this.onOpenPopover(ev, 'ATTACH')}>
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        {/* <span className="wide-layout">Show Menu</span> */}
+                        <ElementOverlay />
+                    </button>
                 </div>
             </div>
         )

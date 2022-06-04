@@ -24,7 +24,6 @@ async function login(credentials) {
 
 async function googleLogin(tokenId) {
     try {
-        console.log(tokenId, "this is the tokenId")
         const user = await httpService.post('auth/googlelogin', { tokenId })
         if (user) return _saveLocalUser(user)
     } catch (err) {
@@ -51,7 +50,6 @@ async function logout(user) {
 }
 
 async function updateUser(user) {
-    console.log(user ,'update user user.service')
     try {
         await httpService.put(`user/${user.id}`, user)
     } catch (err) {
@@ -60,15 +58,12 @@ async function updateUser(user) {
 }
 
 function _saveLocalUser(user) {
-    console.log(user ,'_saveLocal user user.service')
-
     sessionStorage.setItem('loggedinUser', JSON.stringify(user))
     return user
 }
 
 function getLoggedinUser() {
     let user = JSON.parse(sessionStorage.getItem('loggedinUser' || null));
-    console.log("user from gelLogged " , user)
     return user
 }
 

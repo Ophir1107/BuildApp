@@ -1,18 +1,33 @@
 import { Component } from 'react'
 import { cloudinaryService } from '../services/cloudinary.service'
+import { predictService } from '../services/predict.service'
 export class FileUpload extends Component {
   state = {
     fileUrl: null,
     isUploading: false,
   }
   uploadFile = async (ev) => {
-    this.setState({ isUploading: true })
+    console.log('file from file upload' , ev.target.files[0])
 
+    // try{
+    //   const predictLabel = await predictService.onPredict(ev.target.files[0].name)
+    //   console.log('predictLabel' , predictLabel)
+
+    // }
+    // catch(err) {
+    //   console.log('error', err)
+    // }
+
+
+    
     try{
       const {secure_url} = await cloudinaryService.uploadFile(ev)
+      const predictLabel = predictService.onPredict(secure_url)
+      console.log('predictLabel' , predictLabel)
       this.props.onFileUpload(secure_url)
     }catch (err){
-      console.log('error in getting fileUrl From Cloudinary',err)
+      console.log(err , "err from upload error") 
+      throw err
     }
     this.setState({ isUploading: false})
   }

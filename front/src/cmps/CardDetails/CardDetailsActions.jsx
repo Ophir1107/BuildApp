@@ -12,10 +12,18 @@ import { boardService } from '../../services/board.service'
 import { ElementOverlay } from '../Popover/ElementOverlay'
 import { ReactComponent as MemberIcon } from '../../assets/img/icons/person.svg'
 import { socketService } from '../../services/socket.service'
-import * as tf from '@tensorflow/tfjs'
+import FmdBadIcon from '@mui/icons-material/FmdBad';
 
 
 class _CardDetailsActions extends Component {
+    state = {
+        isUrgent: '' 
+    }
+
+    componentDidMount() {
+        const {isUrgent} = this.props.card
+        this.setState({isUrgent})
+    }
 
     addFile = (fileUrl) => {
         const { card, onSaveBoard, closePopover, board } = this.props
@@ -42,7 +50,7 @@ class _CardDetailsActions extends Component {
         const { card, loggedInUser, onSaveCardFromActions, onSaveBoard, board } = this.props
         card.members.push(loggedInUser)
         onSaveCardFromActions(card)
-        const savedActivity = boardService.createActivity('joined', '', card)
+        const savedActivity = boardService.createActivity('הצטרף', '', card)
         socketService.emit('app newActivity', savedActivity)
         board.activities.unshift(savedActivity)
         onSaveBoard(board)
@@ -81,24 +89,48 @@ class _CardDetailsActions extends Component {
         this.props.openPopover(PopoverName, elPos, props)
     }
 
+    onToggleUrgentTask = (ev)=>{ 
+        const {card , board , onSaveCardFromActions} = this.props
+        card.isUrgent = !card.isUrgent
+
+        console.log("card.isUrgent" , card.isUrgent)
+        onSaveCardFromActions(card)
+        const savedActivity = boardService.createActivity('סימן משימה זו כדחופה', '', card)
+        socketService.emit('app newActivity', savedActivity)
+        board.activities.unshift(savedActivity)
+        const updatedBoard = boardService.updateCardInBoard(board, card)
+        onSaveBoard(updatedBoard)
+        this.setState({isUrgent : !card.isUrgent})
+    }
+
+    setCover(){
+        const {card , board} = this.props
+        card.isUrgent ? card.style.coverMode = 'full' : card.style.coverMode = ''
+        card.isUrgent ? card.style.bgColor = '#EB5A46' :  card.style.bgColor = '' 
+        const updatedBoard = boardService.updateCardInBoard(board, card)
+        onSaveBoard(updatedBoard)
+    }
+
     render() {
         const { card } = this.props
+        this.setCover()
+        console.log(card.isUrgent , "card is urgentt" , card.isNew , "card new? ")
         return <div className="details-actions-wrapper flex">
-            {!this.isUserMember() && <div className="suggested flex column"> <h4>SUGGESTED</h4>
+            {/* {!this.isUserMember() && <div className="suggested flex column"> <h4>SUGGESTED</h4>
                 <button className="secondary-btn actions-btn "
                     onClick={this.joinCard}>
                     <div className="actions-btn-content flex align-center">
                         <MemberIcon />
                         <span>Join</span>
                     </div>
-                </button></div>}
+                </button></div>} */}
             <div className="add-section flex column">
                 <h4>ADD TO CARD</h4>
                 <button className="secondary-btn actions-btn "
                     onClick={(ev) => this.onOpenPopover(ev, 'MEMBERS')}>
                     <div className="actions-btn-content flex align-center">
                         <MemberIcon />
-                        <span>Members</span>
+                        <span>אנשי צוות</span>
                     </div>
                     <ElementOverlay />
                 </button>
@@ -108,7 +140,7 @@ class _CardDetailsActions extends Component {
                     onClick={(ev) => this.onOpenPopover(ev, 'LABELS')}>
                     <div className="actions-btn-content flex align-center">
                         <LabelIcon />
-                        <span>Labels</span>
+                        <span>תוויות</span>
                     </div>
                     <ElementOverlay />
                 </button>
@@ -118,7 +150,7 @@ class _CardDetailsActions extends Component {
                     onClick={(ev) => this.onOpenPopover(ev, 'CHECKLIST')}>
                     <div className="actions-btn-content flex align-center">
                         <CheckboxIcon />
-                        <span>Checklist</span>
+                        <span>תתי משימות</span>
                     </div>
                     <ElementOverlay />
                 </button>
@@ -128,7 +160,7 @@ class _CardDetailsActions extends Component {
                     onClick={(ev) => this.onOpenPopover(ev, 'DATE')}>
                     <div className="actions-btn-content flex align-center">
                         <i className="far fa-clock icon-sm "></i>
-                        <span>Date</span>
+                        <span>תאריך</span>
                     </div>
                     <ElementOverlay />
                 </button>
@@ -137,7 +169,7 @@ class _CardDetailsActions extends Component {
                     onClick={(ev) => this.onOpenPopover(ev, 'ATTACH')}>
                     <div className="actions-btn-content flex align-center">
                         <i className="fas fa-paperclip icon-sm"></i>
-                        <span>Attachment</span>
+                        <span>מסמכים</span>
                     </div>
                     <ElementOverlay />
                 </button>
@@ -147,40 +179,39 @@ class _CardDetailsActions extends Component {
                     onClick={(ev) => this.onOpenPopover(ev, 'COVER')}>
                     <div className="actions-btn-content flex align-center">
                         <CoverIcon />
-                        <span>Cover</span>
+                        <span>רקע</span>
                     </div>
                     <ElementOverlay />
                 </button>
-
-
             </div>
+
+            
             <div className="actions-section flex column">
-                <h4>ACTIONS</h4>
-                <button className="secondary-btn actions-btn"
-                    onClick={(ev) => this.onOpenPopover(ev, 'MOVE')}>
+                <h4>פעולות</h4>
+                <button className="secondary-btn actions-btn" onClick={(ev) =>this.onToggleUrgentTask(ev)}>
                     <div className="actions-btn-content flex align-center">
-                        <i className="fas fa-arrow-right icon-sm"></i>
-                        <span>Move</span>
+                        <FmdBadIcon className="card-preview-urgent-btn actions-btn-content " style={{color: card.isUrgent ? '#EB5A46' : '#6b778c'}} />
+                        <span>משימה דחופה</span>
                     </div>
                     <ElementOverlay />
                 </button>
+                
 
-
-                <button className="secondary-btn actions-btn"
+                {/* <button className="secondary-btn actions-btn"
                     onClick={(ev) => this.onOpenPopover(ev, 'COPY')}>
                     <div className="actions-btn-content flex align-center">
                         <CopyIcon />
                         <span>Copy</span>
                     </div>
                     <ElementOverlay />
-                </button>
+                </button> */}
 
                 {!card.isArchived ?
                     <button className="secondary-btn actions-btn"
                         onClick={this.toggleArchive}>
                         <div className="actions-btn-content flex align-center">
                             <i className="fas fa-archive icon-sm"></i>
-                            <span>Archive</span>
+                            <span>מחק</span>
                         </div>
                     </button>
                     :
@@ -189,13 +220,13 @@ class _CardDetailsActions extends Component {
                             onClick={this.toggleArchive} >
                             <div className="actions-btn-content flex align-center">
                                 <i className="fas fa-undo icon-sm"></i>
-                                <span>Return To Board</span>
+                                <span>שחזר</span>
                             </div>
                         </button>
                         <button className="secondary-btn actions-btn danger-btn" onClick={this.removeCard} >
                             <div className="actions-btn-content  flex align-center">
                                 <MinusIcon className="remove" />
-                                <span>Delete</span>
+                                <span>מחק</span>
                             </div>
                         </button>
                     </>}

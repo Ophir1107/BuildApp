@@ -30,11 +30,13 @@ class _CardDetails extends Component {
     componentDidMount() {
         // SETTING LIST AND CARD FROM PARAMS
         const { board: { lists }, closePopover } = this.props
+        const { board , loggedInUser} = this.props
         const { cardId, listId } = this.props.match.params
         closePopover()
         const list = lists.find(list => list.id === listId)
         const { cards } = list;
-        const card = cards.find(card => card.id === cardId)
+        let card = cards.find(currCard => currCard.id === cardId)
+        if (card.isNew && loggedInUser.userType === 'manager') card.isNew = false 
         this.setState({ card, list })
     }
 
@@ -108,6 +110,9 @@ class _CardDetails extends Component {
 
     goBackToBoard = () => {
         const { board } = this.props
+        let {card} = this.state
+        const updatedBoard = boardService.updateCardInBoard(board, card)
+        this.props.onSaveBoard(updatedBoard)
         this.props.closePopover()
         this.props.history.push(`/board/${board._id}`)
     }

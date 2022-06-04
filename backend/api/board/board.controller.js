@@ -27,14 +27,16 @@ async function getBoard(req, res) {
 async function addBoard(req, res) {
     try {
         const board = req.body
-       const  savedBoard = await boardService.save(board)
+        console.log(req.body , "board in coard controller")
+        const savedBoard = await boardService.save(board)
         res.send(savedBoard)
     } catch (err) {
-        console.log(err)
         logger.error('Failed to add board', err)
         res.status(500).send({ err: 'Failed to add board' })
     }
 }
+
+
 
 async function updateBoard(req, res) {
     try {
@@ -42,7 +44,6 @@ async function updateBoard(req, res) {
         savedBoard = await boardService.save(board)
         res.send(savedBoard)
     } catch (err) {
-        console.log(err)
         logger.error('Failed to update board', err)
         res.status(500).send({ err: 'Failed to update board' })
     }
@@ -50,6 +51,7 @@ async function updateBoard(req, res) {
 
 async function deleteBoard(req, res) {
     try {
+        console.log(req ,"hello")
         await boardService.remove(req.params.id)
         res.send({ msg: 'Board deleted successfully' })
     } catch (err) {

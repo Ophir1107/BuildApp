@@ -34,17 +34,16 @@ function _PopoverProfile({
                         <Link to="/workspace" className="clean-link" onClick={closePopover}>{member.fullname}</Link>
                         <p>@{member.username.toLowerCase()}</p>
                         {loggedInUser?._id === member._id &&
-                            <Link className="mini-profile-info-edit" to="/workspace" onClick={closePopover}>Edit profile info</Link>
+                            <Link className="mini-profile-info-edit" to="/workspace" onClick={closePopover}>עריכת פרטי משתמש</Link>
                         }
-                        {console.log(isLoggedInUser + " :isLogged in" , loggedInUser.userType , loggedInUser)}
-                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/signup" onClick={closePopover} >signup new users</Link>}
-                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >add Constructor</Link>}
+                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/signup" onClick={closePopover} >הוספת משתמשים</Link>}
+                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >קבלנים</Link>}
 
                     </div>
                 </div>
             </div>
             {isInCard && <span className="remove clean-btn" onClick={() => onRemoveMember()}>Remove from card</span>}
-            {isLoggedInUser && <span className="remove clean-btn" onClick={logOutUser}>Logout</span>}
+            {isLoggedInUser && <span className="remove clean-btn" onClick={logOutUser}>התנתק</span>}
         </Popover >
     )
 }

@@ -24,8 +24,9 @@ async function query(filterBy = { ctg: '' }) {
 
 async function remove(boardId) {
     try {
-        await httpService.delete(`board/${boardId}`)
+        await httpService.delete(`board/${boardId}` , boardId)
     } catch (err) {
+        console.log(err, "err") 
         throw err
     }
 }

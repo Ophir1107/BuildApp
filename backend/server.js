@@ -42,6 +42,9 @@ if (process.env.NODE_ENV === 'production') {
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const boardRoutes = require('./api/board/board.routes')
+const constructorRoutes = require('./api/constructor/constructor.routes')
+const predictorRoutes = require('./api/predictor/predictor.routes')
+
 const { connectSockets } = require('./services/socket.service')
 
 // routes
@@ -59,6 +62,8 @@ app.get('/api/setup-session', (req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/board', boardRoutes)
+app.use('/api/constructor', constructorRoutes)
+app.use('/api/predictor', predictorRoutes)
 connectSockets(http, session)
 
 // Make every server-side-route to match the index.html
