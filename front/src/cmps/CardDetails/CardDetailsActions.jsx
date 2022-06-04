@@ -112,7 +112,7 @@ class _CardDetailsActions extends Component {
     }
 
     render() {
-        const { card } = this.props
+        const { card, loggedInUser } = this.props
         this.setCover()
         console.log(card.isUrgent , "card is urgentt" , card.isNew , "card new? ")
         return <div className="details-actions-wrapper flex">
@@ -127,7 +127,10 @@ class _CardDetailsActions extends Component {
             <div className="add-section flex column">
                 <h4>ADD TO CARD</h4>
                 <button className="secondary-btn actions-btn "
-                    onClick={(ev) => this.onOpenPopover(ev, 'MEMBERS')}>
+                    onClick={(ev) =>{
+                    if (loggedInUser.userType === "constructor") return
+                    this.onOpenPopover(ev, 'MEMBERS')}
+                    } >
                     <div className="actions-btn-content flex align-center">
                         <MemberIcon />
                         <span>אנשי צוות</span>
@@ -137,7 +140,9 @@ class _CardDetailsActions extends Component {
 
 
                 <button className="secondary-btn actions-btn"
-                    onClick={(ev) => this.onOpenPopover(ev, 'LABELS')}>
+                    onClick={(ev) => { 
+                        if (loggedInUser.userType==='constructor') return
+                        this.onOpenPopover(ev, 'LABELS')}}>
                     <div className="actions-btn-content flex align-center">
                         <LabelIcon />
                         <span>תוויות</span>
@@ -147,7 +152,11 @@ class _CardDetailsActions extends Component {
 
 
                 <button className="secondary-btn actions-btn"
-                    onClick={(ev) => this.onOpenPopover(ev, 'CHECKLIST')}>
+                    onClick={(ev) => {
+                        if (loggedInUser.userType === "constructor") return
+                        this.onOpenPopover(ev, 'CHECKLIST')}
+                        
+                    } >
                     <div className="actions-btn-content flex align-center">
                         <CheckboxIcon />
                         <span>תתי משימות</span>
@@ -157,7 +166,10 @@ class _CardDetailsActions extends Component {
 
 
                 <button className="secondary-btn actions-btn"
-                    onClick={(ev) => this.onOpenPopover(ev, 'DATE')}>
+                    onClick={(ev) => {
+                        if (loggedInUser.userType === "constructor") return
+                        this.onOpenPopover(ev, 'DATE')}
+                    }>
                     <div className="actions-btn-content flex align-center">
                         <i className="far fa-clock icon-sm "></i>
                         <span>תאריך</span>
@@ -176,7 +188,10 @@ class _CardDetailsActions extends Component {
 
 
                 <button className="secondary-btn actions-btn"
-                    onClick={(ev) => this.onOpenPopover(ev, 'COVER')}>
+                    onClick={(ev) => {
+                        if (loggedInUser.userType === "constructor") return
+                        this.onOpenPopover(ev, 'COVER')}
+                    } >
                     <div className="actions-btn-content flex align-center">
                         <CoverIcon />
                         <span>רקע</span>
@@ -188,7 +203,9 @@ class _CardDetailsActions extends Component {
             
             <div className="actions-section flex column">
                 <h4>פעולות</h4>
-                <button className="secondary-btn actions-btn" onClick={(ev) =>this.onToggleUrgentTask(ev)}>
+                <button className="secondary-btn actions-btn" onClick={(ev) =>
+                    { if (loggedInUser.userType ==='constructor') return
+                    this.onToggleUrgentTask(ev)}}>
                     <div className="actions-btn-content flex align-center">
                         <FmdBadIcon className="card-preview-urgent-btn actions-btn-content " style={{color: card.isUrgent ? '#EB5A46' : '#6b778c'}} />
                         <span>משימה דחופה</span>
@@ -208,7 +225,8 @@ class _CardDetailsActions extends Component {
 
                 {!card.isArchived ?
                     <button className="secondary-btn actions-btn"
-                        onClick={this.toggleArchive}>
+                        onClick={(ev) => {if (loggedInUser.userType === 'constructor') return
+                        this.toggleArchive(ev)}}>
                         <div className="actions-btn-content flex align-center">
                             <i className="fas fa-archive icon-sm"></i>
                             <span>מחק</span>

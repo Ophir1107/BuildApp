@@ -166,8 +166,7 @@ export class _LoginSignup extends Component {
                                 <option value = "admin">admin</option>
                                 <option value = "manager">manager</option>
                                 <option value = "client">client</option>
-                                
-                                
+                                <option value = "constructor">constructor</option>
                                 
                             </Field>
 

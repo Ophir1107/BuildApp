@@ -48,6 +48,7 @@ export class CardListAdd extends Component {
     render() {
         const { lists } = this.props.board
         const { titleTxt, isOpen } = this.state
+        const {loggedInUser} = this.props
 
         return (
             <div className="card-list-add-wrapper">
@@ -60,7 +61,9 @@ export class CardListAdd extends Component {
                         </div>
                     </div>
                     :
-                    <div className="card-list-add" onClick={this.toggleListAdd}>
+                    <div className="card-list-add" onClick={(ev)=> 
+                        {if (loggedInUser.userType === "constructor") return
+                        this.toggleListAdd(ev)}}>
                         <AddIcon /> Add {lists.length > 1 ? 'another' : 'a'} list
                         </div>
                 }

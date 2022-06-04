@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import SubjectIcon from '@material-ui/icons/Subject';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { TextareaAutosize } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 
-
-export class CardDescription extends Component {
+export class _CardDescription extends Component {
 
     state = {
         description: '',
@@ -21,10 +21,12 @@ export class CardDescription extends Component {
         this.setState({ description: value })
     }
 
-    onEditClicked = () => {
+    onEditClicked = (ev) => {
+        const {loggedInUser} = this.props
+        if (loggedInUser.userType === 'constructor') return
         this.selectedInput.focus()
         this.setState({ isInputSelected: true }, () => {
-            this.selectedInput.focus()
+            this.selectedInput.focus(ev)
         })
     }
 
@@ -36,24 +38,30 @@ export class CardDescription extends Component {
     }
 
     render() {
+        const {loggedInUser} = this.props
         let { description, isInputSelected } = this.state
         return (<div className="card-description flex column">
             <div className="window-modal-title flex align-center">
                 <SubjectIcon />
                 <h3>Description</h3>
                 <button className={`secondary-btn ${!description || isInputSelected ? 'hidden' : 'show'}`}
-                    onClick={() => this.onEditClicked()}>
+                    onClick={(ev) => {
+                        if (loggedInUser.userType === 'constructor') return
+                        this.onEditClicked(ev)}}>
                     Edit
                      </button>
             </div>
             <div className="card-description-edit flex column">
                 <TextareaAutosize
                     className={!description ? 'placeholder-mode' : ''}
-                    onFocus={() => this.onEditClicked()}
+                    onFocus={(ev) => {if (loggedInUser.userType ==='constructor') return
+                        this.onEditClicked(ev)}}
                     ref={(input) => { this.selectedInput = input; }}
-                    onBlur={() => this.onSaveDescription()}
+                    onBlur={(ev) => {if (loggedInUser.userType ==='constructor') return
+                                     this.onSaveDescription(ev)}}
                     value={description} placeholder="Add a more detailed description..."
-                    onChange={this.handleChange} aria-label="empty textarea" />
+                    onChange={(ev)=> { if (loggedInUser.userType ==='constructor') return
+                    this.handleChange(ev)}} aria-label="empty textarea" />
                 <div className={`description-controls flex align-center ${isInputSelected ? 'show' : 'hidden'}`}>
                     <button className="primary-btn" onClick={() => this.onSaveDescription()}>Save</button>
                     <CloseRoundedIcon className="close-svg" />
@@ -62,3 +70,10 @@ export class CardDescription extends Component {
         </div>)
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        loggedInUser: state.appModule.loggedInUser
+    }
+}
+export const CardDescription = connect(mapStateToProps, null)(_CardDescription)

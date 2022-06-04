@@ -51,6 +51,8 @@ class _CardDetails extends Component {
     }
 
     cardTitleHandleChange = ({ target: { value } }) => {
+        const {loggedInUser} = this.props
+        if (loggedInUser.userType === 'constructor') return
         const { card } = this.state
         if (card.title === value) return
         card.title = value
@@ -119,7 +121,7 @@ class _CardDetails extends Component {
 
 
     render() {
-        const { board, board: { activities }, onSaveBoard, openPopover } = this.props
+        const { board, board: { activities }, onSaveBoard, openPopover, loggedInUser } = this.props
         const { card, list } = this.state
         if (!card) return <Loader />
         const { title, members, description, checklists, dueDate, style, attachs, isArchived } = card
@@ -147,7 +149,8 @@ class _CardDetails extends Component {
                                 onKeyDown={this.onSaveCardTitle}
                                 onBlur={this.onSaveCardTitle}
                                 ref={(input) => this.selectedInput = input}
-                            />
+                                    />
+                            
                         </div>
                         <p className="bottom-list-name">in list <span>{list.title}</span></p>
                     </div>
