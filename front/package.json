@@ -10,6 +10,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/pickers": "^3.3.10",
+    "@mui/icons-material": "^5.8.2",
     "@mui/material": "^5.8.0",
     "@tensorflow/tfjs": "^3.18.0",
     "@testing-library/jest-dom": "^5.12.0",

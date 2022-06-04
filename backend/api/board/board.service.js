@@ -54,7 +54,7 @@ async function save(board) {
                 },
                 labels: [],
                 members: [board.createdBy],
-                lists: [],
+                lists: board.lists,
                 activities: [],
                 isFavorite: false
             }

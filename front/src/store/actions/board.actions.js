@@ -70,6 +70,12 @@ export function setFilter(filterBy) {
     }
 }
 
+export function saveBoards(boards) {
+    return dispatch => {
+        dispatch({ type: 'SET_BOARDS', boards })
+    }
+}
+
 
 
 

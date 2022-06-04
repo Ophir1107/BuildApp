@@ -148,6 +148,7 @@ class _BoardPage extends React.Component {
         let { list } = this.state
         if (!board) return <div className="trello-loader"> <TrelloLoader /> </div>
 
+        console.log(board.lists , "the lists in this board")
         return (
             <Router>
                 <DragDropContext onDragEnd={this.onDragEnd}>

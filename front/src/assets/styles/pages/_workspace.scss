@@ -25,6 +25,7 @@
         width: 100%;
         max-width: 1000px;
         min-width: 288px;
+        direction : rtl;
         > *:not(:last-child) {
             margin-bottom: 40px;
         }

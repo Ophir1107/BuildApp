@@ -108,19 +108,20 @@ export class _LoginSignup extends Component {
             
             {pageMode === 'login' && <div className="login-signup flex column">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
-                <LoginSignupLogo />
+                {/* <LoginSignupLogo /> */}
                 <h1>BuildApp</h1>
             </div>
             </Link>
-                <h3>Log in to BuildApp</h3>
+                <h3>התחבר לאפליקציה</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
-                    <Form className="flex column">
-                        <Field type="username" placeholder="Enter username" name="username" autoFocus />
+                    <Form className="flex column login-form">
+                        {/* <Field type="username" placeholder="שם משתמש" name="username" autoFocus className="login-input"/> */}
+                        <Field type="username" placeholder="username" name="username" autoFocus className="login-input"/>
                         <ErrorMessage name="username" component="div" />
-                        <Field type="password" placeholder="Enter password" name="password" />
+                        <Field type="password" placeholder="password" name="password" className="login-input" />
                         <ErrorMessage name="password" component="div" />
                         {loginErr && <p>{loginErr}</p>}
-                        <button type="submit" className="primary-btn login-signup-btn">Log in</button>
+                        <button type="submit" className="primary-btn login-signup-btn" >התחבר</button>
                     </Form>
                 </Formik>
                 {/* <GoogleLogin
@@ -136,7 +137,7 @@ export class _LoginSignup extends Component {
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
                     <Link to="/workspace" className="clean-link"><div className="logo flex align-center justify-center">
-                <LoginSignupLogo />
+                {/* <LoginSignupLogo /> */}
                 <h1>BuildApp</h1>
             </div>
             </Link>

@@ -27,7 +27,8 @@ async function getBoard(req, res) {
 async function addBoard(req, res) {
     try {
         const board = req.body
-       const  savedBoard = await boardService.save(board)
+        console.log(req.body , "board in coard controller")
+        const savedBoard = await boardService.save(board)
         res.send(savedBoard)
     } catch (err) {
         logger.error('Failed to add board', err)

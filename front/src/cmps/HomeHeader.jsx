@@ -32,7 +32,7 @@ export class HomeHeader extends Component {
             <header className={`home-header ${isNavBgVisible ? 'visibleBg' : ''}`}>
                 <nav className="flex justify-space-between">
                     <div className="logo">
-                        <HomepageLogo />
+                        {/* <HomepageLogo /> */}
                         BuildApp
                     </div>
 

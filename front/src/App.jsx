@@ -64,7 +64,7 @@ class _App extends Component {
   render() {
     const { loggedInUser, board, location } = this.props
     return (
-      <section style={this.style}>
+      <section style={this.style} className="application">
         {this.isHeaderAppears && <header>
           <AppHeader board={board} loggedInUser={loggedInUser} isBoardStyle={location.pathname.includes('/board')} />
         </header>}
