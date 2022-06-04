@@ -4,6 +4,7 @@ import { loadBoards, onSaveBoard } from '../store/actions/board.actions'
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
+import { boardService } from '../services/board.service'
 
 class _Workspace extends Component {
     state = {
@@ -12,7 +13,7 @@ class _Workspace extends Component {
 
     componentDidMount() {
         this.props.loadBoards()
-        const {loggedInUser , boards} = this.props
+        const {boards} = this.props
         this.setState({ boards })
     }
 
@@ -32,6 +33,7 @@ class _Workspace extends Component {
 
     getUserBoards(){
         const {loggedInUser , boards} = this.props
+        if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
         for(let i=0 ; i<boards.length ; i++){
             let boardMembers = boards[i].members
@@ -50,7 +52,8 @@ class _Workspace extends Component {
         let boards = []
         boards = oldBoards.filter(board => board._id !== boardId)
         console.log(boards.length)
-        loadBoards(boards)
+        boardService.remove(boardId)
+        this.setState({boards}) 
     }
 
     render() { 

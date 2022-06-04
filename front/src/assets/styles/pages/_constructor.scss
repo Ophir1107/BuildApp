@@ -9,15 +9,33 @@
         border-radius: 3px;
         display: grid;
         line-height: 20px;
-        padding: 8px 12px;
     }
 
     .constructor-preview{
+        background: #fff;
         line-height: 24px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         box-shadow: 1.5px 2px 2px -1px #091e4240, inset 0px 1px 0 1px #091e4214;
         line-height:40px;
+        .trash-icon{
+            // color : blue;
+            opacity: 0.0 ;
+            position: absolute;
+            right: 12px;
+            line-height: 40px;
+            top: 12px;
+        }
+        &:hover{
+            cursor: pointer;
+            filter: brightness(95%);
+            .trash-icon{
+                opacity: 1 ;
+            }
+
+        }
+       
+        
     }
 
     .add-cons-btn{
