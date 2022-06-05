@@ -4,6 +4,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { PopoverMemberPreview } from './PopoverMemberPreview'
 import { userService } from '../../services/user.service'
+import { closePopover } from "../../store/actions/app.actions"
 class _PopoverInvite extends Component {
 
     state = {
@@ -42,11 +43,11 @@ class _PopoverInvite extends Component {
 
     addConstructorToList = (member) => {
         console.log("im trying to add to list")
-        const { list , board , onSaveBoard} = this.props
+        const { list , board , onSaveBoard , closePopover} = this.props
         list.constructor = member
         console.log("this is list aftter add")
         onSaveBoard(board)
-        // closePopover()
+        closePopover()
     }
 
     render() {
@@ -58,8 +59,8 @@ class _PopoverInvite extends Component {
                     {/* {userType === "all" && this.filteredMembers && this.filteredMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
                         toggleMember={this.addMember}  isSelected={this.isMemberInBoard(member)}  userType={userType}/>)} */}
                     {userType === "constructor" && this.filteredMembers && this.filteredMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
-                        addConstructorToList={this.addConstructorToList(member)} isSelected={this.isMemberInBoard(member)}  userType={userType}/>)}
-                    {!userType === "constructor" && this.filteredMembers && this.filteredMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
+                        addConstructorToList={this.addConstructorToList} isSelected={this.isMemberInBoard(member)}  userType={userType}/>)}
+                    {userType === "all" && this.filteredMembers && this.filteredMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
                         isSelected={this.isMemberInBoard(member)} />)}
                 </div>
 
@@ -80,7 +81,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    onSaveBoard
+    onSaveBoard,
+    closePopover
 }
 
 
