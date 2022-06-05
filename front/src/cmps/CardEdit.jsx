@@ -82,50 +82,50 @@ class _CardEdit extends Component {
                             className="open-card-btn clean-btn"
                             onClick={() => onCloseCardEdit()}>
                             <WebAssetIcon />
-                            Open card
+                            כנס למשימה
                         </Link>
                         <button
                             className="edit-labels-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'LABELS')}>
                             <LabelIcon />
-                            Edit labels
+                            ערוך תוויות
                         </button>
                         <button
                             className="change-members-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'MEMBERS')}>
                             <MemberIcon />
-                            Change members
+                            הוסף משתמשים
                         </button>
                         <button
                             className="change-cover-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'COVER')}>
                             <CoverIcon />
-                            Change cover
+                            שנה רקע
                         </button>
-                        <button
+                        {/* <button
                             className="move-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'MOVE')}>
                             <i className="fas fa-arrow-right icon-sm"></i>
                             Move
-                        </button>
-                        <button
+                        </button> */}
+                        {/* <button
                             className="copy-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'COPY')}>
                             <CopyIcon />
                             Copy
-                        </button>
+                        </button> */}
                         <button
                             className="edit-dates-btn clean-btn"
                             onClick={(ev) => this.onOpenPopover(ev, 'DATE')}>
                             <i className="far fa-clock icon-sm "></i>
-                            Edit dates
+                            ערוך תאריך
                         </button>
                         <button
                             className="archive-btn clean-btn"
                             name="archive"
                             onClick={(ev) => this.onSaveCard(ev)}>
                             <i className="fas fa-archive icon-sm"></i>
-                            Archive
+                            מחק
                         </button>
                     </div>
                 </div>

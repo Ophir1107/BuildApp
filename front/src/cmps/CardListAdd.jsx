@@ -37,7 +37,8 @@ export class CardListAdd extends Component {
         const list = {
             id: utilsService.makeId(),
             title: titleTxt,
-            cards: []
+            cards: [] ,
+            constructor : {}
         }
 
         board.lists.push(list);

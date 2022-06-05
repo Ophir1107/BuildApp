@@ -21,7 +21,8 @@ class _Workspace extends Component {
 
     get favoriteBoards() {
         const { boards } = this.props
-        return boards.filter(board => board.isFavorite)
+        console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
+        return boards.filter(board => board.isFavorite === true)
     }
 
 
@@ -71,7 +72,7 @@ class _Workspace extends Component {
 
     render() { 
         // let boards = this.getUserBoards()
-        const {loggedInUser} = this.props
+        const {loggedInUser , boards} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
                 <Route path="/workspace/dashboard" component={AdminDashboard} />
@@ -88,7 +89,7 @@ class _Workspace extends Component {
                             <BoardIcon />
                             <h3>פרויקטים</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite}   />
+                        <BoardList boards={boards} onToggleFavorite={this.onToggleFavorite}   />
                     </div>
                 </div>
             </section>

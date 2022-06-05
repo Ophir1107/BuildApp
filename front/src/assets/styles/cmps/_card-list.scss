@@ -32,6 +32,16 @@
             display: flex;
             justify-content: space-between;
             padding: rem(5px) rem(5px);
+            .profile-avatar{
+                height:32px;
+                width:32px;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                padding-block-start: 2px;
+                background-color: #dfe1e6;
+                border-radius: 50%;
+            }
             h2 {
                 flex: 1;
                 margin-inline-start: 10px;
@@ -40,6 +50,29 @@
                 font-size: rem(16px);
                 padding-top: 7px;
                 font-weight: 600;
+            }
+            button{
+                display: flex;
+                padding: 5px;
+                align-items: center;
+                cursor: pointer;
+                // background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 3px;
+                outline: unset;
+                border: unset;
+                position: relative;
+                height: 32px;
+                width: 32px;
+                filter: brightness(0.95);
+                color: #172b4d;
+                margin-inline-end: 5px;
+                span{
+                    width:14px;
+                    width:14px;
+                    padding-right: 6px;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
             }
             .card-list-btn-menu {
                 border-radius: $borderRad1;

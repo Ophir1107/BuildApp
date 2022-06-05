@@ -6,6 +6,7 @@ import { CardAdd } from './CardAdd'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import { openPopover, closePopover } from '../store/actions/app.actions'
+import { ProfileAvatar } from './ProfileAvatar'
 
 export class _CardList extends Component {
 
@@ -13,6 +14,7 @@ export class _CardList extends Component {
         isEditTitle: false,
         titleTxt: '',
         isAddCardOpen: false,
+        isRejectDisplay: false,
     }
 
     toggleEditTitle = () => {
@@ -35,6 +37,12 @@ export class _CardList extends Component {
         this.setState({ isAddCardOpen: !isAddCardOpen })
     }
 
+    toggleDisplay = () =>{
+        const { isRejectDisplay } = this.state
+        console.log("is reject display" , isRejectDisplay)
+        this.setState({ isRejectDisplay: !isRejectDisplay })
+    }
+
     handleChange = (ev) => {
         if (ev.key === 'Enter') {
             this.onSaveTitle()
@@ -45,9 +53,18 @@ export class _CardList extends Component {
     }
 
     get filteredList() {
+        const {isRejectDisplay} = this.state
         const { currList, filterBy } = this.props
         if (!currList) return null
-        return boardService.getFilteredList(currList, filterBy)
+        let list = {}
+        list = boardService.getFilteredList(currList, filterBy)
+        console.log(list.cards.length , "list" , isRejectDisplay)
+        if(!isRejectDisplay && list.cards.length > 0) return list
+        if(isRejectDisplay && list.cards.length > 0) {
+            list.cards = list.cards.filter( (card) => card.isReject === true)
+            return list
+        }
+        return []
     }
 
     onOpenPopover = (ev, PopoverName) => {
@@ -57,15 +74,16 @@ export class _CardList extends Component {
             currList,
             board,
             onSaveBoard,
-            closePopover
+            closePopover,
+            member : currList.constructor
         }
         this.props.openPopover(PopoverName, elPos, props)
     }
 
 
     render() {
-        const { board, currList, onSaveBoard, currListIdx, loggedInUser } = this.props
-        const { isEditTitle, isAddCardOpen, titleTxt } = this.state
+        const { board, currList, onSaveBoard, currListIdx } = this.props
+        const { isEditTitle, isAddCardOpen, titleTxt , isRejectDisplay } = this.state
         return (
             <Draggable draggableId={currList.id} index={currListIdx}>
                 {provided => (
@@ -81,13 +99,22 @@ export class _CardList extends Component {
                                             :
                                             <h2 onClick={this.toggleEditTitle}>{currList.title}</h2>
                                         }
-                                        <div onClick={(ev) =>{ if (loggedInUser.userType=== 'constructor') return
-                                         this.onOpenPopover(ev, 'LIST_MENU')}} className="card-list-btn-menu">
+                                        <button className="board-btn" onClick={this.toggleDisplay}>
+                                            <span>R</span>
+                                        </button>
+                                        {currList.constructor.fullname && <ProfileAvatar key={currList.constructor._id} member={currList.constructor}
+                                onClick={(ev) =>this.onOpenPopover(ev, 'PROFILE')} size={32} showStatus={true} />}
+                                        <div onClick={(ev) => this.onOpenPopover(ev, 'LIST_MENU')} className="card-list-btn-menu">
                                             <i className="fas fa-ellipsis-h"></i>
                                         </div>
                                     </div>
                                     <div className="card-list-cards" ref={(cards) => { this.elCardsContainer = cards }}>
-                                        {this.filteredList.cards.map((card, idx) => <CardPreview key={card.id} card={card}
+                                        {!isRejectDisplay && this.filteredList.cards && this.filteredList.cards.map((card, idx) => 
+                                            <CardPreview key={card.id} card={card}
+                                            cardIdx={idx} currList={currList} board={board}
+                                            onSaveBoard={onSaveBoard} />)}
+                                        {isRejectDisplay && this.filteredList!==[] &&  this.filteredList.cards.map((card, idx) =>                      
+                                            <CardPreview key={card.id} card={card}
                                             cardIdx={idx} currList={currList} board={board}
                                             onSaveBoard={onSaveBoard} />)}
                                         {isAddCardOpen &&
