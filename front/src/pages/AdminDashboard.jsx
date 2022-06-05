@@ -10,8 +10,9 @@ import { BoardCharts } from '../cmps/BoardCharts'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { Loader } from '../cmps/Loader'
 import 'react-circular-progressbar/dist/styles.css';
+import {ProjectsCharts} from '../cmps/ProjectsCharts'
 
-class _Dashboard extends Component {
+class _AdminDashboard extends Component {
 
     state = {
         chartsData: null
@@ -32,8 +33,8 @@ class _Dashboard extends Component {
         }, [])
     }
 
-    get cardsCount() {
-        const { lists } = this.props.board
+
+    cardsCount=(lists)=> {
         const cardsCount = lists.reduce((acc, list) => {
             acc += list.cards.length
             return acc
@@ -41,8 +42,19 @@ class _Dashboard extends Component {
         return cardsCount
     }
 
-    get overdueCardsCount() {
-        const { lists } = this.props.board
+    allCardsCount(cards_type) {
+        const { boards } = this.props
+        let cards_count = 0
+        for (let i=0 ; i<boards.length; i++){
+            const lists = boards[i].lists
+            if (cards_type == "all") cards_count += this.cardsCount(lists)
+            if (cards_type == "soon") cards_count += this.dueSoonCardsCount(lists)
+            if (cards_type == "overdue") cards_count += this.overdueCardsCount(lists)
+        }
+        return cards_count
+    }
+
+    overdueCardsCount=(lists)=> {
         const overdueCardsCount = lists.reduce((acc, list) => {
             const overdueCardsCountPerList = list.cards.reduce((acc, card) => {
                 if (card.dueDate < Date.now() && card.dueDate && !card.isDone) acc++
@@ -54,8 +66,7 @@ class _Dashboard extends Component {
         return overdueCardsCount
     }
 
-    get dueSoonCardsCount() {
-        const { lists } = this.props.board
+    dueSoonCardsCount=(lists)=> {
         const dueSoonCardsCount = lists.reduce((acc, list) => {
             const dueSoonCardsCountPerList = list.cards.reduce((acc, card) => {
                 if (card.dueDate && Date.now() <= card.dueDate) {
@@ -88,49 +99,49 @@ class _Dashboard extends Component {
 
 
 
-    get cardsPerMemberMap() {
-        const { members } = this.props.board
-        const allCards = this.allCards
-        const cardsPerMemberMap = members.reduce((acc, member) => {
-            if (!acc[member.fullname]) acc[member.fullname] = 0
-            const cardsPerMemberCount = allCards.reduce((acc, card) => {
-                const memberIdx = card.members.findIndex(currMember => currMember._id === member._id)
-                if (memberIdx > -1 && !card.isDone) acc++
-                return acc
-            }, 0)
-            acc[member.fullname] = cardsPerMemberCount
-            return acc
-        }, {})
-        return cardsPerMemberMap
-    }
+    // get cardsPerMemberMap() {
+    //     const { members } = this.props.board
+    //     const allCards = this.allCards
+    //     const cardsPerMemberMap = members.reduce((acc, member) => {
+    //         if (!acc[member.fullname]) acc[member.fullname] = 0
+    //         const cardsPerMemberCount = allCards.reduce((acc, card) => {
+    //             const memberIdx = card.members.findIndex(currMember => currMember._id === member._id)
+    //             if (memberIdx > -1 && !card.isDone) acc++
+    //             return acc
+    //         }, 0)
+    //         acc[member.fullname] = cardsPerMemberCount
+    //         return acc
+    //     }, {})
+    //     return cardsPerMemberMap
+    // }
 
-    get cardsPerLabelMap() {
-        const { labels } = this.props.board
-        const allCards = this.allCards
-        const cardsPerLabelMap = labels.reduce((acc, label) => {
-            if (!acc[label.title]) acc[label.title] = { count: 0 }
-            const cardsPerLabelCount = allCards.reduce((acc, card) => {
-                const labelIdx = card.labelIds.findIndex(currLabelId => currLabelId === label.id)
-                if (labelIdx > -1 && !card.isDone) acc++
-                return acc
-            }, 0)
-            acc[label.title].count = cardsPerLabelCount
-            return acc
-        }, {})
-        return cardsPerLabelMap
+    // get cardsPerLabelMap() {
+    //     const { labels } = this.props.board
+    //     const allCards = this.allCards
+    //     const cardsPerLabelMap = labels.reduce((acc, label) => {
+    //         if (!acc[label.title]) acc[label.title] = { count: 0 }
+    //         const cardsPerLabelCount = allCards.reduce((acc, card) => {
+    //             const labelIdx = card.labelIds.findIndex(currLabelId => currLabelId === label.id)
+    //             if (labelIdx > -1 && !card.isDone) acc++
+    //             return acc
+    //         }, 0)
+    //         acc[label.title].count = cardsPerLabelCount
+    //         return acc
+    //     }, {})
+    //     return cardsPerLabelMap
 
 
-    }
+    // }
 
-    get cardsPerListMap() {
-        const { lists } = this.props.board
-        const cardsPerListMap = lists.reduce((acc, list) => {
-            if (!acc[list.title]) acc[list.title] = 0
-            acc[list.title] = list.cards.length
-            return acc
-        }, {})
-        return cardsPerListMap
-    }
+    // get cardsPerListMap() {
+    //     const { lists } = this.props.board
+    //     const cardsPerListMap = lists.reduce((acc, list) => {
+    //         if (!acc[list.title]) acc[list.title] = 0
+    //         acc[list.title] = list.cards.length
+    //         return acc
+    //     }, {})
+    //     return cardsPerListMap
+    // }
 
     get progressCircleStyle() {
         return {
@@ -152,17 +163,17 @@ class _Dashboard extends Component {
             },
         }
     }
-    get dueSoonPercentage() {
-        return +((this.dueSoonCardsCount / this.cardsCount * 100).toFixed(1))
-    }
-    get overduePercentage() {
+    // get dueSoonPercentage() {
+    //     return +((this.dueSoonCardsCount / this.cardsCount * 100).toFixed(1))
+    // }
+    // get overduePercentage() {
 
-        return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
-    }
+    //     return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
+    // }
 
     goBackToBoard = () => {
         const { board } = this.props
-        this.props.history.push(`/board/${board._id}`)
+        this.props.history.push(`/workspace`)
     }
 
     render() {
@@ -179,7 +190,7 @@ class _Dashboard extends Component {
                             <div className="content flex  column justify-space-between">
 
                                 <h3 className="flex align-center"><AssignmentIcon /> סה"כ משימות וריג'קטים </h3>
-                                <h4>{this.cardsCount}</h4>
+                                <h4>{this.allCardsCount("all")}</h4>
                             </div>
                             <ChartIcon />
                         </div>
@@ -187,9 +198,9 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
                                 <h3 className="flex align-center">  <QueryBuilderIcon /> מסתיימות בקרוב </h3>
-                                <h4>{this.dueSoonCardsCount}</h4>
+                                <h4>{this.allCardsCount("soon")}</h4>
                             </div>
-                            <CircularProgressbar value={this.dueSoonPercentage} text={`${this.dueSoonPercentage}%`}
+                            <CircularProgressbar value={4} text={`${40}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
 
@@ -197,13 +208,15 @@ class _Dashboard extends Component {
                             <div className="content flex  column justify-space-between">
 
                                 <h3 className="flex align-center"><ExclamationIcon />באיחור </h3>
-                                <h4>{this.overdueCardsCount}</h4>
+                                <h4>{this.allCardsCount("overdue")}</h4>
                             </div>
-                            <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
+                            <CircularProgressbar value={5} text={`${50}%`}
+                            // <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
                     </div>
-                    <BoardCharts chartsData={chartsData} />
+                    <ProjectsCharts/>
+                    {/* <BoardCharts chartsData={chartsData} /> */}
                 </section>
             </>
         )
@@ -212,8 +225,8 @@ class _Dashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        board: state.boardModule.board,
+        boards: state.boardModule.boards,
     }
 }
 
-export const Dashboard = connect(mapStateToProps, null)(_Dashboard)
+export const AdminDashboard = connect(mapStateToProps, null)(_AdminDashboard)
