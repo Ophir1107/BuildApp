@@ -82,7 +82,7 @@ export class _CardList extends Component {
 
 
     render() {
-        const { board, currList, onSaveBoard, currListIdx } = this.props
+        const { board, currList, onSaveBoard, currListIdx, loggedInUser } = this.props
         const { isEditTitle, isAddCardOpen, titleTxt , isRejectDisplay } = this.state
         return (
             <Draggable draggableId={currList.id} index={currListIdx}>

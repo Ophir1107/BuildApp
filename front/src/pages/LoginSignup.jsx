@@ -173,8 +173,6 @@ export class _LoginSignup extends Component {
                             <button type="submit" className="primary-btn login-signup-btn">Sign up</button>
                         </Form>
                     </Formik>
-                    <hr />
-                    <Link to="/login">Already have an account ? Log In</Link>
                 </div>}
             <div className="left-logo">
                 <LogoLeft />

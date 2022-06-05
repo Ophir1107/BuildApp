@@ -33,11 +33,7 @@ function _PopoverProfile({
                     <div className="mini-profile-info">
                         <Link to="/workspace" className="clean-link" onClick={closePopover}>{member.fullname}</Link>
                         <p>@{member.username.toLowerCase()}</p>
-                        {loggedInUser?._id === member._id &&
-                            <Link className="mini-profile-info-edit" to="/workspace" onClick={closePopover}>עריכת פרטי משתמש</Link>
-                        }
-                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/signup" onClick={closePopover} >הוספת משתמשים</Link>}
-                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/constructor" onClick={closePopover} >קבלנים</Link>}
+                        {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/users" onClick={closePopover} >משתמשים</Link>}
 
                     </div>
                 </div>

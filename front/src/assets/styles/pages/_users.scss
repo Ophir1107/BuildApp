@@ -1,21 +1,36 @@
 
-.constructors-preview{
+.users-preview{
     width : 80% ;
     margin-top : 20px;
     display: flex;
     margin-inline : auto;
     text-align : center;
-    .constructors-table{
+    .users-actions{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        .add-cons-btn{
+            margin: 4px 0 12px 0;
+            width: 100%;
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            display: block;
+            line-height: 20px;
+            padding: 8px 12px;
+            box-shadow: inset 0 0 0 2px #dfe1e6;
+        }
+    }
+    .users-table{
         border-radius: 3px;
         display: grid;
         line-height: 20px;
     }
 
-    .constructor-preview{
+    .user-preview{
         background: #fff;
         line-height: 24px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         box-shadow: 1.5px 2px 2px -1px #091e4240, inset 0px 1px 0 1px #091e4214;
         line-height:40px;
         .trash-icon{
@@ -43,7 +58,7 @@
     }
 }
 
-.constructors-logo{
+.users-logo{
     padding: 40px 0;
     svg {
         height: 45px;
@@ -57,7 +72,7 @@
     }
 }
 
-.add-constructor-container{
+.add-user-container{
     overflow-y: scroll;
     top: 0;
     margin: auto;
