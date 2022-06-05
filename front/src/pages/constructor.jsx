@@ -39,7 +39,7 @@ class _Constructor extends Component {
 
     onGoBack(){
         // const history = useHistory()
-        console.log( "history")
+        // this.props.history.push('/workspace')
     }
 
     get filteredConstructors() {
@@ -54,9 +54,9 @@ class _Constructor extends Component {
         const {constructors} = this.state
         const {loggedInUser , board} = this.props
         return (
-            <Router>
+            <Route>
                 <section>
-                    <Link onClick={this.onGoBack} to="/workspace" className="clean-link"><div className="constructors-logo flex align-center justify-center">
+                    <Link to="/workspace" className="clean-link"><div className="constructors-logo flex align-center justify-center">
                         {/* <LoginSignupLogo /> */}
                         <h1>BuildApp</h1>
                     </div>
@@ -82,14 +82,14 @@ class _Constructor extends Component {
                         </div>
                      {/* onClick={(ev) => onDeleteBoard(ev, board._id , boards)}> */}
 
-                        <Link to="/constructor/add" className="primary-btn add-cons-btn" >Add new constructor</Link>
+                        <Link to="/signup" className="primary-btn add-cons-btn" >Add new constructor</Link>
                         {/* <button className="primary-btn">Send invitation</button> */}
                     </div>
                 </section>
                 <section className="nested-routes">
                             <Route path="/constructor/add" component={AddConstructor} />
                         </section>
-        </Router>
+        </Route>
          ) }
 
 
