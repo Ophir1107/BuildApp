@@ -8,7 +8,7 @@ export class _Popover extends Component {
 
     state = {
         top: null,
-        lef: null
+        left: null
     }
 
 

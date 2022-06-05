@@ -83,7 +83,7 @@ class  _BoardList extends Component {
 
 function mapStateToProps(state) {
     return {
-        boards: state.boardModule.boards,
+        // boards: state.boardModule.boards,
         loggedInUser: state.appModule.loggedInUser
     }
 }

@@ -11,7 +11,7 @@ import { boardService } from '../services/board.service'
 import { openPopover } from '../store/actions/app.actions.js'
 import { setFilter } from '../store/actions/board.actions.js'
 import BarChartIcon from '@material-ui/icons/BarChart';
-
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class _BoardHeader extends Component {
 
@@ -57,7 +57,7 @@ class _BoardHeader extends Component {
     }
     onOpenPopover = (ev, PopoverName, member) => {
         const elPos = ev.target.getBoundingClientRect()
-        const props = { member, isInCard: false, showStatus: true }
+        const props = { member, isInCard: false, showStatus: true , userType : 'all' }
         this.props.openPopover(PopoverName, elPos, props)
     }
     get isFilterOn() {

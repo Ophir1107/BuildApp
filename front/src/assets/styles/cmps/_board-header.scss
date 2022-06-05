@@ -44,8 +44,10 @@
         border: unset;
         position: relative;
         height: 32px;
+        // width: 32px;
         color: $clr2;
         margin-inline-end: 5px;
+
         &:first-child {
             svg:first-child {
                 margin-inline-end: 4px;
@@ -196,6 +198,7 @@
                     margin-inline-end: 0;
                     margin-inline-start: 0;
                 }
+           
             }
         }
     }

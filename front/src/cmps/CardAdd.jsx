@@ -27,7 +27,7 @@ export class _CardAdd extends Component {
         this.setState({ titleTxt: value });
     }
     
-    onAddCard = () => {
+    onAddCard = (isReject) => {
         const { titleTxt , isUrgent, isNew } = this.state;
         if (!titleTxt) {
             this.textArea.focus();
@@ -50,7 +50,7 @@ export class _CardAdd extends Component {
             startDate: 0,
             dueDate: 0,
             attachs: [],
-            isReject: false,
+            isReject: isReject,
             isUrgent: isUrgent,
             isNew: isNew ,
             style: {
@@ -80,11 +80,11 @@ export class _CardAdd extends Component {
                     <FmdBadIcon className="card-preview-urgent-btn" style={{color: isUrgent ? '#EB5A46' : '#6b778c'}} onClick={this.onToggleUrgentTask}/>
                 </div>
                 {loggedInUser.userType !== 'client' && (<div>
-                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add Task</button>
+                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(false)}>Add Task</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>)}
                 <div>
-                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add Reject</button>
+                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(true)}>Add Reject</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>
             </div>
