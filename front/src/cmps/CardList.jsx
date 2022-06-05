@@ -38,6 +38,8 @@ export class _CardList extends Component {
     }
 
     toggleDisplay = () =>{
+        const {currList} = this. props
+        if (currList.cards.length <=0 ) return
         const { isRejectDisplay } = this.state
         console.log("is reject display" , isRejectDisplay)
         this.setState({ isRejectDisplay: !isRejectDisplay })
