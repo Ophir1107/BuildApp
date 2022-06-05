@@ -45,6 +45,10 @@ class _PopoverCreateBoard extends Component {
                 id: utilsService.makeId(),
                 title: 'אינסטלציה',
                 cards: []
+            },{
+                id: utilsService.makeId(),
+                title: 'משימות כלליות',
+                cards: []
             }]
         }
         console.log(boardToSave , "boardToSave")

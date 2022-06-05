@@ -116,13 +116,13 @@ class _Card extends Component {
 
     render() {
         
-        const { isEditMode, card, board, handleChange, cardTitle } = this.props;
+        const { isEditMode, card, board, handleChange, cardTitle, loggedInUser } = this.props;
         const { coverMode } = card.style;
         console.log( card.isNew , card.isUrgent , card.bgColor , "card.isNew , card.isUrgent , bgCOlor")
 
         return (
             <div className="card-preview-container" ref={(div) => { this.cardContainer = div }} onContextMenu={this.onOpenCardEdit}>
-                {!isEditMode && <div className="card-preview-edit-btn" onClick={this.onOpenCardEdit}><EditIcon /></div>}
+                {!isEditMode && loggedInUser.userType!== 'constructor' && <div className="card-preview-edit-btn" onClick={this.onOpenCardEdit}><EditIcon /></div>}
                 {(coverMode === 'header' || (coverMode === 'full' && isEditMode)) && <div className="card-preview-header" style={this.getCardHeaderStyles}></div>}
                 <div className={`card-preview ${coverMode === 'full' && 'cover-full'}`} style={this.cardStyles}>
                     {coverMode !== 'full' && <div className="card-preview-labels">

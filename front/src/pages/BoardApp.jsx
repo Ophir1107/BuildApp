@@ -114,7 +114,7 @@ class _BoardApp extends Component {
 
 
     render() {
-        const { onSaveBoard, board, filterBy } = this.props
+        const { onSaveBoard, board, filterBy, loggedInUser } = this.props
         const { currCard, elPos, isCardEditOpen } = this.state
         if (!board) return <Loader />
 
@@ -130,7 +130,7 @@ class _BoardApp extends Component {
                                 <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
                                     {board.lists.map((currList, idx) => <CardList filterBy={filterBy} key={currList.id} currListIdx={idx} currList={currList} onSaveBoard={onSaveBoard} board={board} />)}
                                     {provided.placeholder}
-                                    <CardListAdd board={board} onSaveBoard={onSaveBoard} />
+                                    <CardListAdd board={board} loggedInUser={loggedInUser} onSaveBoard={onSaveBoard} />
                                 </div>
                             )}
                         </Droppable>

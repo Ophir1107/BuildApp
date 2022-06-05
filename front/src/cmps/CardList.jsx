@@ -86,7 +86,6 @@ export class _CardList extends Component {
     render() {
         const { board, currList, onSaveBoard, currListIdx } = this.props
         const { isEditTitle, isAddCardOpen, titleTxt , isRejectDisplay } = this.state
-        console.log(this.filteredList.cards , "list to display")
         return (
             <Draggable draggableId={currList.id} index={currListIdx}>
                 {provided => (
@@ -95,7 +94,7 @@ export class _CardList extends Component {
                             {provided => (
                                 <div className="card-list" ref={provided.innerRef} {...provided.droppableProps}>
                                     <div className="card-list-header">
-                                        {isEditTitle ?
+                                        {isEditTitle && loggedInUser.userType!=='constructor' ?
                                             <input type="text" className="card-list-header-input" value={titleTxt} autoFocus
                                                 onFocus={(ev) => ev.target.select()} onBlur={this.onSaveTitle}
                                                 onChange={this.handleChange} onKeyDown={this.handleChange} />
@@ -127,7 +126,9 @@ export class _CardList extends Component {
                                         {provided.placeholder}
                                     </div>
                                     {!isAddCardOpen &&
-                                        <div className="card-list-footer" onClick={this.toggleCardAdd}>
+                                        <div className="card-list-footer" onClick={(ev)=>
+                                            {if (loggedInUser.userType === "constructor") return
+                                            this.toggleCardAdd(ev)}}>
                                             <AddIcon /> Add {currList.cards.length > 1 ? 'another' : ''} card
                                         </div>
                                     }
@@ -141,12 +142,17 @@ export class _CardList extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+      loggedInUser: state.appModule.loggedInUser
+    }
+  }
 const mapDispatchToProps = {
     openPopover,
     closePopover
 }
 
-export const CardList = connect(null, mapDispatchToProps)(_CardList)
+export const CardList = connect(mapStateToProps, mapDispatchToProps)(_CardList)
 
 
 

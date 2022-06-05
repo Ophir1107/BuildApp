@@ -30,6 +30,8 @@ class _BoardHeader extends Component {
     }
 
     toggleEdit = () => {
+        const {loggedInUser} = this.props
+        if (loggedInUser.userType !== 'admin') return
         const { isEdit } = this.state
         let { inputWidth } = this.state
         if (!isEdit) inputWidth = this.h1Title.getBoundingClientRect().width
@@ -83,12 +85,12 @@ class _BoardHeader extends Component {
     }
 
     render() {
-        const { board } = this.props
+        const { board, loggedInUser } = this.props
         const { isEdit, title } = this.state
         return (
             <div className="board-header">
                 <div className="board-title" >
-                    {isEdit ?
+                    {isEdit && loggedInUser.userType=== 'admin' ?
                         <form onSubmit={this.onTitleSave}>
                             <AutosizeInput
 
@@ -104,7 +106,7 @@ class _BoardHeader extends Component {
                     }
                 </div>
                 <button className="board-btn" onClick={this.onToggleFav}>
-                    <i className={`far fa-star icon-sm star-icon ${board.isFavorite ? 'favorite' : ''}`}></i>
+                    <i className={`far fa-star icon-sm star-icon ${board.isFavorite && loggedInUser.userType!== 'constructor' ? 'favorite' : ''}`}></i>
                 </button>
                 <span className="divider"></span>
                 <div className="flex header-section">
@@ -128,12 +130,16 @@ class _BoardHeader extends Component {
                             <CloseIcon />
                         </span>
                     </Link>}
-                    <button className="board-btn" onClick={(ev) => this.onOpenPopover(ev, 'MENU')}>
+                    <button className="board-btn" onClick={(ev) => {
+                        if (loggedInUser.userType === 'constructor') return
+                        this.onOpenPopover(ev, 'MENU')}}>
                         <ElipsisIcon />
                         <span className="wide-layout">Show Menu</span>
                         <ElementOverlay />
                     </button>
-                    <button className="board-btn" onClick={(ev) => this.onOpenPopover(ev, 'ATTACH')}>
+                    <button className="board-btn" onClick={(ev) =>
+                        {if (loggedInUser.userType ==='constructor') return
+                         this.onOpenPopover(ev, 'ATTACH')}}>
                         <i class="fa fa-camera" aria-hidden="true"></i>
                         {/* <span className="wide-layout">Show Menu</span> */}
                         <ElementOverlay />
