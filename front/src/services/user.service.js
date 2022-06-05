@@ -10,7 +10,7 @@ export const userService = {
     getOnlineUsers,
     getUsers,
     getById,
-    googleLogin
+    deleteUser
 }
 
 async function login(credentials) {
@@ -93,6 +93,14 @@ async function getUsers() {
 async function getById(userId) {
     try {
         return httpService.get(`user/${userId}`)
+    } catch (err) {
+        throw err
+    }
+}
+
+async function deleteUser(userId) {
+    try {
+        await httpService.delete(`user/${userId}` , userId)
     } catch (err) {
         throw err
     }

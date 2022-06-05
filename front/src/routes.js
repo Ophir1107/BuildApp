@@ -1,7 +1,7 @@
 import { Home } from './pages/Home'
 import { Workspace } from './pages/Workspace'
 import { LoginSignup } from './pages/LoginSignup'
-import { Constructor } from './pages/Constructor'
+import { Users } from './pages/Users'
 import { BoardApp } from './pages/BoardApp'
 import { AddConstructor } from './cmps/AddConstructor'
 
@@ -19,8 +19,8 @@ export const routes = [
         component: LoginSignup,
     },
     {
-        path: '/constructor',
-        component: Constructor,
+        path: '/users',
+        component: Users,
     },
     {
         path: '/constructor/add',
