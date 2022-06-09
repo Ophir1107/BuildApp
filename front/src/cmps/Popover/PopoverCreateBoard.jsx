@@ -14,7 +14,7 @@ class _PopoverCreateBoard extends Component {
     }
     componentDidMount() {
 
-        this.setState({ color: '#D1D1D1' })
+        this.setState({ color: '#718C9C' }) //new board color
     }
 
     handleChange = ({ target }) => {
