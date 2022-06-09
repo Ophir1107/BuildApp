@@ -18,7 +18,7 @@ export function CardDetailsCover({ style, openPopover, card }) {
     return (
         <div className={`card-details-cover ${style.bgImgUrl ? 'img' : ''}`} style={getBackground()}>
             < button className="cover-menu-btn" onClick={(ev) => onOpenPopover(ev, 'COVER')
-            }> <VideoLabelIcon />Cover</button >
+            }> <VideoLabelIcon />רקע</button >
         </div >
     )
 }

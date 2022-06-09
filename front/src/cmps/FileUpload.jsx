@@ -39,7 +39,7 @@ export class FileUpload extends Component {
   render() {
     return (
       <div className="upload-preview" >
-        <label htmlFor="file-upload">Computer</label>
+        <label htmlFor="file-upload">מחשב</label>
         <input type="file" onChange={ this.uploadFile } accept="img/*" id="file-upload" />
       </div>
     )

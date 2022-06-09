@@ -46,14 +46,14 @@ export class PopoverAttach extends Component {
 
     render() {
         let { inputTxt } = this.state
-        return <Popover title="Attach from...">
+        return <Popover title="הוסף מ...">
             <div className="attach-pop-over-content">
                 <FileUpload onFileUpload={this.onFileUpload} />
                 <form onSubmit={this.onAttachLink}>
-                    <label className="pop-over-label" htmlFor="attach-input">Attach a link</label>
+                    <label className="pop-over-label" htmlFor="attach-input">הוסף קישור</label>
                     <input type="text" className="pop-over-input" value={inputTxt} id="attach-input"
-                        onChange={this.handleChange} placeholder="Attach any link here..." />
-                    <button className="primary-btn btn-wide">Attach</button>
+                        onChange={this.handleChange} placeholder="הוסף כל לינק כאן..." />
+                    <button className="primary-btn btn-wide">הוסף</button>
                 </form>
             </div>
         </Popover>

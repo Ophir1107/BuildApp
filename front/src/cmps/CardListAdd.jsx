@@ -57,7 +57,7 @@ export class CardListAdd extends Component {
                     <div className="card-list-add-open">
                         <TextareaAutosize className="card-list-add-input" ref={(textArea) => { this.textArea = textArea; }} value={titleTxt} autoFocus onBlur={this.toggleListAdd} onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="Enter list title..." aria-label="empty textarea" />
                         <div>
-                            <button className="primary-btn" onMouseDown={this.onAddList}>Add list</button>
+                            <button className="primary-btn" onMouseDown={this.onAddList}>הוסף רשימה</button>
                             <CloseRoundedIcon onMouseDown={this.toggleListAdd} />
                         </div>
                     </div>
@@ -65,7 +65,7 @@ export class CardListAdd extends Component {
                     <div className="card-list-add" onClick={(ev)=> 
                         {if (loggedInUser.userType === "constructor") return
                         this.toggleListAdd(ev)}}>
-                        <AddIcon /> Add {lists.length > 1 ? 'another' : 'a'} list
+                        <AddIcon /> הוסף {lists.length > 1 ? 'עוד' : ' '} רשימה
                         </div>
                 }
             </div>

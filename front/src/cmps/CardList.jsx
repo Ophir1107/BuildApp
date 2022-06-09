@@ -129,7 +129,7 @@ export class _CardList extends Component {
                                         <div className="card-list-footer" onClick={(ev)=>
                                             {if (loggedInUser.userType === "constructor") return
                                             this.toggleCardAdd(ev)}}>
-                                            <AddIcon /> Add {currList.cards.length > 1 ? 'another' : ''} card
+                                            <AddIcon /> הוסף {currList.cards.length > 1 ? 'עוד' : ''} משימה\ריג'קט
                                         </div>
                                     }
                                 </div>

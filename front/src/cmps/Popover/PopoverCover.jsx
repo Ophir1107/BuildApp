@@ -60,7 +60,7 @@ class _PopoverCover extends Component {
         const { bgColor, coverMode, bgImgUrl } = this.state
         return <Popover title="Cover">
             <div className="cover-pop-over-content">
-                <h4>SIZE</h4>
+                <h4>גודל</h4>
                 <div className="cover-options flex justify-space-between align-center">
                     <div className={`header-cover-preview ${coverMode === 'header' ? 'selected' : ''}`} onClick={() => this.onSetMode('header')} >
                         <div className="header-section" style={{ backgroundColor: bgColor ? bgColor : '#5e6c844d' }}></div>
@@ -68,11 +68,11 @@ class _PopoverCover extends Component {
                     <div className={`full-cover-preview ${coverMode === 'full' ? 'selected' : ''}`} onClick={() => this.onSetMode('full')} style={{ backgroundColor: bgColor ? bgColor : '#5e6c844d' }}> </div>
                 </div>
                 {(bgColor || bgImgUrl) && <div className="flex">
-                    <button className="secondary-btn full" onClick={this.onRemoveCover}>Remove Cover</button>
+                    <button className="secondary-btn full" onClick={this.onRemoveCover}>הסר רקע</button>
                 </div>}
-                <h4>COLOR</h4>
+                <h4>צבע</h4>
                 <ColorPalette selectedColor={bgColor} handleChange={this.handleChange} />
-                <h4>ATTACHMENTS</h4>
+                <h4>מסמכים</h4>
                 <FileUpload onFileUpload={this.onFileUpload} />
             </div>
         </Popover>

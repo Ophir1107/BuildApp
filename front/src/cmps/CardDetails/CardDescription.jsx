@@ -43,7 +43,7 @@ export class _CardDescription extends Component {
         return (<div className="card-description flex column">
             <div className="window-modal-title flex align-center">
                 <SubjectIcon />
-                <h3>Description</h3>
+                <h3>תיאור</h3>
                 <button className={`secondary-btn ${!description || isInputSelected ? 'hidden' : 'show'}`}
                     onClick={(ev) => {
                         if (loggedInUser.userType === 'constructor') return
@@ -59,11 +59,11 @@ export class _CardDescription extends Component {
                     ref={(input) => { this.selectedInput = input; }}
                     onBlur={(ev) => {if (loggedInUser.userType ==='constructor') return
                                      this.onSaveDescription(ev)}}
-                    value={description} placeholder="Add a more detailed description..."
+                    value={description} placeholder="הוסף תיאור למשימה..."
                     onChange={(ev)=> { if (loggedInUser.userType ==='constructor') return
                     this.handleChange(ev)}} aria-label="empty textarea" />
                 <div className={`description-controls flex align-center ${isInputSelected ? 'show' : 'hidden'}`}>
-                    <button className="primary-btn" onClick={() => this.onSaveDescription()}>Save</button>
+                    <button className="primary-btn" onClick={() => this.onSaveDescription()}>שמור</button>
                     <CloseRoundedIcon className="close-svg" />
                 </div>
             </div>
