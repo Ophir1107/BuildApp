@@ -63,9 +63,8 @@ class _Users extends Component {
                     </Link>
                     <div className="users-preview flex column">
                         <div className='users-actions'>
-                        <input type="text" autoFocus className="pop-over-input" onChange={this.handleChange} />
-                        <div></div>
                         <Link to="/signup" className="primary-btn add-cons-btn" >הוספת משתמש חדש</Link>
+                        <input type="text" autoFocus className="pop-over-input" onChange={this.handleChange} placeholder="חיפוש משתמשים" />
                         </div>
                         <div className="users-table">
                             <div className="users-header user-preview" >
@@ -80,7 +79,7 @@ class _Users extends Component {
                                 <div>{user.phone ? user.phone : 'number invalid' }</div>
                                 <div>{user.email ? user.email : 'email invalid' }</div>
                                 <div>{user.userType ? user.userType : 'userType invalid' }</div>
-                                <div>{user.field ? user.filed : 'field invalid'}</div>
+                                <div>{user.field ? user.field : '-----'}</div>
                                 <icon onClick={(ev) => this.removeUser(ev , user._id)}
                             class={`fas fa-archive icon-sm trash-icon`}>
                             </icon>

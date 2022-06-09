@@ -89,7 +89,7 @@ async function update(user) {
 }
 
 async function add(user) {
-    const { username, password, fullname , userType, phone , email } = user
+    const { username, password, fullname , userType, phone , email , field} = user
     try {
         // peek only updatable fields!
         const userToAdd = {
@@ -97,6 +97,7 @@ async function add(user) {
             password,
             userType,
             fullname,
+            field,
             phone,
             email,
             isAdmin: false,
@@ -109,6 +110,7 @@ async function add(user) {
         await collection.insertOne(userToAdd)
         return userToAdd
     } catch (err) {
+        console.log(user , "user is :")
         logger.error('cannot insert user', err)
         throw err
     }

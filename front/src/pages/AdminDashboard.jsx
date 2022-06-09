@@ -215,7 +215,7 @@ class _AdminDashboard extends Component {
                                 styles={this.progressCircleStyle} />
                         </div>
                     </div>
-                    <ProjectsCharts/>
+                    {/* <ProjectsCharts/> */}
                     {/* <BoardCharts chartsData={chartsData} /> */}
                 </section>
             </>

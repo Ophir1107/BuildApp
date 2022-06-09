@@ -22,7 +22,8 @@ export class _LoginSignup extends Component {
             userType: '',
             phone: '',
             email: '',
-            imgUrl: ''
+            imgUrl: '',
+            field: '',
         },
         credentials: {
             username: '',
@@ -73,6 +74,9 @@ export class _LoginSignup extends Component {
         } else if (values.phone.length < 8 || values.phone.length > 12 ) {
             errors.phone = 'Invalid phone number use 8-12 number'
         }
+        if (values.field && values.userType !== 'constructor') {
+            errors.field = 'שדה זה רלוונטי לקבלנים בלבד'
+        } 
         return errors
     }
 
@@ -162,13 +166,27 @@ export class _LoginSignup extends Component {
                                 value = {this.value}
                                 className = "LoginSelectBar"
                             >
-                                <option defaultValue disabled>Select type of user </option>
+                                <option defaultValue disabled>בחר תפקיד למשתמש</option>
                                 <option value = "admin">admin</option>
                                 <option value = "manager">manager</option>
                                 <option value = "client">client</option>
                                 <option value = "constructor">constructor</option>
                                 
                             </Field>
+                      
+                            <Field name="field" as="select" placeholder="Select field of constructor"
+                                //component="select"
+                                value = {this.value}
+                                className = "LoginSelectBar field"
+                            >
+                                <option defaultValue disabled>בחר תחום לקבלן </option>
+                                <option value = "חשמל">חשמל</option>
+                                <option value = "אינסטלציה">אינסטלציה</option>
+                                <option value = "נגרות">נגרות</option>
+                                <option value = "בינוי">בינוי</option>
+                                
+                            </Field>
+                            <ErrorMessage name="field" component="p" />
 
                             <button type="submit" className="primary-btn login-signup-btn">Sign up</button>
                         </Form>

@@ -1,16 +1,24 @@
 
 .users-preview{
-    width : 80% ;
+    width : max-content ;
     margin-top : 20px;
     display: flex;
     margin-inline : auto;
     text-align : center;
+    > *{
+        margin-inline:20px;
+    }
     .users-actions{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        display: flex;
+        flex-direction: column;
+        // grid-template-rows: 0.5fr 0.5fr;
+        .pop-over-input{
+            max-width:300px;
+        }
         .add-cons-btn{
             margin: 4px 0 12px 0;
-            width: 100%;
+            // width: 100%;
+            max-width:300px;
             outline: none;
             border: none;
             border-radius: 3px;
