@@ -75,9 +75,9 @@ class _PopoverArchive extends Component {
                         </Link>
                         <p className="archive-card-actions">
                             <button className="clean-btn"
-                                onClick={() => this.onSendToBoard(card)}>Send to board</button>
+                                onClick={() => this.onSendToBoard(card)}>שלח לפרויקט</button>
                             <button className="clean-btn"
-                                onClick={() => this.onRemoveCard(card)} href="">- Delete</button>
+                                onClick={() => this.onRemoveCard(card)} href="">-מחק</button>
                         </p>
                     </div>
                 })}

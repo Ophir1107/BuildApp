@@ -70,14 +70,15 @@
                 border-radius: 6px;
                 padding: 5px 15px;
                 line-height: rem(44px);
-                color: #0065ff;
+                // color: #0065ff;
+                color: #8a8787;
                 background-color: transparent;
                 background-image: none;
-                border: 1px solid #0065ff;
+                border: 1px solid #8a8787;
                 &:hover {
                     color: #fff;
-                    background-color: #0065ff;
-                    border-color: #0065ff;
+                    background-color: #8a8787;
+                    border-color: #8a8787;
                 }
             }
 

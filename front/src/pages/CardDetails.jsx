@@ -152,7 +152,7 @@ class _CardDetails extends Component {
                                     />
                             
                         </div>
-                        <p className="bottom-list-name">in list <span>{list.title}</span></p>
+                        <p className="bottom-list-name">בתוך הרשימה <span>{list.title}</span></p>
                     </div>
                     <div className="card-details-main-container">
                         <div className="card-details-main flex column">

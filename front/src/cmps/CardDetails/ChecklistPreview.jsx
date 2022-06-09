@@ -97,7 +97,7 @@ export class ChecklistPreview extends Component {
                         onClick={() => this.onToggleTitleEdit()}>{checklist.title}</h3>
                 </div>
                 <button
-                    onClick={() => onRemoveChecklist(checklist)} className="secondary-btn">Delete</button>
+                    onClick={() => onRemoveChecklist(checklist)} className="secondary-btn">מחק</button>
             </div>}
             {isTitleEdit && <div className="title-editor flex">
                 <CheckBoxOutlinedIcon />

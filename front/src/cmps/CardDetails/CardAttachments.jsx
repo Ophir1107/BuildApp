@@ -42,7 +42,7 @@ export function CardAttachments({ attachs, onDeleteCardAttachment, card, openPop
                 })}
             </div>
             <button className="secondary-btn"
-                onClick={(ev) => onOpenPopover(ev, 'ATTACH')}>Add an attachment</button>
+                onClick={(ev) => onOpenPopover(ev, 'ATTACH')}>הוסף קישור</button>
         </div>
     )
 }

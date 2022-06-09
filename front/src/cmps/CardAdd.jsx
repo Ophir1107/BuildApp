@@ -80,11 +80,11 @@ export class _CardAdd extends Component {
                     <FmdBadIcon className="card-preview-urgent-btn" style={{color: isUrgent ? '#EB5A46' : '#6b778c'}} onClick={this.onToggleUrgentTask}/>
                 </div>
                 {loggedInUser.userType !== 'client' && (<div>
-                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(false)}>Add Task</button>
+                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(false)}>הוסף משימה</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>)}
                 <div>
-                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(true)}>Add Reject</button>
+                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(true)}>הוסף ריג'קט</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>
             </div>

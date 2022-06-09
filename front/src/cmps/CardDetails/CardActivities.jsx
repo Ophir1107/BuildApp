@@ -36,10 +36,10 @@ export class CardActivities extends Component {
                 <div className="window-modal-title flex justify-space-between">
                     <div className="flex align-center">
                         <FormatListBulletedIcon />
-                        <h3>Activities</h3>
+                        <h3>פעילויות</h3>
                     </div>
                     <button className="secondary-btn" onClick={this.onToggleFilter}>
-                        {isOnlyComments ? 'Show details' : 'Hide details'}
+                        {isOnlyComments ? 'הצג נתונים' : 'הסתר נתונים'}
                     </button>
                 </div>
                 <CommentAdd card={card} />
