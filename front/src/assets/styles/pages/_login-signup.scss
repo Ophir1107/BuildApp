@@ -1,5 +1,6 @@
 .login-signup-container {
-    background-color: $clr2;
+    // background-color: $clr2;
+    background-color:#D1D1D1;
     height: 100vh;
 
     .logo {
@@ -12,12 +13,13 @@
 
         h1 {
             font-size: 58px;
+            color: #FBB507;
             font-family: SourceSans-Bold;
         }
     }
 
     .login-signup {
-        background-color: $clr2;
+        background-color: #5D5D5D;
         border-radius: $borderRad1;
         max-width: 400px;
         margin: 0 auto;
@@ -25,7 +27,8 @@
         box-shadow: none;
 
         h3 {
-            color: $clr3;
+            // color: $clr3;
+            color: #ebebeb;
             text-align: center;
             font-size: 16px;
             letter-spacing: -0.01em;
@@ -46,7 +49,8 @@
 
             &:focus {
                 background-color: white;
-                border: 2px solid #4c9aff;
+                border: 2px solid #FBB507;
+                // border: 2px solid #4c9aff;
                 box-shadow: 0 0 0;
             }
         }

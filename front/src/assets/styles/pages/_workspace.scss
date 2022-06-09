@@ -1,5 +1,6 @@
 .workspace-container {
-    background-color: $clr2;
+    //background-color: $clr2;
+    background-color: #5D5D5D;
     height: 100vh;
     margin: 40px 8px 0 8px;
 
@@ -8,7 +9,7 @@
         margin-inline-start: 16px;
         margin-inline-end: 32px;
         width: 270px;
-        background: white;
+        background: #5D5D5D;
         font-weight: bold;
         color: $clr1;
 
@@ -16,7 +17,8 @@
             width: 100%;
             padding: 6px 8px 6px 0;
             &.active {
-                background-color: #e4f0f6;
+                //background-color: #e4f0f6;
+                background-color: #5D5D5D;
             }
         }
     }
@@ -32,7 +34,8 @@
     }
 
     .preview-title {
-        color: $clr4;
+        //color: $clr4;
+        color: #FBB507;
         font-size: 16px;
         font-weight: 700;
         margin-inline-start: 5px;
