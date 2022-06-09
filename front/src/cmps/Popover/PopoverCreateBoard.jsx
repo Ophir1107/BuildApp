@@ -69,14 +69,14 @@ class _PopoverCreateBoard extends Component {
                 <div className="flex">
                     <div className="board-preview" style={{ background: color }}>
                         <input type="text" name="title" value={title}
-                            onChange={this.handleChange} placeholder="Add board title" />
+                            onChange={this.handleChange} placeholder="הוסף שם לפרויקט" />
                     </div>
                     <div className="create-preview-colors">
                         <ColorPalette count={6} isGradient={true} handleChange={this.handleChange} selectedColor={color} />
                         <ColorPalette count={3} isGradient={false} handleChange={this.handleChange} selectedColor={color} />
                     </div>
                 </div>
-                <button className={`primary-btn ${title ? '' : 'disabled'}`} onClick={this.onCreateBoard}>Create board</button>
+                <button className={`primary-btn ${title ? '' : 'disabled'}`} onClick={this.onCreateBoard}>ייצר פרויקט</button>
             </div>
         </ScreenOverlay>
     }

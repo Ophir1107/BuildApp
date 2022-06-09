@@ -51,7 +51,7 @@ class _CommentAdd extends Component {
                         onKeyDown={this.onSaveComment}
                         value={txt}
                         aria-label="empty textarea"
-                        placeholder="Write a comment"
+                        placeholder="כתוב תגובה..."
                         autoCorrect="false"
                         autoComplete="false"
                         ref={(input) => this.selectedInput = input}

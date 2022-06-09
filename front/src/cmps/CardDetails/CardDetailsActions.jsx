@@ -125,7 +125,7 @@ class _CardDetailsActions extends Component {
                     </div>
                 </button></div>} */}
             <div className="add-section flex column">
-                <h4>ADD TO CARD</h4>
+                <h4>הוסף למשימה</h4>
                 <button className="secondary-btn actions-btn "
                     onClick={(ev) =>{
                     if (loggedInUser.userType === "constructor") return

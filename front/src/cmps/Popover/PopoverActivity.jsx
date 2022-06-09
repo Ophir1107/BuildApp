@@ -35,12 +35,12 @@ class _PopoverActivity extends Component {
                     <button
                         onClick={() => this.toggleFilter('all')}
                         className={`clean-btn filter-btn ${!isCommentsOnly && 'selected'}`}>
-                        All
+                        הכל
                     </button>
                     <button
                         onClick={() => this.toggleFilter('comments')}
                         className={`clean-btn filter-btn ${isCommentsOnly && 'selected'}`}>
-                        Comments
+                        תגובות
                     </button>
                 </div>
                 <div className="activity-list-pop-over">

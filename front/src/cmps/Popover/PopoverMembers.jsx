@@ -59,11 +59,11 @@ class _PopoverMembers extends Component {
     render() {
         const { presentedMembers, inputTxt } = this.state
         if (!presentedMembers) return '';
-        return <Popover title={"Members"} >
+        return <Popover title={"משתתפים"} >
             <div className="members-pop-over-content">
                 <input className="pop-over-input" type="text" value={inputTxt}
-                    onChange={this.handleChange} placeholder={"Search members"} />
-                <h4>BOARD MEMBERS</h4>
+                    onChange={this.handleChange} placeholder={"חפש משתתפים"} />
+                <h4>חברי הפרויקט</h4>
                 <ul className="clean-list">
                     {presentedMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
                         toggleMember={this.toggleMember} isSelected={this.isMemberInCard(member)} />)}

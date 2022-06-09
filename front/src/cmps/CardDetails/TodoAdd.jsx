@@ -48,7 +48,7 @@ export class TodoAdd extends Component {
                         onKeyDown={(ev) => this.onCreateTodo(ev)}
                         value={title}
                         autoFocus
-                        placeholder="Add an item"
+                        placeholder="הוסף פריט"
                         autoCorrect="false"
                         aria-label="empty textarea" />
                     <div className="checklist-controllers flex align-center">

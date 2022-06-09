@@ -82,7 +82,7 @@ class _CardEdit extends Component {
                             className="open-card-btn clean-btn"
                             onClick={() => onCloseCardEdit()}>
                             <WebAssetIcon />
-                            כנס למשימה
+                            הכנס למשימה
                         </Link>
                         <button
                             className="edit-labels-btn clean-btn"
