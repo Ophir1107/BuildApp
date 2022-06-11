@@ -20,15 +20,15 @@ class _Workspace extends Component {
     }
 
     get favoriteBoards() {
-        const { boards } = this.props
+        const boards = this.getUserBoards
         console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
         return boards.filter(board => board.isFavorite === true)
     }
 
-
-
-    getUserBoards(){
-        const {loggedInUser , boards} = this.props
+    get getUserBoards(){
+        const {loggedInUser } = this.props
+        let { boards} =this.state
+        if (!boards) boards = this.props.boards
         if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
         for(let i=0 ; i<boards.length ; i++){
@@ -39,9 +39,24 @@ class _Workspace extends Component {
                 }
             }
         }
-        this.setState({boardId : ''})
         return userBoards
     }
+
+    // getUserBoards(){
+    //     const {loggedInUser , boards} = this.props
+    //     if (loggedInUser && loggedInUser.userType === 'admin') return boards
+    //     let userBoards = []
+    //     for(let i=0 ; i<boards.length ; i++){
+    //         let boardMembers = boards[i].members
+    //         for(let j=0 ; j<boardMembers.length ; j++){
+    //             if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+    //                 userBoards.push(boards[i])
+    //             }
+    //         }
+    //     }
+    //     this.setState({boardId : ''})
+    //     return userBoards
+    // }
 
     onDeleteBoard(ev, boardId , oldBoards){
         ev.preventDefault()
@@ -89,7 +104,7 @@ class _Workspace extends Component {
                             <BoardIcon />
                             <h3>פרויקטים</h3>
                         </div>
-                        <BoardList boards={boards} onToggleFavorite={this.onToggleFavorite}   />
+                        <BoardList boards={this.getUserBoards} onToggleFavorite={this.onToggleFavorite}   />
                     </div>
                 </div>
             </section>

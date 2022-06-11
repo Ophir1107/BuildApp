@@ -55,8 +55,9 @@ class  _BoardList extends Component {
     }
 
     render (){
-        let boards = this.getUserBoards()
-        const {loggedInUser} = this.props
+        // let boards = this.getUserBoards()
+        const {loggedInUser , boards} = this.props
+        console.log(boards , 'boards from get user boards')
         return(
 
         <div className="board-list">
