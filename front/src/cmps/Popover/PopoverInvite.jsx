@@ -52,7 +52,7 @@ class _PopoverInvite extends Component {
 
     render() {
         const {userType} = this.state
-        return <Popover title="Invite to board">
+        return <Popover title="הזמן לפרויקט">
             <div className="invite-details flex column">
                 <input type="text" autoFocus className="pop-over-input" onChange={this.handleChange} />
                 <div className="members">

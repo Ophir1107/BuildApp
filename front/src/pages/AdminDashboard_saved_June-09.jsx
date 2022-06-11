@@ -6,12 +6,11 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import { ReactComponent as ExclamationIcon } from '../assets/img/icons/exclamation-lg.svg'
 import { ReactComponent as ChartIcon } from '../assets/img/icons/chart.svg'
-import { BoardCharts } from '../cmps/BoardCharts'
+import { BoardCharts } from '../cmps/BoardCharts';
+import { StackedBarChart } from '../cmps/StackedBarChart';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { Loader } from '../cmps/Loader'
 import 'react-circular-progressbar/dist/styles.css';
-import StackedBarChart from '../cmps/StackedBarChart';
-
 
 class _AdminDashboard extends Component {
 

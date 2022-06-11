@@ -1,101 +1,99 @@
-import React from "react";
-import { Bar, char } from "react-chartjs-2";
 
-const data = {
-  labels: ["Organic", "Sponsored", "Organic", "Sponsored"],
-  previousDate: {
-    label: "08/10/2019 - 09/30/2019",
-    dataSet: [10000, 150000, 10000, 150000]
-  },
-  currentDate: {
-    label: "10/01/2019 - 11/20/2019",
-    dataSet: [10000, 225000, 10000, 225000]
+import React, { Component } from 'react'
+import { Bar, defaults, } from 'react-chartjs-2'
+
+
+
+export class StackedBarChart extends Component {
+
+  get cardsPerMemberData() {
+    const { cardsPerMemberMap } = this.props.chartsData
+    return {
+        labels: Object.keys(cardsPerMemberMap),
+        datasets: [
+            {
+                data: Object.values(cardsPerMemberMap),
+                backgroundColor: this.state.gradientColor,
+                barThickness: 20
+            }
+        ]
+    }
   }
-};
 
 
-//export class BoardCharts extends Component 
-export default function StackedBarChart() {
-  return (
-    <div className="StackedBarChart">
-      <Bar
-        pointStyle="star"
-        data={{
-          labels: data.labels,
-          responsive: true,
-          offset: true,
-          datasets: [
+  get cardsPerMemberMap() {
+    const { members } = this.props.board
+    const allCards = this.allCards
+    const cardsPerMemberMap = members.reduce((acc, member) => {
+        if (!acc[member.fullname]) acc[member.fullname] = 0
+        const cardsPerMemberCount = allCards.reduce((acc, card) => {
+            const memberIdx = card.members.findIndex(currMember => currMember._id === member._id)
+            if (memberIdx > -1 && !card.isDone) acc++
+            return acc
+        }, 0)
+        acc[member.fullname] = cardsPerMemberCount
+        return acc
+    }, {})
+    return cardsPerMemberMap
+  }
+
+
+  get cardsPerMemberData() {
+    const { cardsPerMemberMap } = this.props.chartsData
+    return {
+        labels: Object.keys(cardsPerMemberMap),
+        datasets: [
             {
-              label: "Mobile",
-              pointStyle: "rectRounded",
-              backgroundColor: "#6ED3FF",
-              barThickness: 40,
-              categoryPercentage: 1,
-              data: data.previousDate.dataSet //From API
-            },
-            {
-              label: "Desktop",
-              backgroundColor: "#1497FF",
-              barThickness: 40,
-              categoryPercentage: 1,
-              pointStyle: "triangle",
-              data: data.currentDate.dataSet //From API
+                data: Object.values(cardsPerMemberMap),
+                backgroundColor: this.state.gradientColor,
+                barThickness: 20
             }
-          ]
-        }}
-        height={220}
-        options={{
-          offsetGridLines: true,
-          drawTicks: true,
-          layout: {
-            padding: {
-              top: 30,
-              right: 40,
-              bottom: 40
-            }
-          },
-          legend: {
-            display: true,
-            position: "down",
-            align: "start",
-            labels: {
-              usePointStyle: true
-            }
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [
-              {
-                stacked: true,
-                ticks: {
-                  padding: 5
-                },
-                gridLines: {
-                  display: false
-                }
-              }
-            ],
-            yAxes: [
-              {
-                stacked: false,
-                gridLines: {
-                  drawBorder: false
-                },
-                ticks: {
-                  beginAtZero: true,
-                  maxTicksLimit: 6,
-                  padding: 20,
-                  callback(n) {
-                    if (n < 1e3) return n;
-                    if (n >= 1e3) return +(n / 1e3).toFixed(1) + "K";
-                  }
-                }
-              }
-            ]
-          }
-        }}
-      />
-    </div>
-  );
+        ]
+    }
+}
+
+
+  render() {
+
+    return (
+        <div className="board-charts flex wrap justify-center align-center">
+            <div className=" flex column">
+                <h3>Tasks per member</h3>
+                <div className="chart">
+                    <Bar
+                        data={this.cardsPerMemberData}
+                        options={{
+                            indexAxis: 'y',
+                            maintainAspectRatio: false,
+                            legend: {
+                                labels: {
+                                    // This more specific font property overrides the global property
+                                    fontColor: 'black'
+                                }
+                            }
+                        }
+                        }
+
+
+                    />
+                </div>
+            </div>
+            <div className="flex column">
+                <h3>Tasks per list</h3>
+                <div className="chart">
+                    <Bar
+                        data={this.cardsPerListData}
+                        options={{
+                            indexAxis: 'y',
+                            maintainAspectRatio: false
+                        }}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+  }
+
+
+
 }

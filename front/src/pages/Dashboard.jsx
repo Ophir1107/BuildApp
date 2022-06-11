@@ -203,7 +203,7 @@ class _Dashboard extends Component {
                                 styles={this.progressCircleStyle} />
                         </div>
                     </div>
-                    <BoardCharts chartsData={chartsData} />
+                    {/* <BoardCharts chartsData={chartsData} /> */}
                 </section>
             </>
         )
