@@ -16,7 +16,9 @@ class  _BoardList extends Component {
         this.setState({boards})
     }
     getUserBoards(){
-        const {loggedInUser , boards} = this.props
+        const {loggedInUser } = this.props
+        let { boards} =this.state
+        if (!boards) boards = this.props.boards
         if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
         for(let i=0 ; i<boards.length ; i++){
@@ -30,7 +32,7 @@ class  _BoardList extends Component {
         return userBoards
     }
     
-    onDeleteBoard(ev, boardId){ 
+    onDeleteBoard =(ev, boardId) =>{ 
         ev.preventDefault()
         let {boards} = this.props
         console.log('boards from delete' , boards)
@@ -40,6 +42,7 @@ class  _BoardList extends Component {
         // this.setState({boardId : ''})
         console.log(this.state.boards , "this state")
         boardService.remove(boardId)
+        // onSaveBoards()
         // this.componentDidMount()
     }
     onToggleFavorite = (ev, boardId) => {
