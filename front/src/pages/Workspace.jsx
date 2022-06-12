@@ -19,28 +19,28 @@ class _Workspace extends Component {
         this.setState({ boards })
     }
 
-    get favoriteBoards() {
-        const boards = this.getUserBoards
-        console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
-        return boards.filter(board => board.isFavorite === true)
-    }
+    // get favoriteBoards() {
+    //     const boards = this.getUserBoards
+    //     console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
+    //     return boards.filter(board => board.isFavorite === true)
+    // }
 
-    get getUserBoards(){
-        const {loggedInUser } = this.props
-        let { boards} =this.state
-        if (!boards) boards = this.props.boards
-        if (loggedInUser && loggedInUser.userType === 'admin') return boards
-        let userBoards = []
-        for(let i=0 ; i<boards.length ; i++){
-            let boardMembers = boards[i].members
-            for(let j=0 ; j<boardMembers.length ; j++){
-                if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
-                    userBoards.push(boards[i])
-                }
-            }
-        }
-        return userBoards
-    }
+    // get getUserBoards(){
+    //     const {loggedInUser } = this.props
+    //     let { boards} =this.state
+    //     if (!boards) boards = this.props.boards
+    //     if (loggedInUser && loggedInUser.userType === 'admin') return boards
+    //     let userBoards = []
+    //     for(let i=0 ; i<boards.length ; i++){
+    //         let boardMembers = boards[i].members
+    //         for(let j=0 ; j<boardMembers.length ; j++){
+    //             if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+    //                 userBoards.push(boards[i])
+    //             }
+    //         }
+    //     }
+    //     return userBoards
+    // }
 
     onDeleteBoard(ev, boardId , oldBoards){
         ev.preventDefault()
@@ -59,25 +59,19 @@ class _Workspace extends Component {
 
 
     render() { 
-        // let boards = this.getUserBoards()
-        // const {loggedInUser , boards} = this.props
+        // let boards = this.getUserBoards
+        const {loggedInUser , boards} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
                 <Route path="/workspace/dashboard" component={AdminDashboard} />
                 <div className="boards-wrapper flex column">
-                    {/* <div className="boards-preview flex column">
-                        <div className="preview-title flex align-center">
-                            <i className="far fa-star"></i>
-                            <h3>פרויקטים מסומנים</h3>
-                        </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} isFavorite={true} />
-                    </div> */}
+               
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             <BoardIcon />
                             <h3>פרויקטים</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite}  isFavorite={false} />
+                        <BoardList boards={boards} />
                     </div>
                 </div>
             </section>

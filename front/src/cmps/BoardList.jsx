@@ -14,6 +14,7 @@ class  _BoardList extends Component {
 
     componentDidMount(){
         const {boards} = this.props
+        console.log(boards , "boards from boards list")
         this.setState({boards})
     }
     // getUserBoards(){
@@ -40,32 +41,36 @@ class  _BoardList extends Component {
     // }
 
     get getUserBoards(){
+        console.log("hhoioooodgfdogdfng,ndfg")
         const {loggedInUser } = this.props
-        let { boards} =this.props
-        if (!boards) boards = this.props.boards
+        let { boards} =this.state
+        // if (!boards) boards = this.props.boards
         if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
+        console.log(boards.length , "board length")
         for(let i=0 ; i<boards.length ; i++){
             let boardMembers = boards[i].members
+            console.log(boardMembers , "board members")
             for(let j=0 ; j<boardMembers.length ; j++){
                 if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
                     userBoards.push(boards[i])
+                    console.log(userBoards.length , "board members")
                 }
             }
         }
-        this.setState({boards : userBoards})
+        // this.setState({boards : userBoards})
         return userBoards
     }
     
     onDeleteBoard =(ev, boardId) =>{ 
         ev.preventDefault()
         let {boards , onSaveBoards} = this.props
-        console.log('boards from delete' , boards)
-        console.log(boards.length)
+        // console.log('boards from delete' , boards)
+        // console.log(boards.length)
         boards = boards.filter(board => board._id !== boardId)
         this.setState({boards})
         // this.setState({boardId : ''})
-        console.log(boards , "this state")
+        // console.log(boards , "this state")
         boardService.remove(boardId)
         onSaveBoards(boards)
         // this.componentDidMount()
@@ -84,7 +89,7 @@ class  _BoardList extends Component {
 
         const {loggedInUser} = this.props
         let {boards , isFavorite} = this.state
-        // if ( isFavorite){ boards = this.getFavoriteBoards
+        boards = this.getUserBoards
         // console.log(boards, "get board list from state")
         // }
         return(
