@@ -14,6 +14,8 @@ export function loadBoards(filterBy = { ctg: '' }) {
     }
 }
 
+
+
 export function loadBoard(boardId) {
     return async dispatch => {
         try {
@@ -70,7 +72,7 @@ export function setFilter(filterBy) {
     }
 }
 
-export function saveBoards(boards) {
+export function onSaveBoards(boards) {
     return dispatch => {
         dispatch({ type: 'SET_BOARDS', boards })
     }

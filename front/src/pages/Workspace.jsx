@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { loadBoards, onSaveBoard, saveBoards } from '../store/actions/board.actions'
+import { loadBoards, onSaveBoard } from '../store/actions/board.actions'
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
@@ -42,22 +42,6 @@ class _Workspace extends Component {
         return userBoards
     }
 
-    // getUserBoards(){
-    //     const {loggedInUser , boards} = this.props
-    //     if (loggedInUser && loggedInUser.userType === 'admin') return boards
-    //     let userBoards = []
-    //     for(let i=0 ; i<boards.length ; i++){
-    //         let boardMembers = boards[i].members
-    //         for(let j=0 ; j<boardMembers.length ; j++){
-    //             if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
-    //                 userBoards.push(boards[i])
-    //             }
-    //         }
-    //     }
-    //     this.setState({boardId : ''})
-    //     return userBoards
-    // }
-
     onDeleteBoard(ev, boardId , oldBoards){
         ev.preventDefault()
         let boards = oldBoards
@@ -68,17 +52,6 @@ class _Workspace extends Component {
         boards = newBoards
         this.props.boards = boards
 
-
-        // let boards = []
-        // console.log(boards.length)
-        // this.setState(boards)
-        // let {constructors} = this.state
-        // let newConstructors = []
-        // newConstructors = constructors.filter(constructor => constructor._id !== constructorId)
-        // console.log(constructors.length)
-        // constructorService.deleteConstructors(constructorId)
-        // constructors = newConstructors
-        // this.setState({constructors})
     }
 
 
@@ -87,24 +60,24 @@ class _Workspace extends Component {
 
     render() { 
         // let boards = this.getUserBoards()
-        const {loggedInUser , boards} = this.props
+        // const {loggedInUser , boards} = this.props
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
                 <Route path="/workspace/dashboard" component={AdminDashboard} />
                 <div className="boards-wrapper flex column">
-                    <div className="boards-preview flex column">
+                    {/* <div className="boards-preview flex column">
                         <div className="preview-title flex align-center">
                             <i className="far fa-star"></i>
                             <h3>פרויקטים מסומנים</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={this.favoriteBoards} />
-                    </div>
+                        <BoardList onToggleFavorite={this.onToggleFavorite} isFavorite={true} />
+                    </div> */}
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             <BoardIcon />
                             <h3>פרויקטים</h3>
                         </div>
-                        <BoardList boards={this.getUserBoards} onToggleFavorite={this.onToggleFavorite}   />
+                        <BoardList onToggleFavorite={this.onToggleFavorite}  isFavorite={false} />
                     </div>
                 </div>
             </section>
@@ -121,8 +94,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     loadBoards,
-    onSaveBoard,
-    saveBoards
+    onSaveBoard
 
 }
 

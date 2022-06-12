@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { loadBoards, onSaveBoard, saveBoards } from '../store/actions/board.actions'
+import { loadBoards, onSaveBoard, onSaveBoards } from '../store/actions/board.actions'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
 import { boardService } from '../services/board.service'
@@ -8,16 +8,40 @@ import { connect } from 'react-redux'
 
 class  _BoardList extends Component {
     state= {
-        boards : []
+        boards : [] ,
+        // isFavorite : false
     }
 
     componentDidMount(){
         const {boards} = this.props
         this.setState({boards})
     }
-    getUserBoards(){
+    // getUserBoards(){
+    //     const {loggedInUser } = this.props
+    //     let { boards} =this.state
+    //     if (!boards) boards = this.props.boards
+    //     if (loggedInUser && loggedInUser.userType === 'admin') return boards
+    //     let userBoards = []
+    //     for(let i=0 ; i<boards.length ; i++){
+    //         let boardMembers = boards[i].members
+    //         for(let j=0 ; j<boardMembers.length ; j++){
+    //             if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+    //                 userBoards.push(boards[i])
+    //             }
+    //         }
+    //     }
+    //     return userBoards
+    // }
+
+    // get favoriteBoards() {
+    //     const boards = this.getUserBoards
+    //     console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
+    //     return boards.filter(board => board.isFavorite === true)
+    // }
+
+    get getUserBoards(){
         const {loggedInUser } = this.props
-        let { boards} =this.state
+        let { boards} =this.props
         if (!boards) boards = this.props.boards
         if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
@@ -29,20 +53,21 @@ class  _BoardList extends Component {
                 }
             }
         }
+        this.setState({boards : userBoards})
         return userBoards
     }
     
     onDeleteBoard =(ev, boardId) =>{ 
         ev.preventDefault()
-        let {boards} = this.props
+        let {boards , onSaveBoards} = this.props
         console.log('boards from delete' , boards)
         console.log(boards.length)
         boards = boards.filter(board => board._id !== boardId)
         this.setState({boards})
         // this.setState({boardId : ''})
-        console.log(this.state.boards , "this state")
+        console.log(boards , "this state")
         boardService.remove(boardId)
-        // onSaveBoards()
+        onSaveBoards(boards)
         // this.componentDidMount()
     }
     onToggleFavorite = (ev, boardId) => {
@@ -52,12 +77,16 @@ class  _BoardList extends Component {
         const board = boards.find(board => board._id === boardId)
         board.isFavorite = !board.isFavorite
         onSaveBoard(board)
+        
     }
 
     render (){
-        // let boards = this.getUserBoards()
-        const {loggedInUser , boards} = this.props
-        console.log(boards , 'boards from get user boards')
+
+        const {loggedInUser} = this.props
+        let {boards , isFavorite} = this.state
+        // if ( isFavorite){ boards = this.getFavoriteBoards
+        // console.log(boards, "get board list from state")
+        // }
         return(
 
         <div className="board-list">
@@ -87,7 +116,7 @@ class  _BoardList extends Component {
 
 function mapStateToProps(state) {
     return {
-        // boards: state.boardModule.boards,
+        boards: state.boardModule.boards,
         loggedInUser: state.appModule.loggedInUser
     }
 }
@@ -95,7 +124,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     loadBoards,
     onSaveBoard,
-    saveBoards
+    onSaveBoards
 
 }
 
