@@ -68,7 +68,7 @@ class _Workspace extends Component {
                
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
-                            <BoardIcon />
+                            {/* <BoardIcon /> */}
                             <h3>פרויקטים</h3>
                         </div>
                         <BoardList boards={boards} />

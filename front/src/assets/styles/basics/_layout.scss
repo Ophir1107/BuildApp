@@ -1,18 +1,4 @@
 .main-container {
-    // display: grid;
-    // grid-template-columns:
-    //     minmax(2rem, 1fr)
-    //     minmax(auto, $normal-breakpoint)
-    //     minmax(2rem, 1fr);
-
-    // > * {
-    //     grid-column: 2;
-
-    //     &.full {
-    //         grid-column: 1 / -1;
-    //     }
-    // }
-
     @include for-narrow-layout {
         grid-template-columns:
             minmax(2rem, 1fr)

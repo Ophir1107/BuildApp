@@ -34,8 +34,6 @@ class _CardDetailsActions extends Component {
             url: fileUrl,
             createdAt: Date.now()
         }
-        // const model = await tf.loadLayersModel('../../../public/Models/Models/model.json')
-        // const func = await tf.keras.model.imageDataG
         card.attachs.push(attach)
         const savedActivity = boardService.createActivity('attached', attach.fileName, card)
         socketService.emit('app newActivity', savedActivity)

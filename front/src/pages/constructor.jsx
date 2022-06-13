@@ -1,4 +1,3 @@
-// import { onSaveBoard } from "../store/actions/board.actions"
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
@@ -34,12 +33,6 @@ class _Constructor extends Component {
         constructorService.deleteConstructors(constructorId)
         constructors = newConstructors
         this.setState({constructors})
-        // loadBoards(boards)
-    }
-
-    onGoBack(){
-        // const history = useHistory()
-        // this.props.history.push('/workspace')
     }
 
     get filteredConstructors() {
@@ -50,7 +43,6 @@ class _Constructor extends Component {
 
 
     render() {
-        // const constructors = [{_id:"12j34ljk" , userName : "jhon"},{_id:"12jgdhfgh4ljk" , userName : "jhfdgon"}]
         const {constructors} = this.state
         const {loggedInUser , board} = this.props
         return (

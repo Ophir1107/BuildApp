@@ -8,18 +8,6 @@ export class FileUpload extends Component {
   }
   uploadFile = async (ev) => {
     console.log('file from file upload' , ev.target.files[0])
-
-    // try{
-    //   const predictLabel = await predictService.onPredict(ev.target.files[0].name)
-    //   console.log('predictLabel' , predictLabel)
-
-    // }
-    // catch(err) {
-    //   console.log('error', err)
-    // }
-
-
-    
     try{
       const {secure_url} = await cloudinaryService.uploadFile(ev)
       const predictLabel = predictService.onPredict(secure_url)

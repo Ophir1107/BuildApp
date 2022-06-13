@@ -82,9 +82,6 @@ export class BoardCharts extends Component {
         gradient.addColorStop(0.85, '#37c7e5');
         gradient.addColorStop(1, '#55ceda');
         return gradient
-
-
-        // #4fa8f8, #2fb4f5, #23beee, #37c7e5, #55ceda);
     }
     render() {
 

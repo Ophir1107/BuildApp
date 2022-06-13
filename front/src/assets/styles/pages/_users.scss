@@ -11,13 +11,11 @@
     .users-actions{
         display: flex;
         flex-direction: column;
-        // grid-template-rows: 0.5fr 0.5fr;
         .pop-over-input{
             max-width:300px;
         }
         .add-cons-btn{
             margin: 4px 0 12px 0;
-            // width: 100%;
             max-width:300px;
             outline: none;
             border: none;

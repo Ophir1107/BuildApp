@@ -1,5 +1,4 @@
 import CheckIcon from '@material-ui/icons/Check';
-// import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
 
 export function ColorPalette({ handleChange, selectedColor, isGradient, isColor, count }) {
 
@@ -26,15 +25,6 @@ export function ColorPalette({ handleChange, selectedColor, isGradient, isColor,
         'linear-gradient(0deg, rgba(113,140,156) 0%, rgba(113,140,156) 100%)',//default color
 
     ]
-
-    // const gradientStyles = [
-    //     'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
-    //     'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
-    //     'linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)',
-    //     ' linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)',
-    //     'linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)',
-    //     'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
-    // ]
 
     function getStyles() {
         const styles = isGradient ? gradientStyles : colorCodes

@@ -36,10 +36,8 @@ async function addcons(req, res) {
     try {
         const {fullname ,field , phone} = req.body
         // Never log passwords
-        // logger.debug(fullname + ', ' + username + ', ' + password)
         const constructor = await authService.addcons(fullname ,field , phone)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
-        // res.json(userService.getByUsername(username))
         if (constructor) Promise.resolve(constructor ,'constructor has been added')
     } catch (err) {
         logger.error('Failed to signup ' + err)
@@ -64,9 +62,6 @@ async function googleLogin(req, res) {
         const { email, name } = googleRes.payload
         const user = await userService.getByUsername(email)
         if (!user) {
-
-            // const account = await authService.signup(email, tokenId, name)
-            // logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
             logger.debug(`BuildApp doesnt have user with this ` + email ` gmail address`)
         }
         const googleUser = await authService.login(email, tokenId)

@@ -9,10 +9,7 @@ export const constructorService = {
 
 async function addConstructor(constructorInfo) {
     try {
-        // const cons = await httpService.post('auth/constructor', constructorInfo)
         await httpService.post('auth/constructor', constructorInfo)
-        // return _saveLocalUser(user)
-        // return cons
     } catch (err) {
         throw err
     }

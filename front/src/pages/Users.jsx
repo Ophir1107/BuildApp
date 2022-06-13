@@ -1,4 +1,3 @@
-// import { onSaveBoard } from "../store/actions/board.actions"
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
@@ -6,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { PopoverMemberPreview } from '../cmps/Popover/PopoverMemberPreview'
 import { userService } from '../services/user.service'
 import { withRouter , Route, BrowserRouter as Router } from 'react-router-dom'
-// import { AddUser} from '../cmps/AddUser'
 class _Users extends Component {
 
     state = {
@@ -34,11 +32,9 @@ class _Users extends Component {
         userService.deleteUser(userId)
         users = newUsers
         this.setState({users})
-        // loadBoards(boards)
     }
 
     onGoBack(){
-        // const history = useHistory()
         console.log( "history")
     }
 
@@ -50,14 +46,12 @@ class _Users extends Component {
 
 
     render() {
-        // const users = [{_id:"12j34ljk" , userName : "jhon"},{_id:"12jgdhfgh4ljk" , userName : "jhfdgon"}]
         const {users} = this.state
         const {loggedInUser , board} = this.props
         return (
             <Route>
                 <section>
                     <Link onClick={this.onGoBack} to="/workspace" className="clean-link"><div className="users-logo flex align-center justify-center">
-                        {/* <LoginSignupLogo /> */}
                         <h1>BuildApp</h1>
                     </div>
                     </Link>
@@ -87,12 +81,9 @@ class _Users extends Component {
                                 )}
                                 
                         </div>
-                     {/* onClick={(ev) => onDeleteBoard(ev, board._id , boards)}> */}
-                        {/* <button className="primary-btn">Send invitation</button> */}
                     </div>
                 </section>
                 <section className="nested-routes">
-                            {/* <Route path="/user/add" component={AddUser} /> */}
                         </section>
         </Route>
          ) }

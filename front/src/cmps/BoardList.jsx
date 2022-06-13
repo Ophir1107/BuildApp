@@ -44,7 +44,7 @@ class  _BoardList extends Component {
         console.log("hhoioooodgfdogdfng,ndfg")
         const {loggedInUser } = this.props
         let { boards} =this.state
-        // if (!boards) boards = this.props.boards
+        if (!boards) boards = this.props.boards
         if (loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
         console.log(boards.length , "board length")

@@ -24,7 +24,6 @@ export class PopoverAttach extends Component {
 
     onAttachLink = (ev) => {
         ev.preventDefault()
-        // const imageurl = this.handleChange()
         console.log("taget from eve" , this.state.linkTxt)
         let predictLabel = ''
         if (!this.state.linkTxt) return

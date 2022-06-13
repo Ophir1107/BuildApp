@@ -7,10 +7,6 @@ import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
 import { onLogin, onSignup } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 
 export class _LoginSignup extends Component {
 
@@ -34,17 +30,13 @@ export class _LoginSignup extends Component {
 
     componentDidMount() {
         const { loggedinUser } = this.props
-        // if (loggedinUser && !newsignup) this.props.history.push('/workspace')
-        // loggedinUser ? pageMode = '/login' : pageMode = '/signup'
         const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
-        // const pageMode =  loggedinUser ? 'signup' : 'login'
         this.setState({ pageMode })
     }
 
     componentDidUpdate() {
         const { loggedInUser } = this.props
         const { pageMode } = this.state
-        // if ( loggedInUser) this.props.history.push('/workspace')
     }
 
     validate = (values) => {
@@ -112,14 +104,12 @@ export class _LoginSignup extends Component {
             
             {pageMode === 'login' && <div className="login-signup flex column">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
-                {/* <LoginSignupLogo /> */}
                 <h1>BuildApp</h1>
             </div>
             </Link>
                 <h3>התחבר לאפליקציה</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
                     <Form className="flex column login-form">
-                        {/* <Field type="username" placeholder="שם משתמש" name="username" autoFocus className="login-input"/> */}
                         <Field type="username" placeholder="username" name="username" autoFocus className="login-input"/>
                         <ErrorMessage name="username" component="div" />
                         <Field type="password" placeholder="password" name="password" className="login-input" />
@@ -127,21 +117,12 @@ export class _LoginSignup extends Component {
                         {loginErr && <p>{loginErr}</p>}
                         <button type="submit" className="primary-btn login-signup-btn" >התחבר</button>
                     </Form>
-                </Formik>
-                {/* <GoogleLogin
-                    className="google-login-btn flex align-center justify-center"
-                    clientId='640315421255-e4mv3dirnt2lbm4ati92b1euclri0j8d.apps.googleusercontent.com'
-                    buttonText='Continue with Google'
-                    onSuccess={this.onSuccessGoogle}
-                    onFailure={this.onFailureGoogle}
-                    cookiePolicy={'single_host_origin'}
-                /> */}    
+                </Formik>  
             </div>}
         
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
                     <Link to="/workspace" className="clean-link"><div className="logo flex align-center justify-center">
-                {/* <LoginSignupLogo /> */}
                 <h1>BuildApp</h1>
             </div>
             </Link>

@@ -6,10 +6,6 @@ import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
 import { onAddConstructor } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 
 export class _AddConstructor extends Component {
 
@@ -22,16 +18,13 @@ export class _AddConstructor extends Component {
         },
         pageMode: 'constructor'
     }
-
     componentDidMount() {
         const { loggedinUser } = this.props
     }
-
     componentDidUpdate() {
         const { loggedInUser } = this.props
         // if ( loggedInUser) this.props.history.push('/workspace')
     }
-
     validate = (values) => {
         const errors = {}
         if (!values.fullname) {
@@ -44,14 +37,11 @@ export class _AddConstructor extends Component {
         }
         return errors
     }
-
     onSubmit = (values) => {
         console.log(values , "cons fromn ")
         const { onAddConstructor  } = this.props
         onAddConstructor(values)
-        // if ( loggedInUser) this.props.history.push('/workspace')
     }
-
     render() {
         const { constructorInfo } = this.state
         const { loggedInUser } = this.props

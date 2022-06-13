@@ -21,9 +21,7 @@ async function onPredict(ImgUrl) {
             default :
                 category = ''
         }
-        // const label = await httpService.get('predictor' , ImgUrl)
         console.log('label' , label)
-        // return label
     } catch (err) {
         throw err
     }
