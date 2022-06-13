@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { HomeHeader } from '../cmps/HomeHeader'
 import heroImgUrl from '../assets/img/hero.png'
-import productImgUrl from '../assets/img/buildapp-homepage-product.png'
+// import productImgUrl from '../assets/img/buildapp-homepage-product.png'
 export class Home extends Component {
     render() {
         return (
