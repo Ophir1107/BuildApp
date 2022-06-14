@@ -59,10 +59,11 @@ class _Dashboard extends Component {
         const { lists } = this.props.board
         const dueSoonCardsCount = lists.reduce((acc, list) => {
             const dueSoonCardsCountPerList = list.cards.reduce((acc, card) => {
-                if (card.dueDate && Date.now() <= card.dueDate) {
-                    const timeDiff = card.dueDate - Date.now()
-                    if ((timeDiff < 86400000) && card.dueDate) acc++
-                }
+                // if (card.dueDate && Date.now() <= card.dueDate) {
+                //     const timeDiff = card.dueDate - Date.now()
+                    // if ((timeDiff < 86400000) && card.dueDate) acc++
+                if (card.isDone) acc++
+                // }
                 return acc
             }, 0)
             acc += dueSoonCardsCountPerList
@@ -125,26 +126,34 @@ class _Dashboard extends Component {
 
     get cardsPerListMap() {
         const { lists } = this.props.board
-        title = ''
-        openTasks = 0
-        complitedTasks = 0
-        data = []
+
+        let data = []
         for(let i=0 ; i<lists.length; i++) {
-            
-            
-            {
-                title: list.title,
-                openTasks: 4000,
-                complitedTasks: 2400
-            }
+            data.push(this.createListData(lists[i] , i))
         }
+        console.log(data)
         // const cardsPerListMap = lists.reduce((acc, list) => {
         //     if (!acc[list.title]) acc[list.title] = 0
         //     acc[list.title] = list.cards.length
         //     return acc
         // }, {})
 
-        return cardsPerListMap
+        return data
+    }
+
+    createListData = (list , i) => {
+        let openTasks = 0
+        let complitedTasks = 0
+        list.cards.forEach((card) => {
+            if(!card.isDone) openTasks+=1
+            else complitedTasks+=1
+        })
+        return {
+            name: list.title ,
+            open: openTasks ,
+            complited: complitedTasks ,
+            amt : Math.floor(Math.random()*200)+ 2100
+        }   
     }
 
     get progressCircleStyle() {
@@ -181,52 +190,54 @@ class _Dashboard extends Component {
     }
 
     render() {
+        const data = this.cardsPerListMap
+        console.log(data ,"data in render")
         const { chartsData } = this.state
         if (!chartsData) return <Loader />
-        const data = [
-            {
-              name: "Page A",
-              uv: 4000,
-              pv: 2400,
-              amt: 2400
-            },
-            {
-              name: "Page B",
-              uv: 3000,
-              pv: 1398,
-              amt: 2210
-            },
-            {
-              name: "Page C",
-              uv: 2000,
-              pv: 9800,
-              amt: 2290
-            },
-            {
-              name: "Page D",
-              uv: 2780,
-              pv: 3908,
-              amt: 2000
-            },
-            {
-              name: "Page E",
-              uv: 1890,
-              pv: 4800,
-              amt: 2181
-            },
-            {
-              name: "Page F",
-              uv: 2390,
-              pv: 3800,
-              amt: 2500
-            },
-            {
-              name: "Page G",
-              uv: 3490,
-              pv: 4300,
-              amt: 2100
-            }
-          ];
+        // const data = [
+        //     {
+        //       name: "Page A",
+        //       uv: 4000,
+        //       pv: 2400,
+        //       amt: 2400
+        //     },
+        //     {
+        //       name: "Page B",
+        //       uv: 3000,
+        //       pv: 1398,
+        //       amt: 2210
+        //     },
+        //     {
+        //       name: "Page C",
+        //       uv: 2000,
+        //       pv: 9800,
+        //       amt: 2290
+        //     },
+        //     {
+        //       name: "Page D",
+        //       uv: 2780,
+        //       pv: 3908,
+        //       amt: 2000
+        //     },
+        //     {
+        //       name: "Page E",
+        //       uv: 1890,
+        //       pv: 4800,
+        //       amt: 2181
+        //     },
+        //     {
+        //       name: "Page F",
+        //       uv: 2390,
+        //       pv: 3800,
+        //       amt: 2500
+        //     },
+        //     {
+        //       name: "Page G",
+        //       uv: 3490,
+        //       pv: 4300,
+        //       amt: 2100
+        //     }
+        //   ];
         return (
             <>
                 <ScreenOverlay styleMode="heavy-dark" />
@@ -263,23 +274,54 @@ class _Dashboard extends Component {
                         </div>
                     </div>
                     <BarChart
-                        width={500}
-                        height={300}
+                        width={600}
+                        height={400}
                         data={data}
                         margin={{
                         top: 20,
                         right: 30,
                         left: 20,
-                        bottom: 5
+                        bottom: 5 ,
                         }}
+                        style={
+                            {
+                                background : "white"  ,
+                            }
+                             
+                        }
                     >
                         {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                        <XAxis dataKey="name" />
-                        <YAxis />
+                        <XAxis dataKey="name" tick={{ fill: 'red' , fontsize: 56}}/>
+                        <YAxis tick={{ fill: 'red' }}/>
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="pv" stackId="a" fill="red" />
-                        <Bar dataKey="uv" stackId="a" fill="green" />
+                        <Bar dataKey="complited" stackId="a" fill="green" />
+                        <Bar dataKey="open" stackId="a" fill="red" />
+                    </BarChart>
+                    <BarChart
+                        width={600}
+                        height={400}
+                        data={data}
+                        margin={{
+                        top: 20,
+                        right: 30,
+                        left: 20,
+                        bottom: 5 ,
+                        }}
+                        style={
+                            {
+                                background : "white"  ,
+                            }
+                             
+                        }
+                    >
+                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                        <XAxis dataKey="name" tick={{ fill: 'red' , fontsize: 56}}/>
+                        <YAxis tick={{ fill: 'red' }}/>
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="complited" stackId="a" fill="green" />
+                        <Bar dataKey="open" stackId="a" fill="red" />
                     </BarChart>
                     {/* <BoardCharts chartsData={chartsData} /> */}
                 </section>
