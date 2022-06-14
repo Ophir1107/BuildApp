@@ -23,23 +23,23 @@ class _PopoverMenu extends Component {
     render() {
         const { board } = this.props
         return <div className="board-menu-wrapper">
-            <Popover displayMode="menu" title="Menu">
+            <Popover displayMode="menu" title="תפריט">
                 <div className="menu-details ">
                     <section>
                         <ul className="clean-list">
                             <li onClick={(ev) => this.onOpenPopover(ev, 'BACKGROUND')}>
                                 <span style={{ background: board.style.background }}></span>
-                            Change background </li>
+                            שנה רקע </li>
                             <li onClick={(ev) => this.onOpenPopover(ev, 'BOARD_FILTER')}>
                                 <SearchIcon />
-                                Search cards</li>
+                                חפש משימה</li>
                             <li onClick={(ev) => this.onOpenPopover(ev, 'ARCHIVE')}>
                                 <i className="fas fa-archive menu-icon"></i>
-                                Archive</li>
+                                ארכיון</li>
                         </ul>
                         <Link to="#" className="activity clean-link" onClick={(ev) => this.onOpenPopover(ev, 'ACTIVITY')} >
                             <ActivityIcon />
-                            Activity</Link>
+                            פעילות</Link>
                         <ActivitiesList activities={this.activities} isGeneral={true} />
                     </section>
                 </div>
