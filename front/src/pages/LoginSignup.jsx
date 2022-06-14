@@ -126,18 +126,18 @@ export class _LoginSignup extends Component {
                 <h1>BuildApp</h1>
             </div>
             </Link>
-                    <h3>Sign up for your account</h3>
+                    <h3>הוסף משתמש חדש</h3>
                     <Formik initialValues={userInfo} validateOnChange={false} validateOnBlur={false} validate={this.validate} onSubmit={this.onSubmit}>
                         <Form className="flex column">
-                            <Field type="fullname" placeholder="Enter fullname" name="fullname" autoFocus />
+                            <Field type="fullname" placeholder="שם מלא" name="fullname" autoFocus />
                             <ErrorMessage name="fullname" component="p" />
-                            <Field type="email" placeholder="Enter Email address" name="email" autoFocus />
+                            <Field type="email" placeholder="כתובת אימייל" name="email" autoFocus />
                             <ErrorMessage name="email" component="p" />
-                            <Field type="phone" placeholder="Enter phone number" name="phone" />
+                            <Field type="phone" placeholder="מספר פלאפון" name="phone" />
                             <ErrorMessage name="phone" component="p" />
-                            <Field type="username" placeholder="Enter username" name="username" />
+                            <Field type="username" placeholder="שם משתמש" name="username" />
                             <ErrorMessage name="username" component="p" />
-                            <Field type="password" placeholder="Enter password" name="password" />
+                            <Field type="password" placeholder="סיסמא" name="password" />
                             <ErrorMessage name="password" component="p" />
 
 
@@ -148,10 +148,10 @@ export class _LoginSignup extends Component {
                                 className = "LoginSelectBar"
                             >
                                 <option defaultValue disabled>בחר תפקיד למשתמש</option>
-                                <option value = "admin">admin</option>
-                                <option value = "manager">manager</option>
-                                <option value = "client">client</option>
-                                <option value = "constructor">constructor</option>
+                                <option value = "admin">מנהל מערכת</option>
+                                <option value = "manager">מנהל פרויקט</option>
+                                <option value = "client">לקוח</option>
+                                <option value = "constructor">קבלן</option>
                                 
                             </Field>
                       
@@ -169,7 +169,7 @@ export class _LoginSignup extends Component {
                             </Field>
                             <ErrorMessage name="field" component="p" />
 
-                            <button type="submit" className="primary-btn login-signup-btn">Sign up</button>
+                            <button type="submit" className="primary-btn login-signup-btn">הוסף משתמש</button>
                         </Form>
                     </Formik>
                 </div>}

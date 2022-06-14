@@ -3,7 +3,7 @@ import { Workspace } from './pages/Workspace'
 import { LoginSignup } from './pages/LoginSignup'
 import { Users } from './pages/Users'
 import { BoardApp } from './pages/BoardApp'
-import { AddConstructor } from './cmps/AddConstructor'
+import { AddConstructor } from './cmps/addconstructor'
 
 export const routes = [
     {

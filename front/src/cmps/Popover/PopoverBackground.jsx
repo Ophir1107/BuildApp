@@ -14,19 +14,19 @@ function _PopoverBackground({ onSaveBoard, board }) {
         } else board.style.background = value;
         onSaveBoard(board)
     }
-    return <Popover title="Change background" displayMode="menu-popovers">
+    return <Popover title="שנה רקע" displayMode="menu-popovers">
         <BackToPrevPopover popoverName="MENU" />
         <div className="pop-over-backround-details">
             <div>
-                <h4>Colors</h4>
+                <h4>צבעים</h4>
                 <ColorPalette handleChange={handleChange} selectedColor={board.background} />
             </div>
             <div>
-                <h4>Gradients</h4>
+                <h4>צבעים הדרגתיים</h4>
                 <ColorPalette handleChange={handleChange} selectedColor={board.background} isGradient={true} />
             </div>
             <div>
-                <h4>Images</h4>
+                <h4>תמונות</h4>
                 <ImagePalette handleChange={handleChange} />
             </div>
         </div>

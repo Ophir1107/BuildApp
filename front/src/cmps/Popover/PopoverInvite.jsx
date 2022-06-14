@@ -64,7 +64,7 @@ class _PopoverInvite extends Component {
                         isSelected={this.isMemberInBoard(member)} />)}
                 </div>
 
-                <button className="primary-btn">Send invitation</button>
+                <button className="primary-btn">שלח הזמנה</button>
             </div>
 
         </Popover>
