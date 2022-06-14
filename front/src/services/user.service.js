@@ -101,6 +101,7 @@ async function getById(userId) {
 
 async function deleteUser(userId) {
     try {
+        console.log("trying to delete" , userId)
         await httpService.delete(`user/${userId}` , userId)
     } catch (err) {
         throw err

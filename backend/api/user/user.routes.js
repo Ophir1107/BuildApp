@@ -1,5 +1,7 @@
 const express = require('express')
 const { requireAuth, requireAdmin } = require('../../middlewares/requireAuth.middleware')
+const { log } = require('../../middlewares/logger.middleware')
+
 const { getUser, getUsers, deleteUser, updateUser } = require('./user.controller')
 const router = express.Router()
 
@@ -9,6 +11,6 @@ router.get('/', getUsers)
 router.get('/:id', getUser)
 router.put('/:id', updateUser)
 
-router.delete('/:id', requireAuth, requireAdmin, deleteUser)
+router.delete('/:id' ,log ,requireAdmin, deleteUser)
 
 module.exports = router

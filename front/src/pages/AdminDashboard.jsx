@@ -163,13 +163,7 @@ class _AdminDashboard extends Component {
             },
         }
     }
-    // get dueSoonPercentage() {
-    //     return +((this.dueSoonCardsCount / this.cardsCount * 100).toFixed(1))
-    // }
-    // get overduePercentage() {
 
-    //     return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
-    // }
 
     goBackToBoard = () => {
         const { board } = this.props

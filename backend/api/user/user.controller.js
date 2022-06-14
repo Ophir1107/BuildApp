@@ -23,6 +23,7 @@ async function getUsers(req, res) {
 
 async function deleteUser(req, res) {
     try {
+        console.log(req.params.id , "delete user id")
         await userService.remove(req.params.id)
         res.send({ msg: 'Deleted successfully' })
     } catch (err) {
