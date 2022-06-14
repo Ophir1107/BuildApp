@@ -31,7 +31,7 @@
 }
 
 @mixin for-dashboard-narrow-layout {
-    @media (min-width: $dashboard-breakpoint) {
+    @media (max-width: $dashboard-breakpoint) {
         @content;
     }
 }

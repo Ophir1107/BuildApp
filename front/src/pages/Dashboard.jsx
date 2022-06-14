@@ -46,7 +46,8 @@ class _Dashboard extends Component {
         const { lists } = this.props.board
         const overdueCardsCount = lists.reduce((acc, list) => {
             const overdueCardsCountPerList = list.cards.reduce((acc, card) => {
-                if (card.dueDate < Date.now() && card.dueDate && !card.isDone) acc++
+                if ( card.isOverDue) acc++
+                else if (card.dueDate < Date.now() && card.dueDate && !card.isDone) acc++
                 return acc
             }, 0)
             acc += overdueCardsCountPerList
@@ -55,21 +56,17 @@ class _Dashboard extends Component {
         return overdueCardsCount
     }
 
-    get dueSoonCardsCount() {
+    get complitedCardsCount() {
         const { lists } = this.props.board
-        const dueSoonCardsCount = lists.reduce((acc, list) => {
+        const complitedCardsCount = lists.reduce((acc, list) => {
             const dueSoonCardsCountPerList = list.cards.reduce((acc, card) => {
-                // if (card.dueDate && Date.now() <= card.dueDate) {
-                //     const timeDiff = card.dueDate - Date.now()
-                    // if ((timeDiff < 86400000) && card.dueDate) acc++
                 if (card.isDone) acc++
-                // }
                 return acc
             }, 0)
             acc += dueSoonCardsCountPerList
             return acc
         }, 0)
-        return dueSoonCardsCount
+        return complitedCardsCount
     }
 
 
@@ -106,6 +103,7 @@ class _Dashboard extends Component {
         return cardsPerMemberMap
     }
 
+
     get cardsPerLabelMap() {
         const { labels } = this.props.board
         const allCards = this.allCards
@@ -124,37 +122,67 @@ class _Dashboard extends Component {
 
     }
 
+    get complitedCardsPerListMap() {
+        const { lists } = this.props.board
+
+        let data = []
+        for(let i=0 ; i<lists.length; i++) {
+            data.push(this.createListCardsData(lists[i] , i , "onTime"))
+        }
+        console.log(data)
+        return data
+    }
     get cardsPerListMap() {
         const { lists } = this.props.board
 
         let data = []
         for(let i=0 ; i<lists.length; i++) {
-            data.push(this.createListData(lists[i] , i))
+            data.push(this.createListCardsData(lists[i] , i , "total"))
         }
         console.log(data)
-        // const cardsPerListMap = lists.reduce((acc, list) => {
-        //     if (!acc[list.title]) acc[list.title] = 0
-        //     acc[list.title] = list.cards.length
-        //     return acc
-        // }, {})
-
         return data
     }
 
-    createListData = (list , i) => {
+    createListCardsData = (list , i , type) => {
         let openTasks = 0
         let complitedTasks = 0
+        let overDue = 0
+        let onTime = 0
         list.cards.forEach((card) => {
-            if(!card.isDone) openTasks+=1
-            else complitedTasks+=1
+            if(!card.isDone) openTasks++
+            else {
+                complitedTasks++
+                if(!card.isOverDue) onTime++
+            }
+            if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
         })
-        return {
+        if (type === "total") return {
             name: list.title ,
             open: openTasks ,
             complited: complitedTasks ,
             amt : Math.floor(Math.random()*200)+ 2100
         }   
+        if (type === "onTime") return {
+            name: list.title ,
+            onTime: onTime ,
+            overDue: overDue ,
+            amt : Math.floor(Math.random()*200)+ 2100
+        }   
     }
+    // createListComplitedCardsData = (list , i) => {
+    //     let openTasks = 0
+    //     let complitedTasks = 0
+    //     list.cards.forEach((card) => {
+    //         // if(!card.isDone) openTasks+=1
+    //         else complitedTasks+=1
+    //     })
+    //     return {
+    //         name: list.title ,
+    //         open: openTasks ,
+    //         complited: complitedTasks ,
+    //         amt : Math.floor(Math.random()*200)+ 2100
+    //     }   
+    // }
 
     get progressCircleStyle() {
         return {
@@ -176,8 +204,8 @@ class _Dashboard extends Component {
             },
         }
     }
-    get dueSoonPercentage() {
-        return +((this.dueSoonCardsCount / this.cardsCount * 100).toFixed(1))
+    get complitedPercentage() {
+        return +((this.complitedCardsCount / this.cardsCount * 100).toFixed(1))
     }
     get overduePercentage() {
 
@@ -190,54 +218,11 @@ class _Dashboard extends Component {
     }
 
     render() {
-        const data = this.cardsPerListMap
-        console.log(data ,"data in render")
+        const totalData = this.cardsPerListMap
+        const onTimeData =  this.complitedCardsPerListMap
+        // console.log(data ,"data in render")
         const { chartsData } = this.state
         if (!chartsData) return <Loader />
-        // const data = [
-        //     {
-        //       name: "Page A",
-        //       uv: 4000,
-        //       pv: 2400,
-        //       amt: 2400
-        //     },
-        //     {
-        //       name: "Page B",
-        //       uv: 3000,
-        //       pv: 1398,
-        //       amt: 2210
-        //     },
-        //     {
-        //       name: "Page C",
-        //       uv: 2000,
-        //       pv: 9800,
-        //       amt: 2290
-        //     },
-        //     {
-        //       name: "Page D",
-        //       uv: 2780,
-        //       pv: 3908,
-        //       amt: 2000
-        //     },
-        //     {
-        //       name: "Page E",
-        //       uv: 1890,
-        //       pv: 4800,
-        //       amt: 2181
-        //     },
-        //     {
-        //       name: "Page F",
-        //       uv: 2390,
-        //       pv: 3800,
-        //       amt: 2500
-        //     },
-        //     {
-        //       name: "Page G",
-        //       uv: 3490,
-        //       pv: 4300,
-        //       amt: 2100
-        //     }
-        //   ];
         return (
             <>
                 <ScreenOverlay styleMode="heavy-dark" />
@@ -256,10 +241,10 @@ class _Dashboard extends Component {
 
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
-                                <h3 className="flex align-center">  <QueryBuilderIcon /> מסתיימות בקרוב </h3>
-                                <h4>{this.dueSoonCardsCount}</h4>
+                                <h3 className="flex align-center">  <QueryBuilderIcon /> משימות שהושלמו</h3>
+                                <h4>{this.complitedCardsCount}</h4>
                             </div>
-                            <CircularProgressbar value={this.dueSoonPercentage} text={`${this.dueSoonPercentage}%`}
+                            <CircularProgressbar value={this.complitedPercentage} text={`${this.complitedPercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
 
@@ -273,57 +258,14 @@ class _Dashboard extends Component {
                                 styles={this.progressCircleStyle} />
                         </div>
                     </div>
-                    <BarChart
-                        width={600}
-                        height={400}
-                        data={data}
-                        margin={{
-                        top: 20,
-                        right: 30,
-                        left: 20,
-                        bottom: 5 ,
-                        }}
-                        style={
-                            {
-                                background : "white"  ,
-                            }
-                             
-                        }
-                    >
-                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                        <XAxis dataKey="name" tick={{ fill: 'red' , fontsize: 56}}/>
-                        <YAxis tick={{ fill: 'red' }}/>
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="complited" stackId="a" fill="green" />
-                        <Bar dataKey="open" stackId="a" fill="red" />
-                    </BarChart>
-                    <BarChart
-                        width={600}
-                        height={400}
-                        data={data}
-                        margin={{
-                        top: 20,
-                        right: 30,
-                        left: 20,
-                        bottom: 5 ,
-                        }}
-                        style={
-                            {
-                                background : "white"  ,
-                            }
-                             
-                        }
-                    >
-                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                        <XAxis dataKey="name" tick={{ fill: 'red' , fontsize: 56}}/>
-                        <YAxis tick={{ fill: 'red' }}/>
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="complited" stackId="a" fill="green" />
-                        <Bar dataKey="open" stackId="a" fill="red" />
-                    </BarChart>
-                    {/* <BoardCharts chartsData={chartsData} /> */}
+                    <div className="board-charts-con flex">
+                        <div className="board-chart">
+                            <BoardCharts  data={totalData} dataKey1={"open"} dataKey2={"complited"} />
+                        </div>
+                        <div className="board-chart">
+                            <BoardCharts data={onTimeData} dataKey1={"overDue"} dataKey2={"onTime"} />
+                        </div>
+                    </div>
                 </section>
             </>
         )

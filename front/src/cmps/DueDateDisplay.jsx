@@ -31,6 +31,10 @@ class _DueDateDisplay extends Component {
     }
 
     onToggleCardDone = () => {
+        const { card } = this.props
+        if (card.dueDate < Date.now() && card.dueDate && !card.isDone) {
+            card.isOverDue = true ;
+        }
         this.props.toggleCardDone()
     }
 
