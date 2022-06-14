@@ -179,7 +179,11 @@ class _Workspace extends Component {
                     <div className="boards-preview">
                         <div className="preview-title flex align-center">
                             {/* <BoardIcon /> */}
+<<<<<<< HEAD
+                            <h3>פרויקטים</h3>
+=======
                             <h3>Workspace</h3>
+>>>>>>> 1de62c9bf89408c7919031524e0b4bd46bfba77f
                         </div>
                         <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} 
                         loggedInUser={loggedInUser} onDeleteBoard={this.onDeleteBoard}/>

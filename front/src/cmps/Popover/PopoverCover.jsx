@@ -37,7 +37,6 @@ class _PopoverCover extends Component {
 
     onRemoveCover = () => {
         this.setState({ bgColor: '', coverMode: '', bgImgUrl: '' }, this.onSaveCover)
-        // this.props.removeCoverBg()
     }
 
     onSetMode = (mode) => {

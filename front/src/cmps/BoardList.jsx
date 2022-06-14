@@ -1,3 +1,100 @@
+<<<<<<< HEAD
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { loadBoards, onSaveBoard, onSaveBoards } from '../store/actions/board.actions'
+import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
+import { Loader } from '../cmps/Loader'
+import { boardService } from '../services/board.service'
+import { connect } from 'react-redux'
+
+class  _BoardList extends Component {
+    state= {
+        boards : [] ,
+        // isFavorite : false
+    }
+
+    componentDidMount(){
+        const {boards} = this.props
+        console.log(boards , "boards from boards list")
+        this.setState({boards})
+    }
+    // getUserBoards(){
+    //     const {loggedInUser } = this.props
+    //     let { boards} =this.state
+    //     if (!boards) boards = this.props.boards
+    //     if (loggedInUser && loggedInUser.userType === 'admin') return boards
+    //     let userBoards = []
+    //     for(let i=0 ; i<boards.length ; i++){
+    //         let boardMembers = boards[i].members
+    //         for(let j=0 ; j<boardMembers.length ; j++){
+    //             if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+    //                 userBoards.push(boards[i])
+    //             }
+    //         }
+    //     }
+    //     return userBoards
+    // }
+
+    // get favoriteBoards() {
+    //     const boards = this.getUserBoards
+    //     console.log(boards.filter(board => board.isFavorite === true) , "favaorite")
+    //     return boards.filter(board => board.isFavorite === true)
+    // }
+
+    get getUserBoards(){
+        console.log("hhoioooodgfdogdfng,ndfg")
+        const {loggedInUser } = this.props
+        let { boards} =this.state
+        if (!boards) boards = this.props.boards
+        if (loggedInUser && loggedInUser.userType === 'admin') return boards
+        let userBoards = []
+        console.log(boards.length , "board length")
+        for(let i=0 ; i<boards.length ; i++){
+            let boardMembers = boards[i].members
+            console.log(boardMembers , "board members")
+            for(let j=0 ; j<boardMembers.length ; j++){
+                if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
+                    userBoards.push(boards[i])
+                    console.log(userBoards.length , "board members")
+                }
+            }
+        }
+        // this.setState({boards : userBoards})
+        return userBoards
+    }
+    
+    onDeleteBoard =(ev, boardId) =>{ 
+        ev.preventDefault()
+        let {boards , onSaveBoards} = this.props
+        // console.log('boards from delete' , boards)
+        // console.log(boards.length)
+        boards = boards.filter(board => board._id !== boardId)
+        this.setState({boards})
+        // this.setState({boardId : ''})
+        // console.log(boards , "this state")
+        boardService.remove(boardId)
+        onSaveBoards(boards)
+        // this.componentDidMount()
+    }
+    onToggleFavorite = (ev, boardId) => {
+        ev.preventDefault()
+        const { boards, onSaveBoard } = this.props
+        // const {boards} =this.state
+        const board = boards.find(board => board._id === boardId)
+        board.isFavorite = !board.isFavorite
+        onSaveBoard(board)
+        
+    }
+
+    render (){
+
+        const {loggedInUser} = this.props
+        let {boards , isFavorite} = this.state
+        boards = this.getUserBoards
+        // console.log(boards, "get board list from state")
+        // }
+        return(
+=======
 // import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 // import { loadBoards, onSaveBoard, onSaveBoards } from '../store/actions/board.actions'
@@ -5,6 +102,7 @@
 // import { Loader } from '../cmps/Loader'
 // import { boardService } from '../services/board.service'
 // import { connect } from 'react-redux'
+>>>>>>> 1de62c9bf89408c7919031524e0b4bd46bfba77f
 
 import { Link } from 'react-router-dom'
 export function BoardList({ boards, onToggleFavorite , loggedInUser , onDeleteBoard}) {

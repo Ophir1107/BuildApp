@@ -52,7 +52,6 @@ export function onLogout(user) {
         try {
             socketService.emit('user endSession', user._id)
             await userService.logout(user)
-            // dispatch({ type: 'UPDATE_ONLINE_USERS', userId })
             dispatch({ type: 'SET_USER', user: null })
         } catch (err) {
             console.log('UserActions: err in logout', err)

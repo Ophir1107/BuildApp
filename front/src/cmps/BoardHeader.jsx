@@ -11,7 +11,6 @@ import { boardService } from '../services/board.service'
 import { openPopover } from '../store/actions/app.actions.js'
 import { setFilter } from '../store/actions/board.actions.js'
 import BarChartIcon from '@material-ui/icons/BarChart';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class _BoardHeader extends Component {
 
@@ -75,8 +74,6 @@ class _BoardHeader extends Component {
             acc += filteredList.cards.length
             return acc
         }, 0)
-
-
     }
 
     resetFilter = (ev) => {

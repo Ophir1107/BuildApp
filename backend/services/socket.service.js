@@ -12,9 +12,7 @@ function connectSockets(http, session) {
     gIo.on('connection', socket => {
         console.log('New socket - socket.handshake.sessionID', socket.handshake.sessionID)
         gSocketBySessionIdMap[socket.handshake.sessionID] = socket
-        // if (socket.handshake?.session?.user) socket.join(socket.handshake.session.user._id)
         socket.on('disconnect', () => {
-            // console.log('Someone disconnected')
             console.log(socket.userId, 'Has disconnected')
             if (socket.handshake) {
                 gSocketBySessionIdMap[socket.handshake.sessionID] = null
@@ -35,7 +33,6 @@ function connectSockets(http, session) {
                 socket.leave(socket.boardId)
             }
             socket.join(boardId)
-            // logger.debug('Session  ID is', socket.handshake.sessionID)
             socket.boardId = boardId
         })
         socket.on('user-watch', userId => {
@@ -44,7 +41,6 @@ function connectSockets(http, session) {
             //for login
             socket.userId = userId
             gIo.emit('user connected', userId)
-            // gIo.to(socket.userId).emit('user connected', userId)
         })
 
         socket.on('app newActivity', activity => {
@@ -61,15 +57,6 @@ function connectSockets(http, session) {
             console.log('board update ', socket.boardId)
             socket.to(socket.boardId).emit('board updated', savedBoard)
         })
-         // socket.on('card comments', cardId => {
-        //     if (socket.cardId === cardId) return
-        //     if (socket.cardId) {
-        //         socket.leave(socket.cardId)
-        //     }
-        //     socket.join(cardId)
-        //     logger.debug('Session ID is', socket.handshake.sessionID)
-        //     socket.cardId = cardId
-        // })
     })
 }
 function emitToAll({ type, data, room = null }) {

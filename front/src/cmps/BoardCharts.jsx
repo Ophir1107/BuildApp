@@ -42,6 +42,112 @@
 //             values.push(label[1].count)
 //         })
         
+<<<<<<< HEAD
+        return {
+            labels,
+            datasets: [
+                {
+                    data: values,
+                    backgroundColor: this.state.gradientColor,
+                    barThickness: 20,
+                    borderWidth: 0,
+
+                },
+            ],
+        }
+    }
+
+
+    get cardsPerListData() {
+        const { cardsPerListMap } = this.props.chartsData
+        return {
+            labels: Object.keys(cardsPerListMap),
+            datasets: [
+                {
+                    data: Object.values(cardsPerListMap),
+                    backgroundColor: this.state.gradientColor,
+                    borderWidth: 0,
+                    barThickness: 20
+                },
+            ],
+        }
+    }
+
+    getGradientColor(canvas = this.canvas) {
+        if (!canvas) return
+        const ctx = canvas.getContext("2d");
+        const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 300, 0)
+        gradient.addColorStop(0, '#4fa8f8');
+        gradient.addColorStop(0.3, '#2fb4f5');
+        gradient.addColorStop(0.6, '#23beee');
+        gradient.addColorStop(0.85, '#37c7e5');
+        gradient.addColorStop(1, '#55ceda');
+        return gradient
+    }
+    render() {
+
+        return (
+            <div className="board-charts flex wrap justify-center align-center">
+                <div className=" flex column">
+                    <h3>Tasks per label</h3>
+                    <div className="chart">
+                        <Bar
+                            data={this.cardsPerLabelData}
+                            options={{
+                                maintainAspectRatio: false,
+
+                                title: {
+                                    display: true,
+                                    text: 'Tasks per label',
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                                cutout: '60%',
+                            }}
+                            ref={(canvas) => { this.canvas = canvas }}
+                        />
+                    </div>
+                </div>
+                <div className="flex column">
+                    <h3>Tasks per member</h3>
+                    <div className="chart">
+                        <Bar
+                            data={this.cardsPerMemberData}
+                            options={{
+                                indexAxis: 'y',
+                                maintainAspectRatio: false,
+                                legend: {
+                                    labels: {
+                                        // This more specific font property overrides the global property
+                                        fontColor: 'black'
+                                    }
+                                }
+                            }
+                            }
+
+
+                        />
+                    </div>
+                </div>
+                <div className="flex column">
+                    <h3>Tasks per list</h3>
+                    <div className="chart">
+                        <Bar
+                            data={this.cardsPerListData}
+                            options={{
+                                indexAxis: 'y',
+                                maintainAspectRatio: false
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+=======
 //         return {
 //             labels,
 //             datasets: [
@@ -217,3 +323,4 @@
 //   },
 // });
 // export default BoardCharts;
+>>>>>>> 1de62c9bf89408c7919031524e0b4bd46bfba77f
