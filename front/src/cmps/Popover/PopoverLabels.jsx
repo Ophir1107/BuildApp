@@ -74,18 +74,18 @@ class _PopoverLabels extends Component {
                 <PopoverLabelEdit removeLabel={this.removeLabel}
                     labelToEdit={labelToEdit} saveLabel={this.saveLabel} toggleEditMode={this.toggleEditMode} />
                 :
-                <Popover title={"Labels"} >
+                <Popover title={"תוויות"} >
                     <div className="labels-pop-over">
                         <input className="pop-over-input" type="text" value={inputTxt}
-                            onChange={this.handleChange} placeholder={"Search Labels"} />
-                        <h4>LABELS</h4>
+                            onChange={this.handleChange} placeholder={"חפש תוויות"} />
+                        <h4>תוויות</h4>
                         <ul className="clean-list">
 
                             {this.presentedLabels.map(label => <PopoverLabelPreview key={label.id} label={label}
                                 toggleLabel={this.toggleLabel} isSelected={this.isLabelInCard(label)}
                                 toggleEditMode={this.toggleEditMode} />)}
                         </ul>
-                        <button className="secondary-btn" onClick={this.toggleEditMode}>Create a new label</button>
+                        <button className="secondary-btn" onClick={this.toggleEditMode}>צור תווית חדשה</button>
                     </div>
                 </Popover>
             }
