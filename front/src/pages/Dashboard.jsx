@@ -56,9 +56,9 @@ class _Dashboard extends Component {
         return overdueCardsCount
     }
 
-    get complitedCardsCount() {
+    get completedCardsCount() {
         const { lists } = this.props.board
-        const complitedCardsCount = lists.reduce((acc, list) => {
+        const completedCardsCount = lists.reduce((acc, list) => {
             const dueSoonCardsCountPerList = list.cards.reduce((acc, card) => {
                 if (card.isDone) acc++
                 return acc
@@ -66,7 +66,7 @@ class _Dashboard extends Component {
             acc += dueSoonCardsCountPerList
             return acc
         }, 0)
-        return complitedCardsCount
+        return completedCardsCount
     }
 
 
@@ -122,7 +122,7 @@ class _Dashboard extends Component {
 
     }
 
-    get complitedCardsPerListMap() {
+    get completedCardsPerListMap() {
         const { lists } = this.props.board
 
         let data = []
@@ -145,13 +145,13 @@ class _Dashboard extends Component {
 
     createListCardsData = (list , i , type) => {
         let openTasks = 0
-        let complitedTasks = 0
+        let completedTasks = 0
         let overDue = 0
         let onTime = 0
         list.cards.forEach((card) => {
             if(!card.isDone) openTasks++
             else {
-                complitedTasks++
+                completedTasks++
                 if(!card.isOverDue) onTime++
             }
             if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
@@ -159,7 +159,7 @@ class _Dashboard extends Component {
         if (type === "total") return {
             name: list.title ,
             open: openTasks ,
-            complited: complitedTasks ,
+            completed: completedTasks ,
             amt : Math.floor(Math.random()*200)+ 2100
         }   
         if (type === "onTime") return {
@@ -204,8 +204,8 @@ class _Dashboard extends Component {
             },
         }
     }
-    get complitedPercentage() {
-        return +((this.complitedCardsCount / this.cardsCount * 100).toFixed(1))
+    get completedPercentage() {
+        return +((this.completedCardsCount / this.cardsCount * 100).toFixed(1))
     }
     get overduePercentage() {
 
@@ -219,7 +219,7 @@ class _Dashboard extends Component {
 
     render() {
         const totalData = this.cardsPerListMap
-        const onTimeData =  this.complitedCardsPerListMap
+        const onTimeData =  this.completedCardsPerListMap
         // console.log(data ,"data in render")
         const { chartsData } = this.state
         if (!chartsData) return <Loader />
@@ -242,9 +242,9 @@ class _Dashboard extends Component {
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
                                 <h3 className="flex align-center">  <QueryBuilderIcon /> משימות שהושלמו</h3>
-                                <h4>{this.complitedCardsCount}</h4>
+                                <h4>{this.completedCardsCount}</h4>
                             </div>
-                            <CircularProgressbar value={this.complitedPercentage} text={`${this.complitedPercentage}%`}
+                            <CircularProgressbar value={this.completedPercentage} text={`${this.completedPercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
 
