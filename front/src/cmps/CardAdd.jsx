@@ -3,6 +3,7 @@ import { TextareaAutosize } from '@material-ui/core';
 import FmdBadIcon from '@mui/icons-material/FmdBad';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { utilsService } from '../services/utils.service'
+import { boardService } from '../services/board.service'
 import { connect } from 'react-redux'
 
 export class _CardAdd extends Component {
@@ -58,8 +59,13 @@ export class _CardAdd extends Component {
                 bgColor: ''
             }
         }
-        board.lists[listIdx].cards.push(card)
-        onSaveBoard(board)
+        const cardToEdit = boardService.addActivityToCard(card , 'add' , loggedInUser , null , board.lists[listIdx].title)
+        // this.props.onEditBoard(board)
+        const boardToEdit = boardService.addActivityToBoard(board, cardToEdit.activity[0])
+        console.log(card.activity , "cardActivity")
+        board.lists[listIdx].cards.push(cardToEdit)
+        onSaveBoard(boardToEdit)
+        // onSaveBoard(board)
         this.setState({ titleTxt: '' }, () => {
             this.textArea.focus()
         })
@@ -79,11 +85,10 @@ export class _CardAdd extends Component {
                     <TextareaAutosize className="card-add-input" ref={(textArea) => this.textArea = textArea} value={titleTxt} autoFocus onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="הוסף כותרת למשימה" aria-label="empty textarea" />
                     <FmdBadIcon className="card-preview-urgent-btn" style={{color: isUrgent ? '#EB5A46' : '#6b778c'}} onClick={this.onToggleUrgentTask}/>
                 </div>
-                {loggedInUser.userType !== 'client' && (<div>
-                    <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(false)}>הוסף משימה</button>
-                    <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
-                </div>)}
-                <div>
+                <div className="flex">
+                    {loggedInUser.userType !== 'client' && loggedInUser.userType !== 'constructor' && (<div>
+                        <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(false)}>הוסף משימה</button>
+                    </div>)}
                     <button className="primary-btn" onMouseDown={(ev) => this.onAddCard(true)}>הוסף ריג'קט</button>
                     <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>

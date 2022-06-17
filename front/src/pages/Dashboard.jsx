@@ -260,7 +260,7 @@ class _Dashboard extends Component {
                     </div>
                     <div className="board-charts-con flex">
                         <div className="board-chart">
-                            <BoardCharts  data={totalData} dataKey1={"open"} dataKey2={"complited"} />
+                            <BoardCharts label={'hello 1'}  data={totalData} dataKey1={"open"} dataKey2={"complited"} />
                         </div>
                         <div className="board-chart">
                             <BoardCharts data={onTimeData} dataKey1={"overDue"} dataKey2={"onTime"} />

@@ -6,11 +6,14 @@ function _PopoverNotifcs ({loggedInUser,board}){
 
     function getNotifcsActivities(){
         if(!loggedInUser)return
-        const sortedActivities = board.activities.sort((a, b) => b.createdAt - a.createdAt)
+        console.log(board.activities , "board.activities") 
+        const sortedActivities = board.activities.sort((a, b) => a.createdAt - b.createdAt)
+        console.log(sortedActivities , "sortedActivities") 
+
         const userNotifics=sortedActivities.reduce((acc,activity)=>{
             if(activity.card?.members){
-                activity.card.members.forEach(member=>{
-                    if(loggedInUser._id===member._id&&loggedInUser._id!==activity.byMember._id){
+                board.members.forEach(member=>{
+                    if(loggedInUser._id!==activity.byMember._id){
                         acc.push(activity)
                     }
                 })

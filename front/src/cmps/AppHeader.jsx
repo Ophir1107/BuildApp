@@ -91,7 +91,7 @@ class _AppHeader extends Component {
                 <div className="btn-header-container flex">
                     <div>
                         <button className="btn-header wide-layout" onClick={() =>{
-                            if (loggedInUser.userType === "constructor") return
+                            if (loggedInUser.userType === "constructor" || loggedInUser.userType === 'client') return
                             openPopover('CREATE_BOARD')}
                         }>
                             <AddIcon />

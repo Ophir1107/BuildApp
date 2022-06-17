@@ -11,7 +11,7 @@ from keras.models import load_model
 from keras.utils import load_img, img_to_array
 import sys
 
-print('hi')
+
 train_datagen = image.ImageDataGenerator(preprocessing_function=preprocess_input,
                                   shear_range=0.2,
                                   zoom_range=0.2,
@@ -19,7 +19,7 @@ train_datagen = image.ImageDataGenerator(preprocessing_function=preprocess_input
                                   validation_split=0.4)
 
 model = load_model(r"ResNet50_classification_cur.h5") 
-print('load model')
+
 def set_label(y):
     max_index = y.argmax()
     if max_index==0:
@@ -31,20 +31,20 @@ def set_label(y):
     elif max_index==3:
         output = 'Plumbing'
     return output
-print('set label with /', sys.argv[1])
+
 path = sys.argv[1][1:]
 img = load_img(path, target_size=(224,224))
-print('load img')
+
 img = img_to_array(img)
-print('img to array')
+
 img = np.expand_dims(img, 0)
-print('np expand')
+
 input_img = train_datagen.flow(img, batch_size=1)
-print('flowwwww')
+
 y_hat = model.predict(input_img)
-print('predict')
+
 label = set_label(y_hat)
-print('set label')
+
 
 # print('The prediction: ', label, '\n')
 print(label)

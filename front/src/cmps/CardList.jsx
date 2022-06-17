@@ -101,7 +101,7 @@ export class _CardList extends Component {
                                             :
                                             <h2 onClick={this.toggleEditTitle}>{currList.title}</h2>
                                         }
-                                        <button className="board-btn" onClick={this.toggleDisplay}>
+                                        <button className="board-btn" style={{backgroundColor: `${isRejectDisplay ? '#f96262' : '#ebecf0'}` }} onClick={this.toggleDisplay}>
                                             <span>R</span>
                                         </button>
                                         {currList.constructor.fullname && <ProfileAvatar key={currList.constructor._id} member={currList.constructor}

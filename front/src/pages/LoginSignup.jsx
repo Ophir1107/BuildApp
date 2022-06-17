@@ -122,7 +122,7 @@ export class _LoginSignup extends Component {
         
             {pageMode === 'signup' &&
                 <div className="login-signup flex column ">
-                    <Link to="/workspace" className="clean-link"><div className="logo flex align-center justify-center">
+                    <Link to="/users" className="clean-link"><div className="logo flex align-center justify-center">
                 <h1>BuildApp</h1>
             </div>
             </Link>
