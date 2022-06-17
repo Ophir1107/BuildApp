@@ -33,7 +33,7 @@ class _PopoverListMenu extends Component{
 
     render(){
         const {currList} = this.props
-        return <Popover title="List actions" togglePopover={this.props.toggleMenu}>
+        return <Popover title="פעולות " togglePopover={this.props.toggleMenu}>
             <ul className="list-menu-content clean-list">
             {!currList.constructor.fullname && <li onClick={(ev) => this.onOpenPopover(ev, 'INVITE')}>הוסף קבלן</li>}
             {currList.constructor.fullname && <li onClick={this.toggleConstructor}>הסר קבלן</li>}

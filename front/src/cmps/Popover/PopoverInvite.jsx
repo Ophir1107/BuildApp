@@ -109,7 +109,8 @@ class _PopoverInvite extends Component {
                     {userType === "all" && this.filteredMembers && this.filteredMembers.map(member => <PopoverMemberPreview key={member._id} member={member}
                         toggleMember={this.toggleMember} isSelected={this.isMemberInBoard(member)} />)}
                 </div>
-                <button className="primary-btn">Send invitation</button>
+
+                <button className="primary-btn">שלח הזמנה</button>
             </div>
 
         </Popover>
