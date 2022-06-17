@@ -133,8 +133,8 @@ class _Card extends Component {
                             onKeyDown={handleChange}
                             aria-label="empty textarea" />
                         :
-                        <div className="card-preview-name">{card.title}</div>
-                    }
+                        <div className="card-preview-name" style={{textDecoration: `${card.isDone ? 'line-through' : 'none'}` }}>{card.title}</div>}
+                
                     {coverMode !== 'full' &&
                         <div className="card-preview-bagdes">
                             <div className="card-preview-icons">

@@ -23,12 +23,14 @@ class _PopoverDate extends Component {
     }
 
     saveDueDate = (date) => {
-        const { card, onSaveBoard, closePopover, board } = this.props
+        const { card, onSaveBoard, closePopover, board, loggedInUser } = this.props
         card.dueDate = date ? Date.parse(date) : 0;
         const txt = new Date(date).toLocaleString('en-GB', { month: 'short', day: 'numeric' })
-        const savedActivity = boardService.createActivity('changed-date', txt, card)
-        board.activities.unshift(savedActivity)
-        const updatedBoard = boardService.updateCardInBoard(board, card)
+        const cardToEdit = boardService.addActivityToCard(card , 'changed-date',loggedInUser , txt)
+        // this.props.onEditBoard(board)
+        const boardToEdit = boardService.addActivityToBoard(board, cardToEdit.activity[0])
+        // const savedActivity = boardService.addActivityToCard(card , 'changed-date',loggedInUser , txt)
+        const updatedBoard = boardService.updateCardInBoard(boardToEdit, cardToEdit)
         onSaveBoard(updatedBoard)
         closePopover()
     }

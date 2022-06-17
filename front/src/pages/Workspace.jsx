@@ -5,8 +5,8 @@
 // import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 // import { Loader } from '../cmps/Loader'
 // import { boardService } from '../services/board.service'
-// import { Route } from 'react-router-dom'
-// import { AdminDashboard } from './AdminDashboard'
+
+
 
 // class _Workspace extends Component {
 //     state = {
@@ -102,6 +102,9 @@ import { loadBoards, onSaveBoard , onSaveBoards } from '../store/actions/board.a
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { boardService } from '../services/board.service'
+import { socketService } from '../services/socket.service'
+import { Route } from 'react-router-dom'
+import { AdminDashboard } from './AdminDashboard'
 // import { loadBoards, onSaveBoard } from '../store/actions/board.actions'
 import { Loader } from '../cmps/Loader'
 
@@ -111,6 +114,7 @@ class _Workspace extends Component {
     }
     componentDidMount() {
         this.props.loadBoards()
+        socketService.on('board newUpdate', boards => this.setState({boards}) )
     }
 
     get favoriteBoards() {
@@ -127,21 +131,25 @@ class _Workspace extends Component {
     }
 
     getUserBoards =() => {
-        const {loggedInUser , boards } = this.props
+        // this.props.loadBoards()
+        const {loggedInUser ,onSaveBoards, boards } = this.props
         if(loggedInUser && loggedInUser.userType === 'admin') return boards
         let userBoards = []
-        console.log(boards.length , "board length")
+        console.log(boards , "board length")
         for(let i=0 ; i<boards.length ; i++){
             let boardMembers = boards[i].members
-            console.log(boardMembers , "board members")
+            // console.log(boards[i].title , "board members" , )
             for(let j=0 ; j<boardMembers.length ; j++){
+                console.log(boardMembers[j] , "member j" )
                 if (loggedInUser && boardMembers[j]._id === loggedInUser._id){
                     userBoards.push(boards[i])
-                    console.log(userBoards.length , "boards length")
+                    // console.log(userBoards.length , "boards length")
                 }
             }
         }
-        // this.setState({boards : userBoards})
+        // boardService.save(boards)
+        onSaveBoards(boards)
+        this.setState({boards : userBoards})
         return userBoards
     }
     
@@ -162,12 +170,14 @@ class _Workspace extends Component {
 
 
     render() {
-        const boards = this.getUserBoards()
-        const {loggedInUser} = this.props
+        const boards = this.props
+        let {loggedInUser } = this.props
         console.log("i have boards in my pocket" , boards)
         if (!boards) return <Loader />
         return (
             <section className="workspace-container flex align-flex-start justify-center ">
+                <Route path="/workspace/dashboard" component={AdminDashboard} />
+
                 <div className="boards-wrapper flex column">
                     {/* <div className="boards-preview flex column">
                         <div className="preview-title flex align-center">
@@ -181,7 +191,7 @@ class _Workspace extends Component {
                             {/* <BoardIcon /> */}
                             <h3>פרויקטים</h3>
                         </div>
-                        <BoardList onToggleFavorite={this.onToggleFavorite} boards={boards} 
+                        <BoardList  onToggleFavorite={this.onToggleFavorite} getUserBoards={this.getUserBoards} 
                         loggedInUser={loggedInUser} onDeleteBoard={this.onDeleteBoard}/>
                     </div>
                 </div>

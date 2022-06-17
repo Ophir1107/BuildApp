@@ -127,26 +127,16 @@
                 margin-bottom:20px;  
                 .stats{
                     margin-inline:10px;
-                    
-                    // min-width: none;
-                    // width: 150px;
-                    .content{
-                        // width: inherit;
-                        // text-align: center;
+
                     }
                 }
-                // flex-direction: column;
+
                 > *:not(:last-child) {
-                    //margin-inline-end: 25px;
+
                 }
-                // .CircularProgressbar {
-                //     display: none;
-                // }
-                // h4{
-                //     text-align: center;
-                // }
+
             }
-        }
+        
         .board-charts-con{
             display:unset;
             .board-chart{

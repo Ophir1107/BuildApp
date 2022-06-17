@@ -34,10 +34,6 @@ class _Users extends Component {
         this.setState({users})
     }
 
-    onGoBack(){
-        console.log( "history")
-    }
-
     get filteredUsers() {
         const { users, userTxt } = this.state
         const regex = new RegExp(userTxt, 'i')
@@ -51,7 +47,7 @@ class _Users extends Component {
         return (
             <Route>
                 <section>
-                    <Link onClick={this.onGoBack} to="/workspace" className="clean-link"><div className="users-logo flex align-center justify-center">
+                    <Link to="/workspace" className="clean-link"><div className="users-logo flex align-center justify-center">
                         <h1>BuildApp</h1>
                     </div>
                     </Link>

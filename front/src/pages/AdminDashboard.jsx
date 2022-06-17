@@ -9,7 +9,7 @@ import { ReactComponent as ChartIcon } from '../assets/img/icons/chart.svg'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { Loader } from '../cmps/Loader'
 import 'react-circular-progressbar/dist/styles.css';
-import { StackedBarChart } from '../cmps/StackedBarChart';
+import { AdminChart } from '../cmps/AdminChart';
 
 
 class _AdminDashboard extends Component {
@@ -97,10 +97,86 @@ class _AdminDashboard extends Component {
         return criticalTasksCount
     }
 
+    getUsers = () => {
+        const { boards } = this.props
+        let userIds = []
+        let filteredUsers = []
+        for(let i=0 ; i<boards.length; i++) {
+            const {members} = boards[i]
+            for(let j =0 ; j<members.length; j++){
+                if (members[j].userType !== 'manager') continue
+                if(!userIds.includes(members[j]._id)) {
+                    userIds.push(members[j]._id)
+                    filteredUsers.push(members[j])
+                }
+            }
+        }
+     
+        return filteredUsers
+    }
 
 
-    // get cardsPerMemberMap() {
-    //     const { members } = this.props.board
+    get cardsPerMemberMap() {
+        const members = this.getUsers()
+        console.log(members ,"im innnn!!!")
+
+        let data = []
+        const {boards} = this.props
+        for(let i=0 ; i<members.length; i++) {
+            data.push(this.getUserData(members[i]))
+        }
+        return data
+    }
+
+    getUserData = (user) => {
+        const {boards} = this.props
+        const userData = []
+        // finaluserData.name= user.username
+        for (let i=0 ; i<boards.length; i++) {
+            // let userData = []
+            const boardData = []
+            if(boards.members.includes(user)){
+                boardData = this.getBoardData(boards[i]) 
+                console.log(boardData , "board data")
+            }
+            // userDate[board[i].title+'open'] = boardData.openTasks
+            // userDate[board[i].title+'complite'] = boardData.complitedTasks
+            // userDate[board[i].title+'onTime'] = boardData.onTime
+            // userDate[board[i].title+'overDue'] = boardData.overDue
+            userData.push(boardData.openTasks)
+            userData.push(boardData.complitedTasks)
+            userData.push(boardData.onTime)
+            userData.push(boardData.overDue)
+        }
+        console.log(userData , "user data")
+    }
+
+    getBoardData = (board) => {
+        let openTasks = 0
+        let complitedTasks = 0
+        let overDue = 0
+        let onTime = 0
+        console.log(board , "board when trying to get data")
+        for (let i=0 ; i< board.length ; i++) {
+            // lists[i].cards.forEach((card) => {
+            //     if(!card.isDone) openTasks++
+            //     else {
+            //         complitedTasks++
+            //         if(!card.isOverDue) onTime++
+            //     }
+            //     if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
+            // })
+        }
+        return {
+            openTasks,
+            complitedTasks,
+            overDue,
+            onTime
+        }
+    }
+
+    
+
     //     const allCards = this.allCards
     //     const cardsPerMemberMap = members.reduce((acc, member) => {
     //         if (!acc[member.fullname]) acc[member.fullname] = 0
@@ -164,6 +240,40 @@ class _AdminDashboard extends Component {
         }
     }
 
+    // createListCardsData = (board , i , type) => {
+    //     let openTasks = 0
+    //     let complitedTasks = 0
+    //     let overDue = 0
+    //     let onTime = 0
+    //     list.cards.forEach((card) => {
+    //         if(!card.isDone) openTasks++
+    //         else {
+    //             complitedTasks++
+    //             if(!card.isOverDue) onTime++
+    //         }
+    //         if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
+    //     })
+    //     if (type === "total") return {
+    //         name: list.title ,
+    //         open: openTasks ,
+    //         complited: complitedTasks ,
+    //         amt : Math.floor(Math.random()*200)+ 2100
+    //     }   
+    //     if (type === "onTime") return {
+    //         name: list.title ,
+    //         onTime: onTime ,
+    //         overDue: overDue ,
+    //         amt : Math.floor(Math.random()*200)+ 2100
+    //     }   
+    // }
+    get dueSoonPercentage() {
+        return +((this.allCardsCount("soon") / this.allCardsCount("all") * 100).toFixed(1))
+    }
+    get overduePercentage() {
+
+        return +((this.allCardsCount("overdue") / this.allCardsCount("all") * 100).toFixed(1))
+    }
+
 
     goBackToBoard = () => {
         const { board } = this.props
@@ -172,6 +282,8 @@ class _AdminDashboard extends Component {
 
     render() {
         const { chartsData } = this.state
+        // const data1 = this.cardsPerMemberMap
+        // console.log(data1 , "data1")
         if (!chartsData) return <Loader />
         return (
             <>
@@ -194,7 +306,7 @@ class _AdminDashboard extends Component {
                                 <h3 className="flex align-center">  <QueryBuilderIcon /> מסתיימות בקרוב </h3>
                                 <h4>{this.allCardsCount("soon")}</h4>
                             </div>
-                            <CircularProgressbar value={4} text={`${40}%`}
+                            <CircularProgressbar value={this.dueSoonPercentage} text={`${this.dueSoonPercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
 
@@ -204,7 +316,7 @@ class _AdminDashboard extends Component {
                                 <h3 className="flex align-center"><ExclamationIcon />באיחור </h3>
                                 <h4>{this.allCardsCount("overdue")}</h4>
                             </div>
-                            <CircularProgressbar value={5} text={`${50}%`}
+                            <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
                             // <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
@@ -214,9 +326,8 @@ class _AdminDashboard extends Component {
                 </section>
 
                 <section> <div className="StackedBarChart">
-                    <StackedBarChart>
+                    {/* <AdminChart/> */}
 
-                    </StackedBarChart>
 
                 </div>
                 </section>

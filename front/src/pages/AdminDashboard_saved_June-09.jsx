@@ -163,13 +163,13 @@ class _AdminDashboard extends Component {
             },
         }
     }
-    // get dueSoonPercentage() {
-    //     return +((this.dueSoonCardsCount / this.cardsCount * 100).toFixed(1))
-    // }
-    // get overduePercentage() {
+    get dueSoonPercentage() {
+        return +((this.dueSoonCardsCount / this.allCardsCount("all") * 100).toFixed(1))
+    }
+    get overduePercentage() {
 
-    //     return +((this.overdueCardsCount / this.cardsCount * 100).toFixed(1))
-    // }
+        return +((this.overdueCardsCount / this.allCardsCount("all") * 100).toFixed(1))
+    }
 
     goBackToBoard = () => {
         const { board } = this.props
@@ -200,7 +200,7 @@ class _AdminDashboard extends Component {
                                 <h3 className="flex align-center">  <QueryBuilderIcon /> מסתיימות בקרוב </h3>
                                 <h4>{this.allCardsCount("soon")}</h4>
                             </div>
-                            <CircularProgressbar value={4} text={`${40}%`}
+                            <CircularProgressbar value={4} text={`${dueSoonPercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>
 
@@ -210,7 +210,7 @@ class _AdminDashboard extends Component {
                                 <h3 className="flex align-center"><ExclamationIcon />באיחור </h3>
                                 <h4>{this.allCardsCount("overdue")}</h4>
                             </div>
-                            <CircularProgressbar value={5} text={`${50}%`}
+                            <CircularProgressbar value={5} text={`${overduePercentage}%`}
                             // <CircularProgressbar value={this.overduePercentage} text={`${this.overduePercentage}%`}
                                 styles={this.progressCircleStyle} />
                         </div>

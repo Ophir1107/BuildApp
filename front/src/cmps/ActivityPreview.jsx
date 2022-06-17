@@ -6,19 +6,20 @@ import Moment from 'react-moment'
 export class ActivityPreview extends Component {
 
     get fullActivity() {
-        const { activity: { actionType, txt, card }, isGeneral } = this.props
-        const activityLoc = isGeneral ? card?.title : 'this card'
+        const { activity: { actionType, txt,  cardTitle , listTitle}, isGeneral } = this.props
+        const activityLoc =  listTitle
+        console.log(actionType , "cardTitle")
         switch (actionType) {
             case 'attached':
-                return `attached ${txt} to ${activityLoc}`
-            case 'added':
-                return `added ${txt} to ${activityLoc}`
+                return `attached ${txt} to ${cardTitle}`
+            case 'add':
+                return `added ${cardTitle} to ${activityLoc}`
             case 'removed':
-                return `removed ${txt} from ${activityLoc}`
+                return `removed ${cardTitle} from ${activityLoc}`
             case 'joined':
                 return `joined ${activityLoc}`
             case 'completed':
-                return `completed ${txt} on ${activityLoc}`
+                return `completed ${cardTitle} on ${activityLoc}`
             case 'archived':
                 return `archived ${activityLoc}`
             case 'moved':
@@ -26,7 +27,7 @@ export class ActivityPreview extends Component {
             case 'changed':
                 return `changed ${txt}`
             case 'changed-date':
-                return `changed the due date of ${activityLoc} to ${txt}`
+                return `changed the due date of ${cardTitle} to ${txt}`
             case 'renamed':
                 return `renamed this board to ${txt}`
             case 'left':
@@ -39,7 +40,8 @@ export class ActivityPreview extends Component {
     }
 
     render() {
-        const { activity: { actionType, txt, createdAt, byMember, card }, isGeneral } = this.props
+        const { activity: { actionType, txt, createdAt, byMember, cardTitle }, isGeneral } = this.props
+        console.log(byMember , "byMember")
         return (
             <div className="activity-preview flex">
                 <ProfileAvatar member={byMember} size={32} />
@@ -47,7 +49,7 @@ export class ActivityPreview extends Component {
                     <div className="comment-content">
                         <div className="main">
                             <span className="member-name">{byMember.fullname}</span>
-                            {isGeneral && `on ${card.title}`}
+                            {isGeneral && `on ${cardTitle}`}
                             <Moment className="publish-time" fromNow>{createdAt}</Moment>
                         </div>
                         <div className="comment-body">

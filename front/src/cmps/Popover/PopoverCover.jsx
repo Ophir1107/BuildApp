@@ -18,14 +18,21 @@ class _PopoverCover extends Component {
         this.setState({})
     }
 
-    saveCover = ({ bgImgUrl, bgColor, coverMode }) => {
+    saveCover = () => {
+        const { bgImgUrl, bgColor, coverMode } = this.state
+        console.log(bgImgUrl, bgColor, coverMode , "bgImgUrl, bgColor, coverMode")
         const { card, onSaveBoard, board } = this.props
         card.style = {
             coverMode,
             bgImgUrl,
             bgColor,
         }
+        // card.style.bgImgUrl = bgImgUrl
+        // card.style.bgColor = bgColor
+        // card.style.coverMode = coverMode
+        console.log(card.style  , "cardStyle")
         const updatedBoard = boardService.updateCardInBoard(board, card)
+        console.log(card, updatedBoard , "card, updatedBoard")
         onSaveBoard(updatedBoard)
     }
 
@@ -33,6 +40,7 @@ class _PopoverCover extends Component {
         let { coverMode } = this.state
         if (!coverMode) coverMode = 'header';
         this.setState({ bgColor: target.value, bgImgUrl: '', coverMode: coverMode }, this.onSaveCover)
+        console.log(this.state , "state in handle change")
     }
 
     onRemoveCover = () => {
@@ -41,11 +49,14 @@ class _PopoverCover extends Component {
 
     onSetMode = (mode) => {
         this.setState({ coverMode: mode }, this.onSaveCover)
+        
     }
 
     onSaveCover = () => {
         const { bgColor, bgImgUrl, coverMode } = this.state
-        if ((coverMode && bgImgUrl) || (coverMode && bgColor) || (!coverMode && !bgColor && !bgImgUrl)) this.saveCover(this.state)
+        console.log(this.state , "state in on save cover")
+
+        if ((coverMode && bgImgUrl) || (coverMode && bgColor) || (!coverMode && !bgColor && !bgImgUrl)) this.saveCover()
         else return
     }
 

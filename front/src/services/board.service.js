@@ -2,6 +2,7 @@ import { utilsService } from './utils.service'
 import { httpService } from './http.service'
 import { userService } from './user.service'
 
+
 export const boardService = {
     query,
     remove,
@@ -12,6 +13,8 @@ export const boardService = {
     setPopoverPos,
     removeCard,
     getFilteredList,
+    addActivityToBoard,
+    addActivityToCard
 }
 
 async function query(filterBy = { ctg: '' }) {
@@ -136,4 +139,38 @@ function removeCard(board, card) {
             list.cards = list.cards.filter(boardCard => boardCard.id !== card.id)
     })
     return { ...board }
+}
+
+function addActivityToCard(card , actionType , byMember , txt=null , member=null , listTitle=null){
+    !card.activity ? 
+    card.activity = [
+        { 
+            id : utilsService.makeId(5) ,
+            byMember : {...byMember} ,
+            actionType ,
+            member : {...member},
+            createdAt : Date.now(),
+            cardTitle : card.title,
+            listTitle,
+            txt
+        }
+    ]
+    :
+    card.activity.unshift({ 
+        id : utilsService.makeId(5) ,
+        byMember : {...byMember} ,
+        actionType ,
+        member : {...member} ,
+        createdAt : Date.now(),
+        cardTitle : card.title ,
+        listTitle,
+        txt
+    }) 
+    return card
+}
+
+function addActivityToBoard(board, activity) {
+    let boardToEdit = { ...board }
+    boardToEdit.activities.unshift(activity)
+    return boardToEdit
 }

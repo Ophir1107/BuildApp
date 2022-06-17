@@ -9,10 +9,10 @@ import {
   Legend
 } from "recharts";
 
-export function BoardCharts({data , dataKey1 , dataKey2}) {
+export function BoardCharts({label ,data , dataKey1 , dataKey2}) {
   return (
     <BarChart
-    width={400}
+    width={500}
     height={400}
     data={data}
     margin={{

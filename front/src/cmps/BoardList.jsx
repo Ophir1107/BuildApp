@@ -95,7 +95,35 @@
 //         return(
 
 import { Link } from 'react-router-dom'
-export function BoardList({ boards, onToggleFavorite , loggedInUser , onDeleteBoard}) {
+
+import React, { Component } from 'react'
+import { loadBoards, onSaveBoard, onSaveBoards } from '../store/actions/board.actions'
+import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
+import { Loader } from '../cmps/Loader'
+import { boardService } from '../services/board.service'
+import { socketService } from '../services/socket.service'
+import { connect } from 'react-redux'
+
+class  _BoardList extends Component {
+// export function BoardList({ }) {
+    state= {
+        boards : [] ,
+        // isFavorite : false
+    }
+
+    componentDidMount(){
+        // this.props.loadBoards()
+        let {boards , loadBoards} = this.props
+        const {getUserBoards} = this.props
+        boards = getUserBoards()
+        console.log(boards , "boards from boards list")
+        
+        socketService.on('board newUpdate', boards => this.setState({boards}) )
+    }
+    render(){
+    const { onToggleFavorite , loggedInUser , onDeleteBoard , getUserBoards} = this.props
+    let {boards} = this.props
+    boards = getUserBoards()
     return (
         <div className="board-list">
             {boards.map(board => {
@@ -103,7 +131,8 @@ export function BoardList({ boards, onToggleFavorite , loggedInUser , onDeleteBo
                     <div className="board-preview"
                         style={{ background: `${board.style.background} center center / cover` }}>
                         <div className="board-preview-details">
-                            <h3>{board.title.length > 20 ? board.title.substring(0, 20) + '...' : board.title}</h3>
+                            {/* <h3>{board.title.length > 20 ? board.title.substring(0, 20) + '...' : board.title}</h3> */}
+                            <h3>{board.title}</h3>
                             <span className={`far fa-star ${board.isFavorite ? 'favorite' : ''}`}
                                 onClick={(ev) => onToggleFavorite(ev, board._id)}>
                             </span>
@@ -117,9 +146,23 @@ export function BoardList({ boards, onToggleFavorite , loggedInUser , onDeleteBo
                 </Link >
             })}
         </div>
-    )
+    )}
 }
 
+function mapStateToProps(state) {
+    return {
+        boards: state.boardModule.boards,
+        loggedInUser: state.appModule.loggedInUser
+    }
+}
+
+const mapDispatchToProps = {
+    onSaveBoard,
+    onSaveBoards,
+    loadBoards
+}
+
+export const BoardList = connect(mapStateToProps, mapDispatchToProps)(_BoardList)
 // class  _BoardList extends Component {
 //     state= {
 //         boards : [] ,
