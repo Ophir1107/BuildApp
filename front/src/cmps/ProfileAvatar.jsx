@@ -73,7 +73,6 @@ function _ProfileAvatar({ member, size, onOpenPopover, showStatus = false, onlin
                 }}
                 variant={getStatus()}
             >
-                {console.log(member ,"meber from profile avatar")}
                 <Avatar
                     className="avatar"
                     alt={member.fullname}

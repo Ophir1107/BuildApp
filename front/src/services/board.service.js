@@ -14,7 +14,8 @@ export const boardService = {
     removeCard,
     getFilteredList,
     addActivityToBoard,
-    addActivityToCard
+    addActivityToCard,
+    deleteNotifications
 }
 
 async function query(filterBy = { ctg: '' }) {
@@ -70,7 +71,7 @@ export function updateCardInBoard(board, updatedCard) {
     return { ...board }
 }
 
-export function createActivity(actionType, txt = '', card = null) {
+export function createActivity(actionType, txt = '', card = null , board=null) {
 
     const loggedInUser = userService.getLoggedinUser()
 
@@ -81,6 +82,7 @@ export function createActivity(actionType, txt = '', card = null) {
         fullname,
         imgUrl
     }
+
 
     let savedCard
     if (card) {
@@ -98,6 +100,7 @@ export function createActivity(actionType, txt = '', card = null) {
         createdAt: Date.now(),
         byMember,
         card: savedCard || null,
+        members : board ? board.members : null
     }
     return savedActivity
 }
@@ -169,8 +172,25 @@ function addActivityToCard(card , actionType , byMember , txt=null , member=null
     return card
 }
 
-function addActivityToBoard(board, activity) {
+function addActivityToBoard(board, activity=null) {
     let boardToEdit = { ...board }
     boardToEdit.activities.unshift(activity)
+    board.members.forEach(member => {
+        if(member._id !== activity.byMember._id){
+            if(!member.notificationNum) member.notificationNum = 0
+            member.notificationNum++
+        }
+    })
+    return boardToEdit
+}
+
+function deleteNotifications(board, user) {
+    let boardToEdit = { ...board }
+    // boardToEdit.activities.unshift(activity)
+    board.members.forEach(member => {
+        if(member._id !== user._id){
+            member.notificationNum = 0
+        }
+    })
     return boardToEdit
 }

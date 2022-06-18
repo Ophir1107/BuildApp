@@ -1,6 +1,7 @@
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 import { closePopover } from '../../store/actions/app.actions'
+import { onSaveBoard } from '../../store/actions/board.actions'
 import { Component } from 'react'
 import { boardService } from '../../services/board.service';
 
@@ -41,17 +42,17 @@ export class _Popover extends Component {
     }
 
     render() {
-        const { children, title, closePopover, isOverlayOpen, overlay, displayMode } = this.props
+        const { children, title, closePopover, isOverlayOpen, overlay, displayMode , loggedInUser ,board } = this.props
         const { top, left } = this.state
 
         return <>
-            {overlay !== 'none' && isOverlayOpen && <div className="overlay" onClick={closePopover} />}
+            {overlay !== 'none' && isOverlayOpen && <div className="overlay" onClick={(ev) => closePopover(title , loggedInUser ,board)} />}
             <div className={`pop-over ${displayMode} `}
                 style={displayMode === 'menu' ? {} : { top: `${top}px`, left: `${left}px` }}
                 ref={(div) => { this.selectedDiv = div }} >
                 <div className={`pop-over-header ${displayMode} `}>
                     <h3>{title}</h3>
-                    <button className="clean-btn" onClick={closePopover}>
+                    <button className="clean-btn" onClick={(ev) => closePopover(title , loggedInUser ,board)}>
                         <CloseIcon />
                     </button>
                 </div>
@@ -66,13 +67,17 @@ export class _Popover extends Component {
 
 
 const mapDispatchToProps = {
-    closePopover
+    closePopover,
+    onSaveBoard
 }
 
 function mapStateToProps(state) {
     return {
         isOverlayOpen: state.appModule.isOverlayOpen,
-        elPos: state.appModule.currPopover.elPos
+        elPos: state.appModule.currPopover.elPos ,
+        loggedInUser: state.appModule.loggedInUser,
+        board: state.boardModule.board
     }
 }
+
 export const Popover = connect(mapStateToProps, mapDispatchToProps)(_Popover)

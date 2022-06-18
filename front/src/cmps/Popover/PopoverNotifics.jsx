@@ -1,29 +1,38 @@
 import {connect} from 'react-redux'
 import { ActivitiesList } from '../ActivitiesList'
 import {Popover} from './Popover'
+import { onSaveBoard } from "../../store/actions/board.actions";
 
-function _PopoverNotifcs ({loggedInUser,board}){
+function _PopoverNotifcs ({board , loggedInUser , onSaveBoard , data}){
 
     function getNotifcsActivities(){
+        // const {board , loggedInUser , onSaveBoard} = this.props
         if(!loggedInUser)return
-        console.log(board.activities , "board.activities") 
-        const sortedActivities = board.activities.sort((a, b) => a.createdAt - b.createdAt)
-        console.log(sortedActivities , "sortedActivities") 
-
+        const sortedActivities = board.activities.sort((a, b) => b.createdAt - a.createdAt)
+        console.log(sortedActivities.filter(unique) , "unique activities")
         const userNotifics=sortedActivities.reduce((acc,activity)=>{
-            if(activity.card?.members){
+            if(board.members){
                 board.members.forEach(member=>{
                     if(loggedInUser._id!==activity.byMember._id){
+                        if(!member.lastNotified || member.lastNotified <activity.createdAt)
                         acc.push(activity)
                     }
                 })
             }
             return acc
         },[])
-        return userNotifics.slice(0,15)
+        const memberIdx =  board.members.findIndex(member => member._id === loggedInUser._id)
+        return userNotifics
     }
 
-    const notifcsActivities=getNotifcsActivities()
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index
+      }
+
+
+    const notifcsActivities=getNotifcsActivities().filter(unique).slice(0,data)
+    console.log(notifcsActivities , "notifcsActivities")
+    // console.log(notifcsActivities.unique() , "notifcsActivities")
 
     return <Popover title="Notifications">
         <div className="user-notifics">
@@ -39,5 +48,8 @@ function mapStateToProps(state){
         board:state.boardModule.board
     }
 }
+const mapDispatchToProps = {
+    onSaveBoard
+}
 
-export const PopoverNotifics = connect(mapStateToProps,null)(_PopoverNotifcs)
+export const PopoverNotifics = connect(mapStateToProps,mapDispatchToProps)(_PopoverNotifcs)

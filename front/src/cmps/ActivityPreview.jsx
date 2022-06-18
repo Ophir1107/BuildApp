@@ -8,7 +8,6 @@ export class ActivityPreview extends Component {
     get fullActivity() {
         const { activity: { actionType, txt,  cardTitle , listTitle}, isGeneral } = this.props
         const activityLoc =  listTitle
-        console.log(actionType , "cardTitle")
         switch (actionType) {
             case 'attached':
                 return `attached ${txt} to ${cardTitle}`
@@ -41,7 +40,6 @@ export class ActivityPreview extends Component {
 
     render() {
         const { activity: { actionType, txt, createdAt, byMember, cardTitle }, isGeneral } = this.props
-        console.log(byMember , "byMember")
         return (
             <div className="activity-preview flex">
                 <ProfileAvatar member={byMember} size={32} />

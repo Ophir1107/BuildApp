@@ -118,7 +118,10 @@ class  _BoardList extends Component {
         boards = getUserBoards()
         console.log(boards , "boards from boards list")
         
-        socketService.on('board newUpdate', boards => this.setState({boards}) )
+        socketService.on('board newUpdate', boards => {
+            console.log("on board new update , from board list")
+            this.setState({boards}) 
+    })
     }
     render(){
     const { onToggleFavorite , loggedInUser , onDeleteBoard , getUserBoards} = this.props

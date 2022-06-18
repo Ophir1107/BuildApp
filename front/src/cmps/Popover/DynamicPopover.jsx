@@ -43,7 +43,7 @@ function _DynamicPopover({ currPopover }) {
         case 'LIST_MENU': return <PopoverListMenu {...props} />
         case 'NOTIFICATIONS': return <PopoverNotifics {...props} />
         case 'BOARDS_SEARCH': return <PopoverBoardsSearch {...props} />
-        case 'INVITE_CONS': return <PopoverInviteCons {...props} />
+        case 'INVITE_CONS': return <PopoverInviteCons  />
         default: return '';
     }
 }

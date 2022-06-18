@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { socketService } from "../services/socket.service";
 import { openPopover, onLogout, closePopover } from '../store/actions/app.actions'
+import { onSaveBoard } from '../store/actions/board.actions'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
 import { ReactComponent as BellIcon } from '../assets/img/icons/notific-bell.svg'
@@ -20,9 +21,11 @@ class _AppHeader extends Component {
     }
 
     componentDidMount() {
-        socketService.on('app addActivity', activity => {
-            this.setState({ isNewNotific: true })
-        })
+        const {board , loggedInUser} = this.props
+    }
+    componentDidUpdate() {
+
+            // this.setState({ isNewNotific: true })
     }
 
     toggleCurModal = (modalName = '') => {
@@ -31,6 +34,7 @@ class _AppHeader extends Component {
     }
 
     onOpenNotifics = (ev) => {
+
         this.setState({ isNewNotific: false }, () => {
             this.onOpenPopover(ev, 'NOTIFICATIONS')
         })
@@ -112,14 +116,16 @@ class _AppHeader extends Component {
 
 function mapStateToProps(state) {
     return {
-        loggedInUser: state.appModule.loggedInUser
+        loggedInUser: state.appModule.loggedInUser,
+        board: state.boardModule.board
     }
 }
 
 const mapDispatchToProps = {
     openPopover,
     onLogout,
-    closePopover
+    closePopover,
+    onSaveBoard
 }
 
 

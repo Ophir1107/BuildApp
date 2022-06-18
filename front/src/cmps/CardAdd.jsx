@@ -4,6 +4,8 @@ import FmdBadIcon from '@mui/icons-material/FmdBad';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { utilsService } from '../services/utils.service'
 import { boardService } from '../services/board.service'
+import { socketService } from '../services/socket.service'
+import { onSaveBoard } from '../store/actions/board.actions'
 import { connect } from 'react-redux'
 
 export class _CardAdd extends Component {
@@ -35,7 +37,7 @@ export class _CardAdd extends Component {
             return;
         }
 
-        const { board, currList, onSaveBoard , loggedInUser} = this.props;
+        const { board, currList, saveBoard , onSaveBoard , loggedInUser} = this.props;
         const listIdx = board.lists.findIndex(list => list.id === currList.id);
 
         const card = {
@@ -62,10 +64,9 @@ export class _CardAdd extends Component {
         const cardToEdit = boardService.addActivityToCard(card , 'add' , loggedInUser , null , board.lists[listIdx].title)
         // this.props.onEditBoard(board)
         const boardToEdit = boardService.addActivityToBoard(board, cardToEdit.activity[0])
-        console.log(card.activity , "cardActivity")
         board.lists[listIdx].cards.push(cardToEdit)
+        saveBoard(boardToEdit)
         onSaveBoard(boardToEdit)
-        // onSaveBoard(board)
         this.setState({ titleTxt: '' }, () => {
             this.textArea.focus()
         })
@@ -101,9 +102,13 @@ export class _CardAdd extends Component {
 function mapStateToProps(state) {
     return {
       loggedInUser: state.appModule.loggedInUser,
+    //   board : state.boardModule.board,
     }
   }
+const mapDispatchToProps = {
+    onSaveBoard,
+}
 
   
-  export const CardAdd = connect(mapStateToProps)(_CardAdd)
+  export const CardAdd = connect(mapStateToProps , mapDispatchToProps)(_CardAdd)
   

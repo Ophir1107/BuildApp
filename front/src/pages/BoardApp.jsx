@@ -22,7 +22,8 @@ class _BoardApp extends Component {
     state = {
         isCardEditOpen: false,
         currCard: null,
-        elPos: null
+        elPos: null,
+        board: null
     }
 
     removeEvent;
@@ -32,7 +33,8 @@ class _BoardApp extends Component {
             if (!this.props.loggedInUser) this.props.onLogin()
             const { boardId } = this.props.match.params
             await this.props.loadBoard(boardId)
-            const { board } = this.props
+            const { board } = this.props 
+            this.setState({board: board})      
             socketService.emit('join board', board._id)
             socketService.on('board updated', savedBoard => {
                 this.props.loadBoard(savedBoard._id)
@@ -111,24 +113,29 @@ class _BoardApp extends Component {
         board.lists = lists
         onSaveBoard(board)
     }
-
-
+    saveBoard = (board)=>{
+        this.setState({board : board})
+        const {onSaveBoard} = this.props
+        boardService.save(board)
+        onSaveBoard(board)
+    }
+    
     render() {
-        const { onSaveBoard, board, filterBy, loggedInUser } = this.props
+        const { onSaveBoard, filterBy, loggedInUser , board} = this.props
         const { currCard, elPos, isCardEditOpen } = this.state
+        // const {board} = this.state
         if (!board) return <Loader />
-
         return (
             <>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <section className="board-app flex column">
-                        <BoardHeader board={board} onSaveBoard={onSaveBoard} />
+                        <BoardHeader  saveBoard={this.saveBoard} />
                         <Route path="/board/:boardId/:listId/:cardId" component={CardDetails} />
                         <Route path="/board/:boardId/dashboard" component={Dashboard} />
                         <Droppable droppableId="all-lists" direction="horizontal" type="list">
                             {provided => (
                                 <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
-                                    {board.lists.map((currList, idx) => <CardList filterBy={filterBy} key={currList.id} currListIdx={idx} currList={currList} onSaveBoard={onSaveBoard} board={board} />)}
+                                    {board.lists.map((currList, idx) => <CardList filterBy={filterBy} key={currList.id} currListIdx={idx} currList={currList} onSaveBoard={onSaveBoard} saveBoard={this.saveBoard} board={board} />)}
                                     {provided.placeholder}
                                     <CardListAdd board={board} loggedInUser={loggedInUser} onSaveBoard={onSaveBoard} />
                                 </div>

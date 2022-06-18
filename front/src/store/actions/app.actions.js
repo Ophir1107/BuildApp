@@ -1,6 +1,8 @@
 import { userService } from '../../services/user.service.js'
 import { constructorService } from '../../services/constructor.service.js'
 import { socketService } from '../../services/socket.service.js'
+import { boardService } from '../../services/board.service.js'
+import { onSaveBoard } from './board.actions.js'
 
 export function onGoogleLogin(tokenId) {
     return async dispatch => {
@@ -59,7 +61,7 @@ export function onLogout(user) {
     }
 }
 
-export function openPopover(popoverName, elPos, props) {
+export function openPopover(popoverName, elPos, props ) {
     return dispatch => {
         const action = {
             type: 'SET_POPOVER',
@@ -71,7 +73,7 @@ export function openPopover(popoverName, elPos, props) {
     }
 }
 
-export function closePopover() {
+export function closePopover(popoverType=null , user , board) {
     return dispatch => {
         const action = {
             type: 'CLOSE_POPOVER',
