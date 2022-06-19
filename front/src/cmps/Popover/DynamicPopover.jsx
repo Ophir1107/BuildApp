@@ -17,7 +17,7 @@ import { PopoverCreateBoard } from './PopoverCreateBoard';
 import { PopoverListMenu } from './PopoverListMenu';
 import { PopoverNotifics } from './PopoverNotifics';
 import { PopoverBoardsSearch } from './PopoverBoardsSearch';
-import { PopoverInviteCons } from './PopoverInviteCons';
+import { PopoverCamera } from './PopoverCamera';
 
 function _DynamicPopover({ currPopover }) {
     
@@ -43,7 +43,7 @@ function _DynamicPopover({ currPopover }) {
         case 'LIST_MENU': return <PopoverListMenu {...props} />
         case 'NOTIFICATIONS': return <PopoverNotifics {...props} />
         case 'BOARDS_SEARCH': return <PopoverBoardsSearch {...props} />
-        case 'INVITE_CONS': return <PopoverInviteCons  />
+        case 'CAMERA': return <PopoverCamera {...props} />
         default: return '';
     }
 }

@@ -9,6 +9,7 @@ import { predictService } from "../../services/predict.service"
 import { openPopover, closePopover  } from '../../store/actions/app.actions'
 import { onSaveBoard } from '../../store/actions/board.actions'
 import { connect } from 'react-redux'
+import { Alert , AlertTitle  } from '@mui/material';
 
 class _PopoverAttach extends Component {
 
@@ -17,9 +18,13 @@ class _PopoverAttach extends Component {
         link: null,
         formData: null,
         linkTxt: '',
-        predictLabel : ''
+        predictLabel : '',
+        showSuccess : false,
+        interval : null
 
     }
+
+
 
     handleChange = ({ target }) => {
 
@@ -75,14 +80,20 @@ class _PopoverAttach extends Component {
                 newBoard =  boardService.addCardToBoardOnPredict(board , newCard , predictLabel)
                 onSaveBoard(newBoard)
                 console.log(newBoard , "newBoard 1")
-            
+                
             }).then( () => {cloudinaryService.uploadFile(ev).then(result => {
                 console.log(result , "target value")
                 console.log(newBoard , "newBoard ")
                 const updatedBoard = boardService.attachFileToCard(newBoard , newCard , result)
                 onSaveBoard(updatedBoard)
-    
+                
             })})
+            this.setState({showSuccess : true})
+            console.log(this.state.showSuccess , "showSuccess")
+            setTimeout(() =>{ 
+                this.setState({showSuccess : false})
+                console.log(this.state.showSuccess , "showSuccess")
+            }, 5500)
             // const predictLabel = 'Air conditioning'
             // console.log(predictLabel , "pred")
             // let newBoard =  boardService.addCardToBoardOnPredict(board , newCard , predictLabel  )
@@ -92,8 +103,27 @@ class _PopoverAttach extends Component {
             cloudinaryService.uploadFile(ev).then(result => {
                 this.addFile(result)
             })
+            this.setState({showSuccess : true})
+
+            console.log(this.state.showSuccess , "showSuccess")
+            setTimeout(() => {
+                this.setState({showSuccess : false})
+                console.log(this.state.showSuccess , "showSuccess")
+            }, 2500)
+            // this.state.interval = setInterval(() =>this.setState({showSuccess : true}), 2500)
+            // console.log(this.state.interval , "showSuccess")
         }
         closePopover()
+    }
+
+    onOpenPopover = (ev, PopoverName) => {
+        const elPos = ev.target.getBoundingClientRect()
+        const { board, closePopover } = this.props
+        const props = {
+            board,
+            closePopover
+        }
+        this.props.openPopover(PopoverName, elPos, props)
     }
 
     // attachFileToCard = (card , fileUrl) => {
@@ -155,7 +185,7 @@ class _PopoverAttach extends Component {
     }
 
     render() {
-        let { inputTxt } = this.state
+        let { inputTxt , showSuccess } = this.state
         return <Popover title="הוסף מ...">
             <div className="attach-pop-over-content">
                 <FileUpload onFileUpload={this.onFileUpload} />
@@ -166,7 +196,12 @@ class _PopoverAttach extends Component {
                     <button className="primary-btn btn-wide">הוסף</button>
                 </form>
             </div>
+            {showSuccess && <Alert severity="success">
+                                <AlertTitle> מעולה</AlertTitle>
+                                התמונה עלתה  — <strong>בהצלחה!</strong>
+                            </Alert>}
         </Popover>
+
     }
 
 }
