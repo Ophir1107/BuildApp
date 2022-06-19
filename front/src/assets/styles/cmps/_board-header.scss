@@ -45,7 +45,7 @@
         border: unset;
         position: relative;
         height: 32px;
-        width: 32px;
+        min-width: 32px;
         color: $clr2;
         margin-inline-end: 5px;
         &.new-notific {
@@ -59,6 +59,7 @@
                 background: inherit;
                 height: 22px;
                 width: 22px;
+                border: 1px white solid;
             }
         }
         .fa , svg {

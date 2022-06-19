@@ -135,7 +135,7 @@ class _BoardApp extends Component {
                         <Droppable droppableId="all-lists" direction="horizontal" type="list">
                             {provided => (
                                 <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
-                                    {board.lists.map((currList, idx) => <CardList filterBy={filterBy} key={currList.id} currListIdx={idx} currList={currList} onSaveBoard={onSaveBoard} saveBoard={this.saveBoard} board={board} />)}
+                                    {board.lists && board.lists.map((currList, idx) => <CardList filterBy={filterBy} key={currList.id} currListIdx={idx} currList={currList} onSaveBoard={onSaveBoard} saveBoard={this.saveBoard} board={board} />)}
                                     {provided.placeholder}
                                     <CardListAdd board={board} loggedInUser={loggedInUser} onSaveBoard={onSaveBoard} />
                                 </div>

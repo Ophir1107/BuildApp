@@ -76,6 +76,8 @@ class _BoardHeader extends Component {
         board.isFavorite = !board.isFavorite
         saveBoard(board)
     }
+
+    
     onOpenPopover = (ev, PopoverName, member , data=null) => {
         const elPos = ev.target.getBoundingClientRect()
         const props = { member, isInCard: false, showStatus: true , userType : 'all' , data}

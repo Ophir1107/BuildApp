@@ -1,4 +1,5 @@
 import { utilsService } from './utils.service'
+import { socketService } from './socket.service'
 import { httpService } from './http.service'
 import { userService } from './user.service'
 
@@ -15,7 +16,9 @@ export const boardService = {
     getFilteredList,
     addActivityToBoard,
     addActivityToCard,
-    deleteNotifications
+    deleteNotifications,
+    attachFileToCard,
+    addCardToBoardOnPredict
 }
 
 async function query(filterBy = { ctg: '' }) {
@@ -194,3 +197,38 @@ function deleteNotifications(board, user) {
     })
     return boardToEdit
 }
+
+function attachFileToCard(board , card , fileUrl){
+    // let updatedBoard = { ...board}
+
+
+    // this.props.addFile(fileUrl)
+
+    console.log(fileUrl , "fileUrl board service" )
+    if (!card.attachs) card.attachs = []
+    const attach = {
+        id: utilsService.makeId(),
+        fileName: `${utilsService.makeId(12)}.jpg`,
+        url: fileUrl,
+        createdAt: Date.now()
+    }
+    card.attachs.push(attach)
+    card.style.bgImgUrl = fileUrl.url
+    console.log(fileUrl , "img url")
+    card.style.bgColor = ''
+    const savedActivity = createActivity('attached', attach.fileName, card)
+    socketService.emit('app newActivity', savedActivity)
+    console.log(board , "board before activities")
+    board.activities.unshift(savedActivity)
+    board = updateCardInBoard(board, card)
+    
+    return board
+}
+
+function addCardToBoardOnPredict(board , card , predictLabel){
+    let label = utilsService.getLabel(predictLabel)
+    const listIdx =board.lists.findIndex(list => list.title===label) 
+    board.lists[listIdx].cards.push(card)
+    return board
+}
+
