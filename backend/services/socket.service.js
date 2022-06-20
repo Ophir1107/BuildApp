@@ -43,12 +43,13 @@ function connectSockets(http, session) {
             gIo.emit('user connected', userId)
         })
 
-        socket.on('app newActivity', activity => {
-            if (activity.card.members) {
+        socket.on('app newActivity', board => {
+            if (board.members) {
+                const activity = board.activities[board.activities.length - 1]
                 console.log('app activty', activity)
-                activity.card.members.forEach(member => {
+                board.members.forEach(member => {
                     console.log('members in card activity:', member)
-                    if (member._id !== activity.byMember._id) gIo.to(member._id).emit('app addActivity', activity)
+                    if (member._id !== activity.byMember._id) gIo.to(member._id).emit('app addActivity', board)
                 })
             }
         })

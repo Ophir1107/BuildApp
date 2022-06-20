@@ -14,6 +14,7 @@ export function CardAttachments({ attachs, onDeleteCardAttachment, card, openPop
         openPopover(type, elPos, props)
     }
 
+    console.log(card.attachs , "card attached files")
     return (
         <div className="card-attachments">
             <div className="window-modal-title flex align-center">
@@ -26,7 +27,7 @@ export function CardAttachments({ attachs, onDeleteCardAttachment, card, openPop
                         rel="noreferrer" href={attach.url} className="clean-link">
                         <div className="attach-preview flex">
                             <div className="img-container">
-                                <img src={attach.url} alt="" />
+                                <img src={attach.url.url} alt="" />
                             </div>
                             <div className="attach-content flex column full">
                                 <span className="file-name">{attach.fileName} </span>

@@ -8,11 +8,27 @@ export class FileUpload extends Component {
   }
   uploadFile = async (ev) => {
     console.log('file from file upload' , ev.target.files[0])
+    // console.log('file from file upload' , ev.target.files[0].path)
     try{
-      const {secure_url} = await cloudinaryService.uploadFile(ev)
-      const predictLabel = predictService.onPredict(secure_url)
-      console.log('predictLabel' , predictLabel)
-      this.props.onFileUpload(secure_url)
+      const file = document.getElementById('file-upload')
+      console.log(file.value , "file value")
+      const fileUrl=file.value
+      let urlArray = fileUrl.split('\\')
+      urlArray[1] = 'Users/\/\דסה\/\/Downloads'
+      // let urlArray = ev.target.files[0].path.split('/')
+      console.log('urlArray' , urlArray)
+      const urlPath = urlArray.join('/\/')
+      console.log(urlPath , "urlPath")
+      // const {secure_url} = await cloudinaryService.uploadFile(ev)
+    //   const predictLabel = predictService.onPredict(secure_url)
+    //   .then(predictLabel => {
+    //     if(!predictLabel) return
+    //     console.log(predictLabel , "pred")
+    //     let newBoard =  boardService.addCardToBoardOnPredict(board , card)
+    //     onSaveBoard(newBoard)
+    // })
+      // console.log('predictLabel' , predictLabel)
+      this.props.onFileUpload(urlPath , ev)
     }catch (err){
       console.log(err , "err from upload error") 
       throw err

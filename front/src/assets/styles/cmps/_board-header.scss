@@ -35,6 +35,7 @@
     button,
     a {
         display: flex;
+        justify-content:center;
         padding: 5px;
         align-items: center;
         cursor: pointer;
@@ -44,28 +45,46 @@
         border: unset;
         position: relative;
         height: 32px;
+        min-width: 32px;
         color: $clr2;
         margin-inline-end: 5px;
+        &.new-notific {
+            background-color: #e54c31d6;
+            position: relative;
+            div {
+                position: absolute;
+                top: -4px;
+                right: 22px;
+                border-radius: 50%;
+                background: inherit;
+                height: 22px;
+                width: 22px;
+                border: 1px white solid;
+            }
+        }
+        .fa , svg {
+            margin-inline: 3px;
+        }
 
-        &:first-child {
-            svg:first-child {
-                margin-inline-end: 4px;
-                margin-inline-start: 2px;
-            }
-            svg:last-child {
-                margin-inline-end: 2px;
-            }
-            span {
-                margin-inline-end: 6px;
-            }
-        }
-        &:last-child {
-            margin-inline-end: 4px;
-            svg {
-                margin-inline-end: 3px;
-                margin-inline-start: 3px;
-            }
-        }
+        // &:first-child {
+        //     svg:first-child {
+        //         margin-inline-end: 4px;
+        //         margin-inline-start: 2px;
+        //     }
+        //     svg:last-child {
+        //         margin-inline-end: 2px;
+        //     }
+        //     span {
+        //         margin-inline-end: 6px;
+        //     }
+        // }
+        // &:last-child {
+        //     margin-inline-end: 4px;
+        //     svg {
+        //         margin-inline-end: 3px;
+        //         margin-inline-start: 3px;
+        //     }
+        // }
         &:hover {
             background-color: rgba(255, 255, 255, 0.3);
         }

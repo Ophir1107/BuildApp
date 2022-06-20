@@ -26,6 +26,14 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/api/', (req, res) => {
  console.log(req.query.url, 'AMIT est')
  var dataToSend;
+
+// console.log(cloudinary.image("front_face.png", {secure: true, transformation: [
+//     {width: 150, height: 150, gravity: "face", crop: "thumb"},
+//     {radius: 20},
+//     {effect: "sepia"},
+//     {overlay: "cloudinary_icon_blue", gravity: "south_east", x: 5, y: 5, width: 50, opacity: 60, effect: "brightness:200"},
+//     {angle: 10}
+//     ]}) , "img after trans")
 //  spawn new child process to call the python script
  const python = spawn('python', ['script1.py', req.query.url]);
 //  collect data from script

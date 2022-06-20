@@ -20,6 +20,7 @@ export const httpService = {
         return ajax(endpoint, 'POST', data)
     },
     put(endpoint, data) {
+        console.log("im here and its fine put http" , data)
         return ajax(endpoint, 'PUT', data)
     },
     delete(endpoint, data) {
@@ -28,7 +29,7 @@ export const httpService = {
 }
 
 async function ajax(endpoint, method = 'GET', data = null) {
-    console.log(endpoint , method, data , "endpoint , method, data")
+    // console.log(endpoint , method, data , "endpoint , method, data")
     try {
         const res = await axios({
             url: (endpoint.includes('url'))? `${PREDICTOR_URL}${endpoint}` :
@@ -39,8 +40,8 @@ async function ajax(endpoint, method = 'GET', data = null) {
             // params: (method === 'GET') ? data : null
         })
         
-        console.log(`${BASE_URL}${endpoint}` , "url")
-        console.log(res.data , "res.data from http")
+        // console.log(`${BASE_URL}${endpoint}` , "url")
+        // console.log(res.data , "res.data from http")
         return res.data
     } catch (err) {
         if(endpoint !== 'auth/signup'){

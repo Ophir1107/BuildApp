@@ -3,7 +3,8 @@ export const utilsService = {
     makeId,
     getRandomIntInclusive,
     isValidUrl,
-    isValidImg
+    isValidImg,
+    getLabel
 }
 
 function makeId(length = 6) {
@@ -30,5 +31,18 @@ function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min); 
+}
+
+function getLabel(label){
+    let category = ''
+    if (label.includes("condi")) category = "מיזוג אוויר"
+    
+    if (label.includes("onst")) category = "בינוי"
+    
+    if (label.includes("ectr")) category = "חשמל"
+    
+    if (label.includes("lumb")) category = 'אינסטלציה'
+    
+    return category
 }
 

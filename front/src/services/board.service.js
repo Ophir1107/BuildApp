@@ -1,4 +1,5 @@
 import { utilsService } from './utils.service'
+import { socketService } from './socket.service'
 import { httpService } from './http.service'
 import { userService } from './user.service'
 
@@ -14,7 +15,10 @@ export const boardService = {
     removeCard,
     getFilteredList,
     addActivityToBoard,
-    addActivityToCard
+    addActivityToCard,
+    deleteNotifications,
+    attachFileToCard,
+    addCardToBoardOnPredict
 }
 
 async function query(filterBy = { ctg: '' }) {
@@ -70,7 +74,7 @@ export function updateCardInBoard(board, updatedCard) {
     return { ...board }
 }
 
-export function createActivity(actionType, txt = '', card = null) {
+export function createActivity(actionType, txt = '', card = null , board=null) {
 
     const loggedInUser = userService.getLoggedinUser()
 
@@ -81,6 +85,7 @@ export function createActivity(actionType, txt = '', card = null) {
         fullname,
         imgUrl
     }
+
 
     let savedCard
     if (card) {
@@ -98,6 +103,7 @@ export function createActivity(actionType, txt = '', card = null) {
         createdAt: Date.now(),
         byMember,
         card: savedCard || null,
+        members : board ? board.members : null
     }
     return savedActivity
 }
@@ -169,8 +175,60 @@ function addActivityToCard(card , actionType , byMember , txt=null , member=null
     return card
 }
 
-function addActivityToBoard(board, activity) {
+function addActivityToBoard(board, activity=null) {
     let boardToEdit = { ...board }
     boardToEdit.activities.unshift(activity)
+    board.members.forEach(member => {
+        if(member._id !== activity.byMember._id){
+            if(!member.notificationNum) member.notificationNum = 0
+            member.notificationNum++
+        }
+    })
     return boardToEdit
 }
+
+function deleteNotifications(board, user) {
+    let boardToEdit = { ...board }
+    // boardToEdit.activities.unshift(activity)
+    board.members.forEach(member => {
+        if(member._id !== user._id){
+            member.notificationNum = 0
+        }
+    })
+    return boardToEdit
+}
+
+function attachFileToCard(board , card , fileUrl){
+    // let updatedBoard = { ...board}
+
+
+    // this.props.addFile(fileUrl)
+
+    console.log(fileUrl , "fileUrl board service" )
+    if (!card.attachs) card.attachs = []
+    const attach = {
+        id: utilsService.makeId(),
+        fileName: `${utilsService.makeId(12)}.jpg`,
+        url: fileUrl,
+        createdAt: Date.now()
+    }
+    card.attachs.push(attach)
+    card.style.bgImgUrl = fileUrl.url
+    console.log(fileUrl , "img url")
+    card.style.bgColor = ''
+    const savedActivity = createActivity('attached', attach.fileName, card)
+    socketService.emit('app newActivity', savedActivity)
+    console.log(board , "board before activities")
+    board.activities.unshift(savedActivity)
+    board = updateCardInBoard(board, card)
+    
+    return board
+}
+
+function addCardToBoardOnPredict(board , card , predictLabel){
+    let label = utilsService.getLabel(predictLabel)
+    const listIdx =board.lists.findIndex(list => list.title===label) 
+    board.lists[listIdx].cards.push(card)
+    return board
+}
+

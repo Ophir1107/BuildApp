@@ -9,18 +9,38 @@ import { ElementOverlay } from '../cmps/Popover/ElementOverlay';
 import { ProfileAvatar } from './ProfileAvatar';
 import { boardService } from '../services/board.service'
 import { openPopover } from '../store/actions/app.actions.js'
-import { setFilter } from '../store/actions/board.actions.js'
+import { setFilter , onSaveBoard} from '../store/actions/board.actions.js'
 import BarChartIcon from '@material-ui/icons/BarChart';
+import { ReactComponent as BellIcon } from '../assets/img/icons/notific-bell.svg'
 
 class _BoardHeader extends Component {
 
     state = {
         title: '',
         isEdit: false,
+        notificationNum: 0 ,
+        board : null
     }
 
     componentDidMount() {
-        this.setState({ title: this.props.board.title })
+        this.setState({ board : this.props.board ,title: this.props.board.title , notificationNum : this.notificationNum})
+    }
+
+    get notificationNum(){
+        const {board , loggedInUser} = this.props
+        const memberIdx = board.members.findIndex(member => member._id === loggedInUser._id)
+        return board.members[memberIdx].notificationNum
+    }
+
+    onOpenNotifics = (ev) => {
+        this.setState({ notificationNum: 0 })
+        const {loggedInUser , board , saveBoard} = this.props
+        const memberIdx = board.members.findIndex(member => member._id === loggedInUser._id)
+        const notifNum = board.members[memberIdx].notificationNum
+        this.onOpenPopover(ev, 'NOTIFICATIONS' ,loggedInUser ,  notifNum )     
+        board.members[memberIdx].notificationNum = 0 
+        boardService.save(board)
+        saveBoard(board)       
     }
 
     handleChange = ({ target }) => {
@@ -43,22 +63,24 @@ class _BoardHeader extends Component {
         ev.preventDefault()
         const { title } = this.state
         if (!title) return
-        const { board, onSaveBoard } = this.props
+        const { board, saveBoard } = this.props
         board.title = title
         const savedActivity = boardService.createActivity('renamed', board.title)
         board.activities.unshift(savedActivity)
-        onSaveBoard(board)
+        saveBoard(board)
         this.toggleEdit()
     }
 
     onToggleFav = () => {
-        const { board, onSaveBoard } = this.props
+        const { board, saveBoard } = this.props
         board.isFavorite = !board.isFavorite
-        onSaveBoard(board)
+        saveBoard(board)
     }
-    onOpenPopover = (ev, PopoverName, member) => {
+
+    
+    onOpenPopover = (ev, PopoverName, member , data=null) => {
         const elPos = ev.target.getBoundingClientRect()
-        const props = { member, isInCard: false, showStatus: true , userType : 'all' }
+        const props = { member, isInCard: false, showStatus: true , userType : 'all' , data}
         this.props.openPopover(PopoverName, elPos, props)
     }
     get isFilterOn() {
@@ -83,7 +105,8 @@ class _BoardHeader extends Component {
 
     render() {
         const { board, loggedInUser } = this.props
-        const { isEdit, title } = this.state
+        const { isEdit, title  } = this.state
+        let notificationNum = this.notificationNum
         return (
             <div className="board-header">
                 <div className="board-title" >
@@ -144,6 +167,13 @@ class _BoardHeader extends Component {
                         {/* <span className="wide-layout">Show Menu</span> */}
                         <ElementOverlay />
                     </button>
+                    {/* <button> */}
+                    <button className={`btn-header ${(notificationNum > 0)? 'new-notific' : ''}`} onClick={(ev) => this.onOpenNotifics(ev)}>
+                        <BellIcon />
+                        {notificationNum> 0 && <div>{notificationNum}</div>}
+                        <ElementOverlay />
+                    </button>
+                    {/* </button> */}
                 </div>
             </div>
         )
@@ -163,7 +193,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     openPopover,
-    setFilter
+    setFilter,
+    onSaveBoard
 }
 
 export const BoardHeader = connect(mapStateToProps, mapDispatchToProps)(_BoardHeader)

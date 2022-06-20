@@ -60,7 +60,6 @@ export class _CardList extends Component {
         if (!currList) return null
         let list = {}
         list = boardService.getFilteredList(currList, filterBy)
-        console.log(list.cards.length , "list" , isRejectDisplay)
         if(!isRejectDisplay && list.cards.length > 0) return list
         if(isRejectDisplay && list.cards.length > 0) {
             list.cards = list.cards.filter( (card) => card.isReject === true)
@@ -84,7 +83,7 @@ export class _CardList extends Component {
 
 
     render() {
-        const { board, currList, onSaveBoard, currListIdx, loggedInUser } = this.props
+        const { board, currList, saveBoard, onSaveBoard ,  currListIdx, loggedInUser } = this.props
         const { isEditTitle, isAddCardOpen, titleTxt , isRejectDisplay } = this.state
         return (
             <Draggable draggableId={currList.id} index={currListIdx}>
@@ -120,7 +119,8 @@ export class _CardList extends Component {
                                             cardIdx={idx} currList={currList} board={board}
                                             onSaveBoard={onSaveBoard} />)}
                                         {isAddCardOpen &&
-                                            <CardAdd board={board} currList={currList} onSaveBoard={onSaveBoard}
+                                            <CardAdd board={board} currList={currList} saveBoard={saveBoard}
+                                            // <CardAdd currList={currList} onSaveBoard={onSaveBoard}
                                                 toggleCardAdd={this.toggleCardAdd} elCardsContainer={this.elCardsContainer} />
                                         }
                                         {provided.placeholder}

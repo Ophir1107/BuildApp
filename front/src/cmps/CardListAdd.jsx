@@ -65,7 +65,7 @@ export class CardListAdd extends Component {
                     <div className="card-list-add" onClick={(ev)=> 
                         {if (loggedInUser.userType === "constructor") return
                         this.toggleListAdd(ev)}}>
-                        <AddIcon /> הוסף {lists.length > 1 ? 'עוד' : ' '} רשימה
+                        <AddIcon /> הוסף {lists && lists.length > 1 ? 'עוד' : ' '} רשימה
                         </div>
                 }
             </div>

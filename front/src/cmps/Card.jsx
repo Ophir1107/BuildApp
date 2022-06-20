@@ -112,7 +112,6 @@ class _Card extends Component {
     render() {
         const { isEditMode, card, board, handleChange, cardTitle, loggedInUser } = this.props;
         const { coverMode } = card.style;
-        console.log( card.isNew , card.isUrgent , card.bgColor , "card.isNew , card.isUrgent , bgCOlor")
         return (
             <div className="card-preview-container" ref={(div) => { this.cardContainer = div }} onContextMenu={this.onOpenCardEdit}>
                 {!isEditMode && loggedInUser.userType!== 'constructor' && <div className="card-preview-edit-btn" onClick={this.onOpenCardEdit}><EditIcon /></div>}
