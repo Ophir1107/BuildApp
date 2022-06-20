@@ -19,7 +19,7 @@ export function CardAttachments({ attachs, onDeleteCardAttachment, card, openPop
         <div className="card-attachments">
             <div className="window-modal-title flex align-center">
                 <PaperClipIcon />
-                <h3>Attachments</h3>
+                <h3>קבצים</h3>
             </div>
             <div className="attachments-container">
                 {attachs.map(attach => {

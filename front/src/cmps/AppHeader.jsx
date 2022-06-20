@@ -101,11 +101,6 @@ class _AppHeader extends Component {
                             <AddIcon />
                         </button>
                     </div>
-                    <div>
-                        <button className={`btn-header ${isNewNotific ? 'new-notific' : ''}`} onClick={(ev) => this.onOpenNotifics(ev)}>
-                            <BellIcon />
-                        </button>
-                    </div>
                     <ProfileAvatar member={loggedInUser} onOpenPopover={this.onOpenPopover} size={32} />
                 </div>
             </div>
