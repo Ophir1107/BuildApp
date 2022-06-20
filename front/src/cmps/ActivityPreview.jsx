@@ -11,29 +11,29 @@ export class ActivityPreview extends Component {
         console.log(actionType , "cardTitle")
         switch (actionType) {
             case 'attached':
-                return `attached ${txt} to ${cardTitle}`
+                return `צירף קובץ ${txt} ל ${cardTitle}`
             case 'add':
-                return `added ${cardTitle} to ${activityLoc}`
+                return `הוסיף ${cardTitle} ל ${activityLoc}`
             case 'removed':
-                return `removed ${cardTitle} from ${activityLoc}`
+                return `removed ${cardTitle} מ ${activityLoc}`
             case 'joined':
                 return `joined ${activityLoc}`
             case 'completed':
-                return `completed ${cardTitle} on ${activityLoc}`
+                return `השלים ${cardTitle} ב ${activityLoc}`
             case 'archived':
-                return `archived ${activityLoc}`
+                return `העביר לארכיון ${activityLoc}`
             case 'moved':
-                return `moved ${activityLoc} from ${txt}`
+                return `העביר ${activityLoc} מ${txt}`
             case 'changed':
                 return `changed ${txt}`
             case 'changed-date':
-                return `changed the due date of ${cardTitle} to ${txt}`
+                return `שינה את תאריך הסיום מ ${cardTitle} ל ${txt}`
             case 'renamed':
-                return `renamed this board to ${txt}`
+                return `שינה את שם הפרויקט ל ${txt}`
             case 'left':
-                return `left ${activityLoc}`
+                return `עזב ${activityLoc}`
             case 'marked':
-                return `marked ${txt} on ${activityLoc}`
+                return `סימן ${txt} ב ${activityLoc}`
             default:
                 return ''
         }

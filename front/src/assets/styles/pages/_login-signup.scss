@@ -1,8 +1,10 @@
 .login-signup-container {
     // background-color: $clr2;
-    background-color:#D1D1D1;
+    // background-color:#D1D1D1;
     height: 100vh;
-
+    background-image: url(building10.png);
+    background-position: center;
+    background-size: cover;
     .logo {
         padding: 40px 0;
         svg {

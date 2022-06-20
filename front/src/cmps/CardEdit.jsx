@@ -74,7 +74,7 @@ class _CardEdit extends Component {
                     <div>
                         <Card card={card} isEditMode={true} board={board} handleChange={this.handleChange} cardTitle={cardTitle} />
                         <button className="edit-pop-over-save primary-btn" name="save"
-                            onClick={this.onSaveCard}>Save</button>
+                            onClick={this.onSaveCard}>שמור</button>
                     </div>
                     <div className="edit-pop-over-btns">
                         <Link

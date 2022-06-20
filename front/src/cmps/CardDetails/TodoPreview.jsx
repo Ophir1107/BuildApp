@@ -75,7 +75,7 @@ export class TodoPreview extends Component {
                     {!isInputSelected && <DeleteIcon className="delete-svg" onClick={() => onRemoveTodo(todo.id)} />}
                 </div>
                 <div className={`checklist-controllers flex align-center ${isInputSelected ? 'show' : 'hidden'}`}>
-                    <button className="primary-btn" onClick={() => this.onFinishEditing()}>Save</button>
+                    <button className="primary-btn" onClick={() => this.onFinishEditing()}>שמור</button>
                     <CloseRoundedIcon className="close-svg" />
                 </div >
             </div >

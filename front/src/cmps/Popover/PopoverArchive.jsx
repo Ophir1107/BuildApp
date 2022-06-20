@@ -63,7 +63,7 @@ class _PopoverArchive extends Component {
     render() {
         const { filterTxt, archivedCards } = this.state
         const { board } = this.props
-        return <Popover displayMode="menu-popovers" title="Archive">
+        return <Popover displayMode="menu-popovers" title="ארכיון">
             <div className="pop-over-archive-details">
                 <BackToPrevPopover popoverName="MENU" />
                 <input type="text" className="pop-over-input" value={filterTxt}
@@ -75,9 +75,9 @@ class _PopoverArchive extends Component {
                         </Link>
                         <p className="archive-card-actions">
                             <button className="clean-btn"
-                                onClick={() => this.onSendToBoard(card)}>שלח לפרויקט</button>
+                                onClick={() => this.onSendToBoard(card)}>שחזר</button>
                             <button className="clean-btn"
-                                onClick={() => this.onRemoveCard(card)} href="">-מחק</button>
+                                onClick={() => this.onRemoveCard(card)} href="">מחק לצמיתות</button>
                         </p>
                     </div>
                 })}

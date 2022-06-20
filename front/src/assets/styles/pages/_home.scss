@@ -1,17 +1,22 @@
 .home {
-    background: linear-gradient(0deg, #fff, #eae6ff 100%);
+    // background: linear-gradient(0deg, #fff, #eae6ff 100%);
+    //background-image: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(93,93,93,1) 91%);
+    background-image: url(building10.png);
+    background-position: center;
+    background-size: cover;
     .home-container {
         padding: 0 15px;
         margin: auto;
         text-align: center;
+        
         a {
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
         }
-        .hero {
+        .logo {
             line-height: 1.5;
             display: flex;
             padding: 112px 0 80px 0px;
-            .hero-info {
+            .logo-info {
                 display: flex;
                 flex-direction: column;
                 h1 {
@@ -19,13 +24,15 @@
                     line-height: 1.25;
                     font-weight: 500;
                     font-size: rem(32px);
-                    margin-bottom: 8px;
+                    color: fade-in($color: #ffff, $amount: 0);
+                    margin-bottom: 0px;
                 }
                 p {
                     font-family: "SourceSans-Light";
                     font-weight: 600;
-                    font-size: rem(20px);
-                    margin-bottom: 24px;
+                    font-size: rem(30px);
+                    color: fade-in($color: #ffff, $amount: 0);
+                    margin-bottom: 0px;
                 }
                 a {
                     border-radius: 6px;
@@ -47,24 +54,27 @@
             line-height: 1.5;
 
             .product-info {
-                margin-bottom: rem(24px);
+                margin-bottom: rem(0px);
             }
 
             h2 {
                 font-family: "SourceSans-Semibold";
                 font-size: rem(24px);
+                color: #fff;
                 line-height: 1.3;
                 margin-bottom: 0.5rem;
             }
             p {
                 font-family: "SourceSans-Light";
                 font-weight: 600;
+                color: #fff;
                 font-size: rem(20px);
                 margin-bottom: 24px;
             }
             a {
                 font-weight: 600;
                 font-size: rem(20px);
+                color: #fff;
                 border-radius: 6px;
                 padding: 5px 15px;
                 line-height: rem(44px);
@@ -97,13 +107,14 @@
             align-items: center;
             margin: auto;
             max-width: 525px;
-            .hero {
+            .logo{
                 align-items: center;
                 min-height: 50vh;
-                .hero-info {
+                .logo-info {
                     a {
                         text-align: center;
                         line-height: 1.8;
+                        color: #fff;
                     }
                 }
             }
@@ -122,15 +133,16 @@
             text-align: unset;
             text-align: left;
             max-width: 768px;
-            .hero {
+            .logo {
                 min-height: 85vh;
-                .hero-info {
+                .logo-info {
                     margin-right: 25px;
                     h1 {
                         font-size: rem(42px);
+                        color: #fff;
                     }
                 }
-                .hero-img {
+                .logo-img {
                     display: block;
                     img {
                         vertical-align: middle;
@@ -144,6 +156,7 @@
                 padding: 54px 0;
                 h2 {
                     font-size: rem(28px);
+                    color: #fff;
                 }
                 p {
                     padding: 0 35px;
@@ -156,16 +169,18 @@
     .home {
         .home-container {
             max-width: 960px;
-            .hero {
-                .hero-info {
+            .logo {
+                .logo-info {
                     h1 {
                         font-size: rem(48px);
+                        color: #FCB310;
                     }
                     padding: 0 rem(15px);
                     margin-right: 95px;
                     max-width: 56%;
                     a {
                         font-size: rem(28px);
+                        color: #fff;
                         line-height: 2;
                         width: 50%;
                     }
@@ -174,6 +189,7 @@
             .product {
                 h2 {
                     font-size: rem(36px);
+                    color: #fff;
                 }
             }
         }
@@ -183,6 +199,7 @@
     .home {
         .home-container {
             max-width: 1140px;
+            max-height: 1140px;
         }
     }
 }

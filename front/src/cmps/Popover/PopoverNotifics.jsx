@@ -25,7 +25,7 @@ function _PopoverNotifcs ({loggedInUser,board}){
 
     const notifcsActivities=getNotifcsActivities()
 
-    return <Popover title="Notifications">
+    return <Popover title="התראות">
         <div className="user-notifics">
             <ActivitiesList activities={notifcsActivities} isGeneral={true}/>
             {!notifcsActivities&& <p> No notifications to present...</p> }

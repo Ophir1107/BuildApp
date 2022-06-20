@@ -183,12 +183,12 @@ class _AdminDashboard extends Component {
             <>
                 <ScreenOverlay styleMode="heavy-dark" />
                 <section className="dashboard-container flex column">
+                    
                     <CloseRoundedIcon className="close-svg" onClick={() => this.goBackToBoard()} />
                     <div className="general-statistics flex justify-center wrap">
-
                         <div className="stats flex justify-space-between  ">
                             <div className="content flex  column justify-space-between">
-
+                                <h1>מעקב כללי</h1>
                                 <h3 className="flex align-center"><AssignmentIcon /> סה"כ משימות וריג'קטים </h3>
                                 <h4>{this.allCardsCount("all")}</h4>
                             </div>

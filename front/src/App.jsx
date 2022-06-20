@@ -52,7 +52,7 @@ class _App extends Component {
     if (!location.pathname.includes('/board')) return {}
     const style = board ? {
       background: `${board.style.background} center center / cover`,
-    } : { background: "#0079bf" }
+    } : { background: "#565656" }
     return style
   }
 
