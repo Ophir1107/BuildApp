@@ -136,9 +136,9 @@ class  _BoardList extends Component {
                         <div className="board-preview-details">
                             {/* <h3>{board.title.length > 20 ? board.title.substring(0, 20) + '...' : board.title}</h3> */}
                             <h3>{board.title}</h3>
-                            <span className={`far fa-star ${board.isFavorite ? 'favorite' : ''}`}
+                            {/* <span className={`far fa-star ${board.isFavorite ? 'favorite' : ''}`}
                                 onClick={(ev) => onToggleFavorite(ev, board._id)}>
-                            </span>
+                            </span> */}
                             {loggedInUser && loggedInUser.userType === 'admin' && 
                             <icon
                             class={`fas fa-archive icon-sm fa-star2`}
