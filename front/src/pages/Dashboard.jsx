@@ -169,17 +169,17 @@ class _Dashboard extends Component {
             amt : Math.floor(Math.random()*200)+ 2100
         }   
     }
-    // createListComplitedCardsData = (list , i) => {
+    // createListcompletedCardsData = (list , i) => {
     //     let openTasks = 0
-    //     let complitedTasks = 0
+    //     let completedTasks = 0
     //     list.cards.forEach((card) => {
     //         // if(!card.isDone) openTasks+=1
-    //         else complitedTasks+=1
+    //         else completedTasks+=1
     //     })
     //     return {
     //         name: list.title ,
     //         open: openTasks ,
-    //         complited: complitedTasks ,
+    //         completed: completedTasks ,
     //         amt : Math.floor(Math.random()*200)+ 2100
     //     }   
     // }
@@ -260,7 +260,7 @@ class _Dashboard extends Component {
                     </div>
                     <div className="board-charts-con flex">
                         <div className="board-chart">
-                            <BoardCharts label={'hello 1'}  data={totalData} dataKey1={"open"} dataKey2={"complited"} />
+                            <BoardCharts label={'hello 1'}  data={totalData} dataKey1={"open"} dataKey2={"completed"} />
                         </div>
                         <div className="board-chart">
                             <BoardCharts data={onTimeData} dataKey1={"overDue"} dataKey2={"onTime"} />

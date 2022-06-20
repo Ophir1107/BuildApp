@@ -7,6 +7,9 @@ import { ReactComponent as LogoRight } from '../assets/img/logos/auth-right-logo
 import { ReactComponent as LogoLeft } from '../assets/img/logos/auth-left-logo.svg'
 import { onLogin, onSignup } from '../store/actions/app.actions.js'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
+import home_logo from '../assets/img/buildApp_logo.png'
+import heroImgUrl from '../assets/img/hero.png'
+
 
 export class _LoginSignup extends Component {
 
@@ -85,17 +88,6 @@ export class _LoginSignup extends Component {
         }
     }
 
-    onSuccessGoogle = (res) => {
-        const { tokenId } = res
-        const { onGoogleLogin } = this.props
-        onGoogleLogin(tokenId)
-    }
-
-    onFailureGoogle = (res) => {
-        console.log('Login with google failed', res)
-    }
-
-
     render() {
         const { pageMode, credentials, userInfo } = this.state
         const { loginErr , loggedInUser } = this.props
@@ -110,9 +102,9 @@ export class _LoginSignup extends Component {
                 <h3>התחבר לאפליקציה</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
                     <Form className="flex column login-form">
-                        <Field type="username" placeholder="username" name="username" autoFocus className="login-input"/>
+                        <Field type="username" placeholder="שם משתמש" name="username" autoFocus className="login-input"/>
                         <ErrorMessage name="username" component="div" />
-                        <Field type="password" placeholder="password" name="password" className="login-input" />
+                        <Field type="password" placeholder="סיסמא" name="password" className="login-input" />
                         <ErrorMessage name="password" component="div" />
                         {loginErr && <p>{loginErr}</p>}
                         <button type="submit" className="primary-btn login-signup-btn" >התחבר</button>
@@ -142,7 +134,7 @@ export class _LoginSignup extends Component {
 
 
 
-                            <Field name="userType" as="select" placeholder="Select type of user"
+                            <Field name="userType" as="select" placeholder="בחר סוג משתמש"
                                 //component="select"
                                 value = {this.value}
                                 className = "LoginSelectBar"
@@ -173,13 +165,13 @@ export class _LoginSignup extends Component {
                         </Form>
                     </Formik>
                 </div>}
-            <div className="left-logo">
+            {/* <div className="left-logo">
                 <LogoLeft />
                 {/* <img src="../assets/images/leftLogo.jpg" alt="img suppose to be here"/> */}
             </div>
             <div className="right-logo">
                 <LogoRight />
-            </div>
+            </div> */}
         </section>
         )
     }

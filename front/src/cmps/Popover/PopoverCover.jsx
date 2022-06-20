@@ -68,7 +68,7 @@ class _PopoverCover extends Component {
 
     render() {
         const { bgColor, coverMode, bgImgUrl } = this.state
-        return <Popover title="Cover">
+        return <Popover title="רקע">
             <div className="cover-pop-over-content">
                 <h4>גודל</h4>
                 <div className="cover-options flex justify-space-between align-center">

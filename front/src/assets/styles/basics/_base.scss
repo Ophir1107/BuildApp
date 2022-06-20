@@ -5,9 +5,9 @@ body{
     margin : 0;
 }
 body, button, html, input, select, textarea{
-    color: #2f373c;
+    font-style: normal; 
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     font-weight: 400;
 }
@@ -26,5 +26,5 @@ p{
 }
 
 ::spelling-error  {
-    text-decoration: none;
+    text-decoration: whitesmoke;
   }

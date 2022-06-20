@@ -192,7 +192,7 @@ class _PopoverAttach extends Component {
                 <form onSubmit={this.onAttachLink}>
                     <label className="pop-over-label" htmlFor="attach-input">הוסף קישור</label>
                     <input type="text" className="pop-over-input" value={inputTxt} id="attach-input"
-                        onChange={this.handleChange} placeholder="הוסף כל לינק כאן..." />
+                        onChange={this.handleChange} placeholder="הוסף לינק כאן..." />
                     <button className="primary-btn btn-wide">הוסף</button>
                 </form>
             </div>

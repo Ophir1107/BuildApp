@@ -42,7 +42,7 @@ class _PopoverDate extends Component {
     render() {
         const { date } = this.state
         if (!date) return ''//loading
-        return <Popover title="Date">
+        return <Popover title="תאריך">
             <div className="date-pop-over-content">
 
                 <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -56,8 +56,8 @@ class _PopoverDate extends Component {
                     />
                 </MuiPickersUtilsProvider>
                 <div className="btn-container flex column">
-                    <button className="primary-btn" onClick={() => this.saveDueDate(date)} >Save</button>
-                    <button className="secondary-btn" onClick={this.onRemoveDate}>Remove</button>
+                    <button className="primary-btn" onClick={() => this.saveDueDate(date)} >שמור</button>
+                    <button className="secondary-btn" onClick={this.onRemoveDate}>הסר תאריך</button>
                 </div>
             </div>
 

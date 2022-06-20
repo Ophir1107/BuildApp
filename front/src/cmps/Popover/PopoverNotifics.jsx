@@ -34,7 +34,7 @@ function _PopoverNotifcs ({board , loggedInUser , onSaveBoard , data}){
     console.log(notifcsActivities , "notifcsActivities")
     // console.log(notifcsActivities.unique() , "notifcsActivities")
 
-    return <Popover title="Notifications">
+    return <Popover title="התראות">
         <div className="user-notifics">
             <ActivitiesList activities={notifcsActivities} isGeneral={true}/>
             {!notifcsActivities&& <p> No notifications to present...</p> }

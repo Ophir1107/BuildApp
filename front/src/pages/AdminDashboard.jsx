@@ -140,11 +140,11 @@ class _AdminDashboard extends Component {
                 console.log(boardData , "board data")
             }
             // userDate[board[i].title+'open'] = boardData.openTasks
-            // userDate[board[i].title+'complite'] = boardData.complitedTasks
+            // userDate[board[i].title+'complite'] = boardData.completedTasks
             // userDate[board[i].title+'onTime'] = boardData.onTime
             // userDate[board[i].title+'overDue'] = boardData.overDue
             userData.push(boardData.openTasks)
-            userData.push(boardData.complitedTasks)
+            userData.push(boardData.completedTasks)
             userData.push(boardData.onTime)
             userData.push(boardData.overDue)
         }
@@ -153,7 +153,7 @@ class _AdminDashboard extends Component {
 
     getBoardData = (board) => {
         let openTasks = 0
-        let complitedTasks = 0
+        let completedTasks = 0
         let overDue = 0
         let onTime = 0
         console.log(board , "board when trying to get data")
@@ -161,7 +161,7 @@ class _AdminDashboard extends Component {
             // lists[i].cards.forEach((card) => {
             //     if(!card.isDone) openTasks++
             //     else {
-            //         complitedTasks++
+            //         completedTasks++
             //         if(!card.isOverDue) onTime++
             //     }
             //     if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
@@ -169,55 +169,11 @@ class _AdminDashboard extends Component {
         }
         return {
             openTasks,
-            complitedTasks,
+            completedTasks,
             overDue,
             onTime
         }
     }
-
-    
-
-    //     const allCards = this.allCards
-    //     const cardsPerMemberMap = members.reduce((acc, member) => {
-    //         if (!acc[member.fullname]) acc[member.fullname] = 0
-    //         const cardsPerMemberCount = allCards.reduce((acc, card) => {
-    //             const memberIdx = card.members.findIndex(currMember => currMember._id === member._id)
-    //             if (memberIdx > -1 && !card.isDone) acc++
-    //             return acc
-    //         }, 0)
-    //         acc[member.fullname] = cardsPerMemberCount
-    //         return acc
-    //     }, {})
-    //     return cardsPerMemberMap
-    // }
-
-    // get cardsPerLabelMap() {
-    //     const { labels } = this.props.board
-    //     const allCards = this.allCards
-    //     const cardsPerLabelMap = labels.reduce((acc, label) => {
-    //         if (!acc[label.title]) acc[label.title] = { count: 0 }
-    //         const cardsPerLabelCount = allCards.reduce((acc, card) => {
-    //             const labelIdx = card.labelIds.findIndex(currLabelId => currLabelId === label.id)
-    //             if (labelIdx > -1 && !card.isDone) acc++
-    //             return acc
-    //         }, 0)
-    //         acc[label.title].count = cardsPerLabelCount
-    //         return acc
-    //     }, {})
-    //     return cardsPerLabelMap
-
-
-    // }
-
-    // get cardsPerListMap() {
-    //     const { lists } = this.props.board
-    //     const cardsPerListMap = lists.reduce((acc, list) => {
-    //         if (!acc[list.title]) acc[list.title] = 0
-    //         acc[list.title] = list.cards.length
-    //         return acc
-    //     }, {})
-    //     return cardsPerListMap
-    // }
 
     get progressCircleStyle() {
         return {
@@ -242,13 +198,13 @@ class _AdminDashboard extends Component {
 
     // createListCardsData = (board , i , type) => {
     //     let openTasks = 0
-    //     let complitedTasks = 0
+    //     let completedTasks = 0
     //     let overDue = 0
     //     let onTime = 0
     //     list.cards.forEach((card) => {
     //         if(!card.isDone) openTasks++
     //         else {
-    //             complitedTasks++
+    //             completedTasks++
     //             if(!card.isOverDue) onTime++
     //         }
     //         if (card.isOverDue || (card.dueDate < Date.now() && card.dueDate ) ) overDue++
@@ -256,7 +212,7 @@ class _AdminDashboard extends Component {
     //     if (type === "total") return {
     //         name: list.title ,
     //         open: openTasks ,
-    //         complited: complitedTasks ,
+    //         completed: completedTasks ,
     //         amt : Math.floor(Math.random()*200)+ 2100
     //     }   
     //     if (type === "onTime") return {
