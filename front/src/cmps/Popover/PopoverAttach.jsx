@@ -198,7 +198,7 @@ class _PopoverAttach extends Component {
             </div>
             {showSuccess && <Alert severity="success">
                                 <AlertTitle> מעולה</AlertTitle>
-                                התמונה עלתה  — <strong>בהצלחה!</strong>
+                                התמונה עלתה <strong> בהצלחה! </strong>
                             </Alert>}
         </Popover>
 

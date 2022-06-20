@@ -175,6 +175,7 @@ export class _LoginSignup extends Component {
                 </div>}
             <div className="left-logo">
                 <LogoLeft />
+                {/* <img src="../assets/images/leftLogo.jpg" alt="img suppose to be here"/> */}
             </div>
             <div className="right-logo">
                 <LogoRight />
