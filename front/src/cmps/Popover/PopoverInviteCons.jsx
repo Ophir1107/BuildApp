@@ -39,7 +39,7 @@ class _PopoverInviteCons extends Component {
 
     render() {
         
-        return <Popover title="Invite to board">
+        return <Popover title="הזמן לפרויקט">
             <div className="invite-details flex column">
                 <input type="text" autoFocus className="pop-over-input" onChange={this.handleChange} />
                 <div className="members">

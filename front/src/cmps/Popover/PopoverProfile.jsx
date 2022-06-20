@@ -31,7 +31,7 @@ function _PopoverProfile({
                 <div className="mini-profile">
                     <div className="mini-profile-avatar"><ProfileAvatar member={member} size={50} showStatus={showStatus} /></div>
                     <div className="mini-profile-info">
-                        <Link to="/workspace" className="clean-link" onClick={closePopover}>{member.fullname}</Link>
+                        <div className="clean-link" onClick={closePopover}>{member.fullname}</div>
                         <p>@{member.username.toLowerCase()}</p>
                         {isLoggedInUser && loggedInUser.userType === 'admin' && <Link to="/users" onClick={closePopover} >משתמשים</Link>}
 
