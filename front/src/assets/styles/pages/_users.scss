@@ -1,4 +1,5 @@
 
+
 .users-preview{
     width : max-content ;
     margin-top : 20px;
@@ -11,6 +12,7 @@
     .users-actions{
         display: flex;
         flex-direction: column;
+        align-self: center;
         .pop-over-input{
             max-width:300px;
         }
