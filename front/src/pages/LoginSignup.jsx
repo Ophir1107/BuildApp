@@ -165,13 +165,13 @@ export class _LoginSignup extends Component {
                         </Form>
                     </Formik>
                 </div>}
-            {/* <div className="left-logo">
-                <LogoLeft />
+            {/* <div className="left-logo"> */}
+                {/* <LogoLeft /> */}
                 {/* <img src="../assets/images/leftLogo.jpg" alt="img suppose to be here"/> */}
-            </div>
-            <div className="right-logo">
-                <LogoRight />
-            </div> */}
+            {/* </div> */}
+            {/* <div className="right-logo"> */}
+                {/* <LogoRight /> */}
+            {/* </div>  */}
         </section>
         )
     }

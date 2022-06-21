@@ -160,13 +160,13 @@ class _BoardHeader extends Component {
                         <span className="wide-layout">תפריט</span>
                         <ElementOverlay />
                     </button>
-                    <button className="board-btn" onClick={(ev) =>
+                    {/* <button className="board-btn" onClick={(ev) =>
                         {if (loggedInUser.userType ==='constructor') return
                          this.onOpenPopover(ev, 'ATTACH')}}>
                         <i class="fa fa-camera" aria-hidden="true"></i>
-                        {/* <span className="wide-layout">Show Menu</span> */}
+                        <span className="wide-layout">Show Menu</span>
                         <ElementOverlay />
-                    </button>
+                    </button> */}
                     {/* <button> */}
                     <button className={`btn-header ${(notificationNum > 0)? 'new-notific' : ''}`} onClick={(ev) => this.onOpenNotifics(ev)}>
                         <BellIcon />

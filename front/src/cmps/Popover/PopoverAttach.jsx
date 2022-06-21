@@ -208,7 +208,7 @@ class _PopoverAttach extends Component {
 
 function mapStateToProps(state) {
     return {
-        board: state.boardModule.board,
+        // board: state.boardModule.board,
         currPopoverName: state.appModule.currPopover.name,
         loggedInUser: state.appModule.loggedInUser
     }

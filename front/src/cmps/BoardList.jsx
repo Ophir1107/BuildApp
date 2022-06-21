@@ -98,6 +98,8 @@ import { Link } from 'react-router-dom'
 
 import React, { Component } from 'react'
 import { loadBoards, onSaveBoard, onSaveBoards } from '../store/actions/board.actions'
+import { ElementOverlay } from '../cmps/Popover/ElementOverlay';
+import { openPopover } from '../store/actions/app.actions.js'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { Loader } from '../cmps/Loader'
 import { boardService } from '../services/board.service'
@@ -121,7 +123,17 @@ class  _BoardList extends Component {
         socketService.on('board newUpdate', boards => {
             console.log("on board new update , from board list")
             this.setState({boards}) 
-    })
+        })
+
+    
+    }
+    onOpenPopover = (ev, PopoverName, member ,board ) => {
+        console.log(board , "board on open popover")
+        ev.preventDefault()
+        const { openPopover } = this.props
+        const elPos = ev.target.getBoundingClientRect()
+        const props = { member , board }
+        openPopover(PopoverName, elPos, props)
     }
     render(){
     const { onToggleFavorite , loggedInUser , onDeleteBoard , getUserBoards} = this.props
@@ -139,10 +151,17 @@ class  _BoardList extends Component {
                             {/* <span className={`far fa-star ${board.isFavorite ? 'favorite' : ''}`}
                                 onClick={(ev) => onToggleFavorite(ev, board._id)}>
                             </span> */}
-                            {loggedInUser && loggedInUser.userType === 'admin' && 
-                            <icon
-                            class={`fas fa-archive icon-sm fa-star2`}
-                                onClick={(ev) => onDeleteBoard(ev, board._id)}>
+                            <button className="board-btn camera favorite" onClick={(ev) =>
+                                {if (loggedInUser.userType ==='constructor') return
+                                this.onOpenPopover(ev, 'ATTACH' , loggedInUser , board)}}>
+                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                {/* <span className="wide-layout">Show Menu</span> */}
+                                <ElementOverlay />
+                            </button>
+                                {loggedInUser && loggedInUser.userType === 'admin' && 
+                                <icon
+                                class={`fas fa-archive icon-sm fa-star2`}
+                                    onClick={(ev) => onDeleteBoard(ev, board._id)}>
                             </icon>}
                         </div>
                     </div>
@@ -162,7 +181,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     onSaveBoard,
     onSaveBoards,
-    loadBoards
+    loadBoards,
+    openPopover
 }
 
 export const BoardList = connect(mapStateToProps, mapDispatchToProps)(_BoardList)
