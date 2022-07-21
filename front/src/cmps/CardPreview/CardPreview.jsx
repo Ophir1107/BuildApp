@@ -24,7 +24,7 @@ export class CardPreview extends Component {
                         <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                             style={this.draggableStyle(provided.draggableProps.style, snapshot)} >
                             <Link to={`/board/${board._id}/${currList?.id}/${card.id}`} className="clean-link">
-                                <Card card={card} board={board} />
+                                <Card card={card} board={board} currList={currList} />
                             </Link>
                         </div>
                     )}

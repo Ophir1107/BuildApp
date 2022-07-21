@@ -61,8 +61,8 @@ export class _CardAdd extends Component {
                 bgColor: ''
             }
         }
-        const cardToEdit = boardService.addActivityToCard(card , 'add' , loggedInUser , null , board.lists[listIdx].title)
-        // this.props.onEditBoard(board)
+        const cardToEdit = boardService.addActivityToCard(card , 'add' , loggedInUser , null ,null , board.lists[listIdx].title)
+        // this.props.onEditBoard(board)card , actionType , byMember , txt=null , member=null , listTitle=null
         const boardToEdit = boardService.addActivityToBoard(board, cardToEdit.activity[0])
         board.lists[listIdx].cards.push(cardToEdit)
         saveBoard(boardToEdit)

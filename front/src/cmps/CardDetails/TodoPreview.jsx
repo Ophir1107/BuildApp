@@ -45,9 +45,9 @@ export class TodoPreview extends Component {
         const { onSaveTodo, onCreateActivity } = this.props
         const { todo } = this.state
         todo.isDone = !todo.isDone
-        if (todo.isDone) {
-            onCreateActivity('completed', todo.title)
-        }
+        // if (todo.isDone) {
+        //     onCreateActivity('completed', todo.title)
+        // }
         this.setState({ todo }, onSaveTodo(this.state.todo))
     }
 

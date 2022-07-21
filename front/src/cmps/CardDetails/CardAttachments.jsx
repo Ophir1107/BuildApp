@@ -27,7 +27,7 @@ export function CardAttachments({ attachs, onDeleteCardAttachment, card, openPop
                         rel="noreferrer" href={attach.url} className="clean-link">
                         <div className="attach-preview flex">
                             <div className="img-container">
-                                <img src={attach.url.url} alt="" />
+                                <img src={attach.url} alt="" />
                             </div>
                             <div className="attach-content flex column full">
                                 <span className="file-name">{attach.fileName} </span>

@@ -48,7 +48,7 @@ class _Users extends Component {
             <Route>
                 <section>
                     <Link to="/workspace" className="clean-link"><div className="users-logo flex align-center justify-center">
-                        <h1>BuildApp</h1>
+                        <h1 className="must-be-yellow">BuildApp</h1>
                     </div>
                     </Link>
                     <div className="users-preview flex column">

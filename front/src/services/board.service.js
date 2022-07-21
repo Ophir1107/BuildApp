@@ -103,6 +103,7 @@ export function createActivity(actionType, txt = '', card = null , board=null) {
         createdAt: Date.now(),
         byMember,
         card: savedCard || null,
+        cardTitle : savedCard.title || null,
         members : board ? board.members : null
     }
     return savedActivity
