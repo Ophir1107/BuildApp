@@ -3,6 +3,4 @@
 This is BuildApp:
 This is an application for construction project management.
 
-
-]
    
